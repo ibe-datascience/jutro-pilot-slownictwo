@@ -1,0 +1,85 @@
+---
+title: "Pools and concepts"
+subtitle: "Subject terms, general vocabulary matched to them, and concept groups"
+page-layout: full
+toc: false
+---
+
+```{python}
+import _lib as L
+import itables
+itables.init_notebook_mode(all_interactive=False, connected=True)
+
+def prep(df, match_col):
+    df = df.copy()
+    df.insert(1, "label_source", df["kategoria_final"].notna().map({True: "LLM", False: "rule"}))
+    df.insert(2, "form_changed", (df["forma_podstawowa"] != df["forma_kandydata"]).map({True: "yes", False: ""}))
+    front = ["forma_podstawowa", "forma_kandydata", "form_changed", "kategoria", "label_source", "pojecie", "obrazowalnosc", match_col, "dlugosc", "cls",
+             "freq_cel", "freq_kontrast", "n_mat_cel", "n_przedmiotow", "freq_kwjp", "zipf_wordfreq"]
+    return df[front + [c for c in df.columns if c not in front]]
+
+HIDE = ["n_mat_kontrast", "n_klas_cel", "rozproszenie", "termopl_ok", "forma_podstawowa_llm", "kategoria_final", "forma_join",
+        "ll_vs_kwjp", "log_ratio_kwjp", "zipf_bin", "cls_bin"]
+pp = prep(L.csv("pula_przedmiotowa.csv"), "dopasowanie_ogolne")
+po = prep(L.csv("pula_ogolna.csv"), "dopasowanie_przedmiotowe")
+poj = L.csv("pojecia.csv")
+hide = lambda df: [c for c in df.columns if c.startswith("rank_") or c in HIDE]
+n = lambda v: L.fmt(int(v))
+by_freq = lambda df: [[list(df.columns).index("freq_cel"), "desc"]]
+dup = lambda df: int(df["forma_podstawowa"].duplicated(keep=False).sum())
+```
+
+The pools are the candidates split by label: **T3** (subject terms) and **T1/T2** (everyday and school vocabulary).
+For each subject term the pipeline picks one general-pool item of the same length in words and the closest Zipf
+frequency. `label_source` shows whether the label comes from the language models or only from the rule-based
+pre-label. Nothing here has been checked by a human.
+
+::: {.callout-warning title="Two form columns"}
+`forma_kandydata` is the string the statistics were computed for; `forma_podstawowa` is the language model's base
+form where it returned a different one (`form_changed` = `yes`:
+`{python} n((pp["form_changed"] == "yes").sum())` rows in the subject pool,
+`{python} n((po["form_changed"] == "yes").sum())` in the general pool). As a result the same `forma_podstawowa`
+can appear in more than one row (`{python} n(dup(pp))` such rows in the subject pool, `{python} n(dup(po))` in the
+general pool), and matching between the pools is done on `forma_podstawowa`.
+:::
+
+Filter with the boxes under the table, sort by clicking a header, and use **Columns** to show the hidden columns.
+
+::: {.panel-tabset}
+
+## Subject pool (T3)
+
+`{python} n(len(pp))` terms; `{python} n((pp["label_source"] == "LLM").sum())` labelled by the language models,
+`{python} n((pp["label_source"] == "rule").sum())` by rules only.
+
+```{python}
+L.source("pula_przedmiotowa.csv")
+L.glossary(pp.columns)
+L.dt(pp, order=by_freq(pp), hide=hide(pp), wrap=["pojecie"])
+```
+
+## General pool (T1/T2)
+
+`{python} n(len(po))` items; `{python} n((po["label_source"] == "LLM").sum())` labelled by the language models,
+`{python} n((po["label_source"] == "rule").sum())` by rules only. `{python} n(po["dopasowanie_przedmiotowe"].notna().sum())`
+of them are matched to a subject term.
+
+```{python}
+L.source("pula_ogolna.csv")
+L.glossary(po.columns)
+L.dt(po, order=by_freq(po), hide=hide(po), wrap=["pojecie"])
+```
+
+## Concepts
+
+`{python} n(len(poj))` groups of subject-pool terms that share a concept label;
+`{python} n((poj["n_terminow"] > 1).sum())` groups hold more than one term. For terms without a language-model
+label the concept is the term itself.
+
+```{python}
+L.source("pojecia.csv")
+L.glossary(poj.columns)
+L.dt(poj, order=[[2, "desc"]], wrap=["terminy", "pojecie"])
+```
+
+:::

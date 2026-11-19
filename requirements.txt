@@ -1,0 +1,32 @@
+# JUTRO pilot – Python dependencies imported by the pipeline (jutro/, resources/*/ helper scripts) and the report site.
+# Versions are the ones the published run used (Python 3.12.2, macOS arm64).
+# Exact environment including transitive packages: requirements-lock.txt
+# Everything that pip cannot install (Java, Quarto, models, word lists, input data): REQUIREMENTS.md
+#
+#   python3.12 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+
+# --- pipeline
+anthropic==2.8.0          # Claude API: steps 2 (benchmark), 5, 7
+lxml==6.1.3               # ZPE HTML parsing: step 1
+morfeusz2==1.99.15        # morphological analysis; the wheel bundles the SGJP dictionary
+numpy==2.5.4
+openpyxl==3.1.5           # xlsx worksheets
+pandas==3.1.1
+pyarrow==26.0.1           # intermediate parquet files
+python-dotenv==1.2.4      # reads the API key from the .env file named in the config
+PyYAML==6.0.3
+RapidFuzz==3.14.6         # edit distances: step 7
+scipy==1.18.1             # Spearman correlations: step 3
+spacy==3.8.18
+stanza==1.15.0            # comparison tagger; also tags the input of TermoPL
+torch==2.15.0             # required by stanza
+wordfreq==3.1.1           # Zipf frequencies (bundled Polish data, CC BY-SA 4.0)
+wuggy==1.1.2              # pseudoword generator: step 7
+pl_core_news_lg @ https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.8.0/pl_core_news_lg-3.8.0-py3-none-any.whl
+
+# --- report site (Quarto runs the Python cells through Jupyter)
+ipykernel==7.4.0
+nbclient==0.11.0
+nbformat==5.11.1
+itables==2.9.1            # interactive tables
+matplotlib==3.11.2        # charts

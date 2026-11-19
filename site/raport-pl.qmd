@@ -1,0 +1,11 @@
+---
+title: "Raport szczegółowy (PL)"
+subtitle: "Treść pliku raport.md zapisanego przez krok 8"
+lang: pl
+---
+
+```{python}
+import _lib as L
+L.source("raport.md")
+L.include_markdown(L.OUT / "raport.md")
+```

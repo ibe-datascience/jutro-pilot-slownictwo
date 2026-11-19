@@ -1,0 +1,423 @@
+---
+title: "Results"
+subtitle: "Every metric saved by the pipeline, step by step"
+---
+
+```{python}
+import json
+import pandas as pd
+import matplotlib.pyplot as plt
+import _lib as L
+
+num = L.fmt
+opis, dobor = L.metrics("opis_danych"), L.metrics("dobor_materialow")
+czasy, m41, m42, m43 = (L.metrics(n) for n in ["tagowanie_czasy", "ocena_41", "ekstrakcja_42", "frekwencje_43"])
+m5, m6, m7 = (L.metrics(n) for n in ["llm_5", "pule_6", "pseudoslowa_7"])
+kand = L.csv("kandydaci.csv")
+plt.rcParams.update({"figure.dpi": 110, "axes.spines.top": False, "axes.spines.right": False, "font.size": 9})
+INK, ACCENT, MUTED = "#2c3e50", "#18bc9c", "#b4bcc2"
+
+def kv(d, headers=("Item", "Value"), sort=False):
+    items = sorted(d.items(), key=lambda x: -x[1]) if sort else d.items()
+    L.table(items, list(headers), "lr")
+```
+
+Run **`{python} L.RUN_NAME`** of configuration **`{python} L.NAME`**. All numbers are read from
+the files in `{python} f"wyniki/{L.NAME}/{L.RUN_NAME}/metryki/"` when the site is rendered; the raw files are shown on the
+[Reproduce](reproduce.qmd#raw-metrics-files) page. Polish key names from the files are kept where they identify a
+column or a setting.
+
+## 1 · Corpus {#corpus}
+
+### Selection of materials
+
+```{python}
+labels = {"etap": "Catalogue entries of the school stage", "bez_przedmiotu_etapu": "… without a subject of that stage (dropped)",
+          "typ_wykluczony": "… of an excluded type, addressed to teachers (dropped)",
+          "tylko_jezyk_obcy": "… foreign-language subjects only (dropped)", "wybrane": "Selected (target + contrast)",
+          "cel": "of which target subject"}
+L.table([(labels.get(k, k), v) for k, v in dobor.items()], ["Stage of selection (whole ZPE catalogue)", "Materials"])
+```
+
+From the selected materials this run sampled `{python} num(opis.get("materialy_cel"))` target materials and
+`{python} num(opis.get("materialy_kontrast"))` contrast materials (six contrast materials per target one), with the
+seed from the configuration.
+
+### Size
+
+```{python}
+rows = [
+    ("Materials, target (biology)", opis.get("materialy_cel")),
+    ("… assigned to biology only", opis.get("materialy_cel_tylko_ten_przedmiot")),
+    ("Materials, contrast", opis.get("materialy_kontrast")),
+    ("HTML units in target materials", opis.get("jednostki_html_cel")),
+    ("Words, target", opis.get("slowa_cel")),
+    ("Words, contrast", opis.get("slowa_kontrast")),
+    ("Content read from HTML / from plain-text fallback", " / ".join(num(opis.get("zrodlo_tresci", {}).get(k, 0)) for k in ("html", "txt"))),
+    ("Parsing errors", opis.get("liczba_bledow")),
+]
+L.table(rows, ["Measure", "Value"])
+```
+
+Word counts cover the segment types used for statistics
+(`{python} ", ".join(opis.get("segmenty_w_statystykach", []))`); image descriptions (`alt`) are kept in the corpus but
+left out of the statistics.
+
+::: {.panel-tabset}
+
+#### Words by segment type
+
+```{python}
+seg_all, seg_cel = opis.get("slowa_wszystkie_wg_typu_segmentu", {}), opis.get("slowa_cel_wg_typu_segmentu", {})
+L.table([(k, seg_cel.get(k, 0), v) for k, v in sorted(seg_all.items(), key=lambda x: -x[1])],
+        ["Segment type", "Words, target", "Words, all"])
+```
+
+#### By subject
+
+```{python}
+mats, words = opis.get("materialy_wg_przedmiotu", {}), opis.get("slowa_wg_przedmiotu", {})
+L.table([(k, mats.get(k, 0), v) for k, v in sorted(words.items(), key=lambda x: -x[1])], ["Subject", "Materials", "Words"])
+```
+
+A material assigned to several subjects is counted under each of them.
+
+#### Target material types
+
+```{python}
+kv(opis.get("materialy_cel_wg_typu", {}), ("Material type", "Materials"), sort=True)
+```
+
+#### Estimated grade
+
+```{python}
+g = opis.get("klasa_szac_reguly_cel", {})
+L.table(sorted(((("not estimated" if k == "None" else f"grade {k}"), v) for k, v in g.items()), key=lambda x: x[0]),
+        ["Estimated grade (keyword rules)", "Target materials"])
+conf = {"wysoka": "high", "srednia": "medium", "niska": "low", "brak": "none"}
+L.table([(conf.get(k, k), v) for k, v in opis.get("klasa_szac_pewnosc_cel", {}).items()], ["Confidence of the estimate", "Target materials"])
+```
+
+The catalogue value for all target materials is `{python} ", ".join(opis.get("klasa_katalog_cel", {}).keys())`;
+`{python} num(opis.get("klasa_jawnie_w_tresci_cel"))` materials name a grade explicitly in their text.
+
+:::
+
+### Cleaning
+
+```{python}
+sz = opis.get("szablony", {})
+reasons = {"szablon powtarzalny": "repeated platform template", "polecenie techniczne": "technical instruction (UI)",
+           "metadane/licencja": "metadata or licence line"}
+rows = [("Distinct sentences removed", sz.get("rozne_zdania_usuniete")), ("Removals in total", sz.get("usuniecia_lacznie")),
+        ("Words removed", sz.get("slowa_usuniete")),
+        ("Template threshold: sentence repeated in at least this many materials", sz.get("prog_materialow"))]
+rows += [(f"Distinct sentences removed as: {reasons.get(k, k)}", v) for k, v in sz.get("wg_powodu", {}).items()]
+L.table(rows, ["Measure", "Value"])
+```
+
+### Silver standards from ZPE
+
+```{python}
+ss = opis.get("srebrny_standard", {})
+lab = {"hasla_slowniczka_cel": "Glossary entries in target materials", "rozne_hasla_cel": "… distinct",
+       "materialy_cel_ze_slowniczkiem": "Target materials that have a glossary",
+       "hasla_slowniczka_kontrast": "Glossary entries in contrast materials",
+       "pary_forma_lemat_cel": "Editors' pairs inflected form → base form, target", "rozne_pary_forma_lemat_cel": "… distinct"}
+L.table([(lab.get(k, k), v) for k, v in ss.items()], ["Measure", "Value"])
+```
+
+```{python}
+full = L.ROOT / "wyniki" / L.NAME / "pelny" / "metryki" / "opis_danych.json"
+if L.RUN_NAME != "pelny" and full.exists():
+    fo = json.loads(full.read_text(encoding="utf-8"))["dane"]
+    L.md("### Full corpus, for scale\n\nStep 1 has also been run on the full corpus (the later steps have not):")
+    L.table([("Materials, target", opis.get("materialy_cel"), fo.get("materialy_cel")),
+             ("Materials, contrast", opis.get("materialy_kontrast"), fo.get("materialy_kontrast")),
+             ("Words, target", opis.get("slowa_cel"), fo.get("slowa_cel")),
+             ("Words, contrast", opis.get("slowa_kontrast"), fo.get("slowa_kontrast")),
+             ("Distinct glossary entries, target", ss.get("rozne_hasla_cel"), fo.get("srebrny_standard", {}).get("rozne_hasla_cel"))],
+            ["Measure", "This run", "Full corpus"])
+```
+
+## 2 · Tagging and lemmatisation {#tagging}
+
+### Benchmark on `{python} num(m41.get("n"))` forms
+
+Each tool lemmatised the same forms in their sentence context. *Exact* means the whole base form equals the
+reference; *components* means each word of the answer shares a lemma with the matching word of the reference, even
+if the phrase as a whole was not rebuilt in the nominative.
+
+```{python}
+tools = m41.get("narzedzia", {})
+strata = sorted({k.split("__")[1] for d in tools.values() for k in d if k.startswith("lemat_dokladny__")})
+st_lab = {"rzadki termin": "rare terms", "wielowyrazowe": "multiword", "pozostale": "other"}
+n_zpe = next((d.get("n_ref_redakcja_ZPE") for d in tools.values()), None)
+rows = [(f"`{t}`", d.get("lemat_dokladny_wszystkie"), d.get("lemat_skladniki_wszystkie"),
+         d.get("lemat_dokladny_ref_redakcja_ZPE"), d.get("lemat_dokladny_ref_tymczasowa"),
+         *[d.get(f"lemat_dokladny__{s}") for s in strata]) for t, d in tools.items()]
+rows.sort(key=lambda r: -(r[1] or 0))
+L.table(rows, ["Tool", "Exact, all", "Components, all", f"Exact, ZPE reference (n = {n_zpe})", "Exact, provisional reference",
+               *[f"Exact, {st_lab.get(s, s)}" for s in strata]])
+```
+
+```{python}
+#| fig-cap: "Share of forms whose base form equals the reference."
+#| fig-alt: "Horizontal bar chart of exact-match lemmatisation accuracy by tool."
+prod = __import__("yaml").safe_load((L.ROOT / "config" / f"{L.NAME}.yaml").read_text(encoding="utf-8"))["narzedzia"]["tager_produkcyjny"]
+order = sorted(tools, key=lambda t: tools[t].get("lemat_dokladny_wszystkie") or 0)
+fig, ax = plt.subplots(figsize=(6.2, 2.6))
+vals = [tools[t].get("lemat_dokladny_wszystkie") or 0 for t in order]
+bars = ax.barh(order, vals, color=[ACCENT if t == prod else INK for t in order])
+ax.bar_label(bars, fmt="%.2f", padding=3)
+ax.set_xlim(0, 1); ax.set_xlabel("exact match, all forms (production tagger highlighted)")
+plt.tight_layout(); plt.show()
+```
+
+::: {.callout-warning title="What the reference is"}
+`{python} "The sheet has been checked by a human and the scores use those answers." if m41.get("referencja_ludzka_z_arkusza") else "The sheet has not been checked by a human yet."`
+Until it is, the reference is the base form written by ZPE editors where one exists, and otherwise a provisional
+answer from the adjudicating language model. The editors' forms were not written for this study (some keep the
+plural, for example), and a reference written by a language model may favour the LLM lemmatisers. The sheet itself is on the
+[Annotation worksheets](sheets.qmd) page.
+:::
+
+```{python}
+L.md("Composition of the sample:")
+src = {"redakcja ZPE": "ZPE editors", "tymczasowa": "provisional (LLM)"}
+L.table([(st_lab.get(r["warstwa"], r["warstwa"]), src.get(r["zrodlo_referencji"], r["zrodlo_referencji"]), r["n"]) for r in m41.get("sklad", [])],
+        ["Stratum", "Reference from", "Forms"], "llr")
+if m41.get("uwaga"):
+    L.md(f"Note saved with the metrics (PL): *{m41['uwaga']}*")
+```
+
+### Tagging the corpus
+
+```{python}
+sm, st, bm = czasy.get("spacy_morfeusz", {}), czasy.get("stanza", {}), czasy.get("benchmark", {})
+rows = [
+    ("Production tagger", sm.get("narzedzie")),
+    ("Tokens tagged, whole corpus", sm.get("tokeny")),
+    ("… alphabetic", sm.get("tokeny_alfabetyczne")),
+    ("Time, whole corpus", f"{num(sm.get('czas_s'))} s on {num(sm.get('procesy'))} processes"),
+    ("Alphabetic tokens unknown to Morfeusz2, whole corpus", f"{100 * (sm.get('nierozpoznane_morfeusz_udzial_caly_korpus') or 0):.2f}%"),
+    ("… in the target corpus", f"{100 * (sm.get('cel_nierozpoznane_morfeusz_udzial') or 0):.2f}% ({num(sm.get('cel_nierozpoznane_morfeusz_rozne_formy'))} distinct forms)"),
+    ("Target tokens outside the spaCy vocabulary", f"{100 * (sm.get('cel_spacy_oov_udzial') or 0):.2f}%"),
+    ("Comparison tagger", st.get("narzedzie", st.get("blad"))),
+    ("Tokens tagged by Stanza, target corpus", st.get("tokeny")),
+    ("Time, Stanza", f"{num(st.get('czas_s'))} s on {num(st.get('procesy'))} process, {st.get('urzadzenie', '')}"),
+    ("Morfeusz2 dictionary", czasy.get("morfeusz_slownik")),
+]
+L.table(rows, ["Measure", "Value"], "ll")
+```
+
+Speed on the same `{python} num(bm.get("slowa_w_probie"))` words, one process, CPU:
+
+```{python}
+L.table([("spaCy", bm.get("spacy_s"), bm.get("spacy_slow_na_s")), ("Morfeusz2 analysis", bm.get("morfeusz_analiza_s"), bm.get("morfeusz_analiza_slow_na_s")),
+         ("Stanza", bm.get("stanza_s"), bm.get("stanza_slow_na_s"))], ["Tool", "Seconds", "Words per second"])
+```
+
+::: {.callout-note collapse="true" title="Most frequent target forms unknown to Morfeusz2"}
+```{python}
+L.md(", ".join(f"{w} ({n})" for w, n in sm.get("cel_najczestsze_nierozpoznane", [])))
+```
+:::
+
+## 3 · General-frequency resources {#frequency}
+
+```{python}
+ko = m43.get("korpus", {})
+L.table([("Alphabetic tokens", ko.get("n_tokenow_alpha")), ("… target", ko.get("n_tokenow_cel")), ("… contrast", ko.get("n_tokenow_kontrast")),
+         ("Distinct lemmas", ko.get("n_lematow")), ("Distinct forms", ko.get("n_form"))], ["Corpus after tagging", "Value"])
+```
+
+### Coverage of the biology vocabulary
+
+```{python}
+res = {"kwjp": "KWJP100, lemmas", "nkjp1m": "NKJP 1M subcorpus, lemmas", "subtlex": "SUBTLEX-PL, lemmas (comparison only)",
+       "wordfreq": "wordfreq, forms", "kwjp_orth": "KWJP100, forms", "nkjp": "NKJP 1-grams, forms"}
+pl, pf = m43.get("pokrycie_lematow_cel", {}), m43.get("pokrycie_form_cel", {})
+L.md(f"Share of the {num(pl.get('n'))} distinct target lemmas and {num(pf.get('n'))} distinct target forms found in each resource:")
+L.table([(res.get(k, k), "lemma", v) for k, v in pl.items() if k != "n"] + [(res.get(k, k), "form", v) for k, v in pf.items() if k != "n"],
+        ["Resource", "Unit", "Coverage"], "llr")
+L.md(f"Resource used in the published lists (note saved by the step, PL): *{m43.get('rekomendacja_produkcyjna', '')}*")
+```
+
+### Agreement between resources
+
+```{python}
+co = m43.get("korelacje_rang_lematy_biol_freq_cel_ge_3", {})
+col = {"freq_kwjp": "KWJP100", "freq_nkjp1m": "NKJP 1M", "freq_subtlex_lemma": "SUBTLEX-PL", "zipf_wordfreq": "wordfreq"}
+rows = []
+for k, v in co.items():
+    if k.startswith("spearman_"):
+        a, b = k[len("spearman_"):].split("_vs_")
+        rows.append((f"{col.get(a, a)} vs {col.get(b, b)}", v, co.get(f"n_{a}_vs_{b}")))
+L.md("Spearman rank correlation of frequencies, over target lemmas with at least 3 occurrences that both resources contain:")
+L.table(rows, ["Pair", "Spearman ρ", "Lemmas"])
+ov = m43.get("wplyw_zasobu_na_top300_score_freq_cel_nad_1_plus_ogolna", {})
+names = {"kwjp": "KWJP100", "nkjp1m": "NKJP 1M", "subtlex": "SUBTLEX-PL", "wordfreq_inv": "wordfreq"}
+L.md("How much the choice of resource changes a simple keyness ranking: overlap of the top 300 lemmas ranked by "
+     "target frequency divided by (1 + general frequency).")
+L.table([(" vs ".join(names.get(x, x) for x in k.split("_vs_")), v) for k, v in ov.items()], ["Pair", "Shared share of top 300"])
+```
+
+## 4 · Candidate extraction {#extraction}
+
+```{python}
+L.table([("Candidates after frequency filters", m42.get("n_kandydatow")), ("… single-word", m42.get("n_jednowyrazowych")),
+         ("… multiword", m42.get("n_mwu")), ("TermoPL ran", m42.get("termopl")),
+         ("Silver standard: glossary entries", m42.get("srebrny", {}).get("slowniczek")),
+         ("Silver standard: editors' base forms", m42.get("srebrny", {}).get("pojecie_ref"))], ["Measure", "Value"])
+L.md("Rule-based pre-labels (thresholds on dispersion and frequency; a starting point for step 5, not a result):")
+kv(m42.get("etykiety_regulowe", {}), ("Pre-label", "Candidates"), sort=True)
+```
+
+### Precision and recall at K against the silver standards
+
+Each method ranks all candidates; the table shows what share of its top K is in the silver standard (P@K) and what
+share of the silver items present among the candidates it has reached by K (R@K).
+
+```{python}
+prec = m42.get("precyzja_wzgledem_srebrnego", {})
+mlab = {"ll_kontrast": "log-likelihood vs contrast", "log_ratio_kontrast": "log ratio vs contrast",
+        "simple_maths_kwjp": "Simple Maths vs KWJP100", "tfidf_biol": "TF-IDF across subjects",
+        "pmi_mwu": "PMI (multiword)", "logdice_mwu": "logDice (multiword)", "cvalue_termopl": "TermoPL C-value"}
+sets = {"vs_union": "Union of both", "vs_slowniczek": "Glossary entries", "vs_pojecie_ref": "Editors' base forms"}
+parts = ["::: {.panel-tabset}"]
+for key, title in sets.items():
+    rows = []
+    for m, d in prec.items():
+        if "status" in d:
+            rows.append((mlab.get(m, m), d["status"], *[""] * 5))
+        else:
+            v = d.get(key, {})
+            rows.append((mlab.get(m, m), *[v.get(f"{x}@{k}") for x in "pr" for k in (100, 300, 1000)]))
+    parts += [f"#### {title}", L.table_md(rows, ["Method", "P@100", "P@300", "P@1000", "R@100", "R@300", "R@1000"])]
+L.md("\n\n".join(parts + [":::"]))
+```
+
+The silver standard only contains what ZPE editors chose to put in glossaries, so low precision does not mean the
+top candidates are wrong. It supports comparison between methods only.
+
+## 5 · LLM classification {#llm}
+
+```{python}
+ag = m5.get("zgodnosc_miedzy_modelami", {})
+rows = [("Candidates labelled", m5.get("n_klasyfikowanych")), ("Adjudicated (models disagreed or low confidence)", m5.get("n_rozstrzyganych_opus")),
+        ("Agreement between the two models", ag.get("prosta"))]
+rows += [(f"Cohen's κ, {k.replace('_vs_', ' vs ')}", v) for k, v in (ag.get("kappa") or {}).items()]
+rows += [("Materials used for direct LLM term extraction", m5.get("n_materialow_ekstrakcja")), ("Prompt version", m5.get("wersja_promptu")),
+         ("API spend so far for this configuration, all runs", f"${m5.get('koszt_usd_dotychczas', 0):.4f}"),
+         ("Wall-clock time of the step", f"{num(m5.get('czas_s'))} s")]
+L.table(rows, ["Measure", "Value"])
+```
+
+::: {.callout-warning title="Agreement is not accuracy"}
+There are no human labels yet. The worksheet for double annotation is on the
+[Annotation worksheets](sheets.qmd) page; precision, recall and F1 against people can be reported only after it is
+filled in.
+:::
+
+::: {.panel-tabset}
+
+#### Final labels
+
+```{python}
+cat = {"T3": "T3 · subject term", "T2": "T2 · school / academic vocabulary", "T1": "T1 · everyday vocabulary", "SZUM": "SZUM · noise"}
+L.table([(cat.get(k, k), v) for k, v in m5.get("rozklad_final", {}).items()], ["Final label of LLM-labelled candidates", "Candidates"])
+```
+
+#### Model against model
+
+```{python}
+mcols = [c for c in kand.columns if c.endswith("_kategoria") and not c.startswith("opus")]
+if len(mcols) >= 2:
+    a, b = mcols[:2]
+    sub = kand.dropna(subset=[a, b])
+    ct = pd.crosstab(sub[a], sub[b]).reset_index().rename(columns={a: f"{a.replace('_kategoria', '')} ↓ / {b.replace('_kategoria', '')} →"})
+    L.df_table(ct)
+    L.md(f"Computed from `kandydaci.csv`, {num(len(sub))} candidates labelled by both models.")
+```
+
+#### Adjudicated cases
+
+```{python}
+ocols = [c for c in kand.columns if c.startswith("opus") and c.endswith("_kategoria")]
+if ocols and len(mcols) >= 2:
+    adj = kand.dropna(subset=ocols[:1])
+    rows = [(m.replace("_kategoria", ""), int((adj[m] == adj[ocols[0]]).sum()), len(adj)) for m in mcols[:2]]
+    L.table(rows, ["Model", "Cases where the adjudicator chose the same label", "Adjudicated cases"])
+```
+
+:::
+
+## 6 · Pools {#pools}
+
+```{python}
+L.table([("Rows in `kandydaci.csv`", m6.get("n_kandydaci_csv")), ("Subject pool (T3)", m6.get("n_pula_przedmiotowa")),
+         ("General pool (T1 + T2)", m6.get("n_pula_ogolna")), ("Concept groups", m6.get("n_pojec")),
+         ("Rows in the gold-set worksheet", m6.get("n_zloty"))], ["Measure", "Value"])
+src = kand["kategoria_final"].notna().map({True: "LLM", False: "rule only"})
+ct = pd.crosstab(kand["kategoria"], src)
+ct["all"] = ct.sum(axis=1)
+ct = ct.sort_values("all", ascending=False).reset_index().rename(columns={"kategoria": "Label used for the pools"})
+L.md("Where the label of each candidate comes from:")
+L.df_table(ct)
+```
+
+```{python}
+#| fig-cap: "Candidates by label and by source of the label."
+#| fig-alt: "Stacked horizontal bar chart of candidate counts per label, split into LLM-labelled and rule-only."
+fig, ax = plt.subplots(figsize=(6.2, 2.3))
+lab = ct.iloc[::-1]
+left = None
+for colname, color in [("LLM", INK), ("rule only", MUTED)]:
+    if colname in lab:
+        ax.barh(lab.iloc[:, 0], lab[colname], left=left, color=color, label=colname)
+        left = lab[colname] if left is None else left + lab[colname]
+ax.legend(frameon=False); ax.set_xlabel("candidates")
+plt.tight_layout(); plt.show()
+```
+
+`do_llm` are candidates the rules left undecided and that were not among those sent to the models; they are in
+neither pool.
+
+## 7 · Pseudowords {#pseudowords}
+
+```{python}
+acc, rej = L.csv("pseudoslowa.csv"), L.csv("pseudoslowa_odrzucone.csv")
+L.table([("Templates (real words)", m7.get("n_szablonow")), ("Pseudoword rows kept", m7.get("n_zaakceptowanych")),
+         ("… distinct strings", acc["pseudoslowo"].nunique()), ("Rows rejected by the filters", m7.get("n_odrzuconych"))], ["Measure", "Value"])
+rows = []
+for m in sorted(set(acc["metoda"]) | set(rej["metoda"])):
+    a, r = acc[acc["metoda"] == m], rej[rej["metoda"] == m]
+    rows.append((f"`{m}`", len(a) + len(r), len(a), a["pseudoslowo"].nunique(), len(r)))
+L.table(rows, ["Generator", "Generated", "Kept", "Kept, distinct strings", "Rejected"])
+```
+
+::: {.panel-tabset}
+
+#### Rejection reasons
+
+```{python}
+why = {"znane_morfeusz": "known to Morfeusz2 (a real word form)", "sufiks_na_istniejacym": "productive suffix on an existing stem",
+       "prefiks_na_istniejacym": "productive prefix on an existing stem", "literowka_edit1": "one edit away from a real word",
+       "wordfreq_istnieje": "found in wordfreq", "homofon_wordfreq": "homophone of a real word",
+       "w_leksykonie_korpusu": "occurs in the corpus", "niealfabetyczne": "contains non-letters"}
+L.table([(why.get(k, k), v) for k, v in m7.get("odrzucenia_powody", {}).items()], ["Reason", "Rows"])
+```
+
+#### Real words against pseudowords
+
+```{python}
+ro = m7.get("rozklady", {})
+feat = {"dlugosc": "Length in letters", "syl": "Syllables", "zbitka": "Longest run of consonant letters", "diakryty": "Diacritic letters"}
+rows = [(f, *[ro.get(p, {}).get(f"{k}_{s}") for p in ("prawdziwe", "pseudoslowa") for s in ("mean", "std")]) for k, f in feat.items()]
+L.table(rows, ["Feature", "Templates, mean", "Templates, SD", "Pseudowords, mean", "Pseudowords, SD"])
+```
+
+:::
+
+The lists themselves, and a note on the `unipseudo` rows, are on the [Pseudowords](pseudowords.qmd) page.

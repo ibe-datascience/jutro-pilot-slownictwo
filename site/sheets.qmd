@@ -1,0 +1,50 @@
+---
+title: "Annotation worksheets"
+subtitle: "The two spreadsheets that wait for human judgement"
+page-layout: full
+toc: false
+---
+
+```{python}
+import _lib as L
+import itables
+itables.init_notebook_mode(all_interactive=False, connected=True)
+
+gold = L.xlsx("zloty_zbior_do_oznaczenia.xlsx")
+lem = L.xlsx("ocena_lematyzacji_300.xlsx")
+n = lambda v: L.fmt(int(v))
+filled = lambda s: int(s.notna().sum())
+```
+
+Both files are meant to be downloaded, filled in and returned. They are shown here so that their content can be
+inspected without opening Excel.
+
+::: {.panel-tabset}
+
+## Gold-set worksheet
+
+`{python} n(len(gold))` candidates drawn in strata (extraction method that ranked the candidate highest × frequency
+quartile × length). The sheet deliberately carries **no model labels**, so that two annotators can label
+independently. Filled in so far: annotator A `{python} n(filled(gold["kategoria_oceniajacy_A"]))`, annotator B
+`{python} n(filled(gold["kategoria_oceniajacy_B"]))` of `{python} n(len(gold))`.
+
+```{python}
+L.source("zloty_zbior_do_oznaczenia.xlsx")
+L.glossary(gold.columns)
+L.dt(gold, page=50)
+```
+
+## Lemmatisation sheet (300 forms)
+
+`{python} n(len(lem))` inflected forms with their sentence, the reference base form, and the answer of every tool.
+Columns `lemat_poprawny_czlowiek` and `pos_poprawny_czlowiek` are for the human checker
+(`{python} n(filled(lem["lemat_poprawny_czlowiek"]))` filled in so far). Once the sheet is saved as
+`ocena_lematyzacji_300_sprawdzone.xlsx` next to the original, step 2 recomputes the benchmark against those answers.
+
+```{python}
+L.source("ocena_lematyzacji_300.xlsx")
+L.glossary(lem.columns)
+L.dt(lem, page=25, wrap=["kontekst"], hide=[c for c in lem.columns if c.endswith("_pos")])
+```
+
+:::

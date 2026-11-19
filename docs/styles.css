@@ -1,0 +1,63 @@
+/* Interactive tables */
+.dt-container { font-size: 0.85rem; }
+table.dataTable td.dt-wrap { white-space: normal; min-width: 16rem; max-width: 34rem; }
+table.dataTable tfoot input { width: 100%; min-width: 3.5rem; font-weight: normal; }
+/* per-column filter row (table footer) shown directly under the header */
+.dt-scroll { display: flex; flex-direction: column; }
+.dt-scroll-head { order: 0; }
+.dt-scroll-foot { order: 1; }
+.dt-scroll-body { order: 2; }
+.dt-buttons .dt-button { font-size: 0.8rem; }
+
+/* Static tables */
+main table.table { font-size: 0.9rem; width: auto; }
+
+/* Pipeline diagram (site/_pipeline.py) */
+.pl { --pl-ink: #2c3e50; --pl-line: #95a5a6; font-size: 0.82rem; line-height: 1.35; margin: 1rem 0 1.25rem; }
+.pl ul { list-style: none; margin: 0; padding: 0; }
+.pl-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr) minmax(0, 1fr); column-gap: 2.2rem;
+          align-items: center; position: relative; padding-bottom: 1.9rem; }
+.pl-row:last-child { padding-bottom: 0; }
+.pl-colhead { padding-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; color: #5d6d7e;
+              text-align: center; }
+.pl-step { border: 1.5px solid var(--pl-ink); border-radius: 6px; background: #fff; position: relative; }
+.pl-step-head { background: var(--pl-ink); color: #fff; padding: 0.4rem 0.6rem; display: flex; flex-wrap: wrap;
+                align-items: baseline; gap: 0.15rem 0.5rem; border-radius: 4px 4px 0 0; }
+.pl-num { display: inline-flex; align-items: center; justify-content: center; width: 1.45rem; height: 1.45rem;
+          border-radius: 50%; background: #fff; color: var(--pl-ink); font-weight: 700; align-self: center; }
+.pl-step-name { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-weight: 700; }
+.pl-step-title { opacity: 0.92; }
+.pl ul.pl-does { list-style: disc; padding: 0.5rem 0.7rem 0.3rem 1.6rem; }
+.pl-does li { margin-bottom: 0.3rem; }
+.pl-does code { font-size: 0.95em; }
+.pl-mod { border-top: 1px solid #dfe4e8; padding: 0.25rem 0.6rem; color: #5d6d7e; font-size: 0.74rem;
+          font-family: SFMono-Regular, Menlo, Consolas, monospace; }
+/* arrows: reads -> step -> writes, and step -> next step */
+.pl-row:not(.pl-colhead) .pl-step::before, .pl-row:not(.pl-colhead) .pl-step::after {
+  content: "\2192"; position: absolute; top: 50%; transform: translateY(-50%); color: var(--pl-line); font-size: 1.5rem; line-height: 1; }
+.pl-step::before { left: -1.85rem; }
+.pl-step::after { right: -1.85rem; }
+.pl-row:not(.pl-colhead):not(:last-child)::after { content: "\2193"; position: absolute; left: 50%; bottom: 0.15rem;
+  transform: translateX(-50%); color: var(--pl-ink); font-size: 1.5rem; line-height: 1; }
+.pl-io { display: flex; flex-direction: column; gap: 0.3rem; }
+.pl-chip { border: 1px solid; border-radius: 4px; padding: 0.2rem 0.45rem; overflow-wrap: anywhere; }
+.pl-name { font-weight: 600; }
+.pl-note { display: block; font-size: 0.74rem; opacity: 0.85; }
+.pl-src { float: right; margin-left: 0.3rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; font-size: 0.7rem; font-weight: 700;
+          display: inline-flex; align-items: center; justify-content: center; background: var(--pl-ink); color: #fff; }
+.pl-ext { background: #eef2f7; border-color: #9aa7b4; color: #1f2d3d; }
+.pl-mid { background: #fff8e1; border-color: #d4b23a; color: #3d3200; }
+.pl-out { background: #e3f4ea; border-color: #18a689; color: #0b3d2e; }
+.pl-met { background: #fff; border-color: #b4bcc2; border-style: dashed; color: #34495e; }
+.pl-mid .pl-name, .pl-out .pl-name, .pl-met .pl-name { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.76rem; }
+.pl-legend .pl-name { font-family: inherit !important; font-size: inherit !important; }
+.pl-chip a { color: inherit; }
+.pl ul.pl-legend { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
+@media (max-width: 800px) {
+  .pl-row { grid-template-columns: 1fr; row-gap: 1.6rem; }
+  .pl-colhead { display: none; }
+  .pl-row:not(.pl-colhead) .pl-step::before, .pl-row:not(.pl-colhead) .pl-step::after {
+    content: "\2193"; left: 50%; right: auto; transform: translateX(-50%); }
+  .pl-step::before { top: -1.5rem; }
+  .pl-step::after { top: auto; bottom: -1.55rem; }
+}

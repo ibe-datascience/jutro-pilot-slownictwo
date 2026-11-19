@@ -1,0 +1,33 @@
+---
+title: "NLP tools"
+subtitle: "Taggers, lemmatisers and term extractors for Polish: availability, licences, how they were run"
+toc-depth: 3
+---
+
+```{python}
+import json
+import pandas as pd
+import _lib as L
+import itables
+itables.init_notebook_mode(all_interactive=False, connected=True)
+D = L.ROOT / "resources" / "tools"
+```
+
+Notes written while the tools were installed and tried on the machine of the published run (13 November 2026). The
+tools themselves are not in the repository; [Reproduce](reproduce.qmd) lists the ones the pipeline uses.
+
+## Overview table
+
+From [`resources/tools/manifest.json`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/resources/tools/manifest.json).
+
+```{python}
+m = pd.DataFrame(json.loads((D / "manifest.json").read_text(encoding="utf-8")))
+L.dt(m[["tool", "version", "status", "licence", "url", "blocker", "how_to_run", "notes"]], page=25,
+     wrap=["tool", "version", "licence", "blocker", "how_to_run", "notes"], hide=["how_to_run", "notes"])
+```
+
+## Full notes
+
+```{python}
+L.include_markdown(D / "README_tools.md", shift=1)
+```

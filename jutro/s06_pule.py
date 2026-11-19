@@ -18,6 +18,9 @@ def _match_key(row: pd.Series) -> tuple:
 def run(ctx: Ctx) -> None:
     t = Timer()
     stat = pq.read_table(ctx.data / "kandydaci_stat.parquet").to_pandas()
+    # forma, dla której policzono statystyki (krok 4); `forma_podstawowa` może niżej zostać
+    # zastąpiona formą zwróconą przez LLM, więc zachowujemy oryginał w osobnej kolumnie
+    stat.insert(1, "forma_kandydata", stat["forma_podstawowa"])
     llm_path = ctx.data / "llm_klasyfikacja.parquet"
     if llm_path.exists():
         lab = pq.read_table(llm_path).to_pandas()

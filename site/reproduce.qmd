@@ -1,0 +1,79 @@
+---
+title: "Reproduce"
+subtitle: "Requirements, configuration, versions and the raw record of this run"
+toc-depth: 3
+---
+
+```{python}
+import json
+import _lib as L
+meta = L.run_meta()
+```
+
+This page shows the files a person needs in order to repeat the run, as they are in the repository:
+[`REQUIREMENTS.md`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/REQUIREMENTS.md),
+[`requirements.txt`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/requirements.txt),
+[`requirements-lock.txt`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/requirements-lock.txt) and
+[`config/biologia_sp.yaml`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/config/biologia_sp.yaml).
+
+## Requirements
+
+```{python}
+L.include_markdown(L.ROOT / "REQUIREMENTS.md", shift=1)
+```
+
+## Python dependencies
+
+`requirements.txt`, the direct dependencies with the versions of the published run:
+
+```{python}
+L.code_file(L.ROOT / "requirements.txt", "bash")
+```
+
+`requirements-lock.txt` holds the complete `pip freeze` of that environment
+(`{python} sum(1 for l in (L.ROOT / "requirements-lock.txt").read_text().splitlines() if l and not l.startswith("#"))`
+packages).
+
+## Configuration
+
+Subject, school stage, grades, thresholds, models and the seed are parameters. To repeat the process for another
+subject, copy the file and change the `cel` section.
+
+```{python}
+L.code_file(L.ROOT / "config" / f"{L.NAME}.yaml", "yaml")
+```
+
+## Record of this run
+
+### Library versions
+
+Saved by the pipeline in `przebieg.json` at the time of the run.
+
+```{python}
+L.table(meta.get("wersje", {}).items(), ["Component", "Version"], "ll")
+```
+
+### Steps
+
+```{python}
+from datetime import datetime
+rows = []
+for name, t in meta.get("kroki", {}).items():
+    a, b = datetime.fromisoformat(t["start"]), datetime.fromisoformat(t["koniec"])
+    rows.append((name, a.strftime("%Y-%m-%d %H:%M:%S"), b.strftime("%H:%M:%S"), f"{(b - a).total_seconds():.0f} s"))
+L.table(rows, ["Step (last execution)", "Start", "End", "Duration"], "lllr")
+L.md(f"Seed: `{meta.get('ziarno')}`. The record keeps the last execution of each step; a step that was run in an "
+     "earlier session and not repeated may be missing from it.")
+```
+
+### Raw metrics files {#raw-metrics-files}
+
+Every number on the [Results](results.qmd) page comes from one of these files.
+
+```{python}
+for p in sorted((L.OUT / "metryki").glob("*.json")):
+    d = json.loads(p.read_text(encoding="utf-8"))
+    body = json.dumps(d, ensure_ascii=False, indent=2)
+    L.md(f"::: {{.callout-note collapse=\"true\" title=\"{p.name} · saved {d.get('_zapisano', '')}\"}}\n"
+         f"[view on GitHub]({L.REPO}/blob/main/{L.rel(p)})\n\n````json\n{body}\n````\n:::")
+```

@@ -34,5 +34,6 @@ resources/**
 !resources/tools/concraft/concraft_tag.py
 
 # artefakty renderowania Quarto
+site/_site/
 site/*_files/
 site/.quarto/

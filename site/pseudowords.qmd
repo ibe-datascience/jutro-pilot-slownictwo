@@ -1,0 +1,83 @@
+---
+title: "Pseudowords"
+subtitle: "Generated non-words for the LexTALE-style test: kept, rejected, and why"
+page-layout: full
+toc: false
+---
+
+```{python}
+import _lib as L
+import itables
+itables.init_notebook_mode(all_interactive=False, connected=True)
+
+acc, rej = L.csv("pseudoslowa.csv"), L.csv("pseudoslowa_odrzucone.csv")
+n = lambda v: L.fmt(int(v))
+uni = acc[acc["metoda"] == "unipseudo"]
+uni_broken = len(uni) > 0 and uni["pseudoslowo"].nunique() <= max(10, len(uni) // 10)
+```
+
+Templates are single real words from the general pool, stratified by length and syllable count. Each of the four
+generators proposes pseudowords for a template; filters then reject anything that is, or looks too much like, a real
+Polish word. `imbir` is a published ready-made list, sampled at random, so its rows are not derived from the
+template they sit next to.
+
+```{python}
+rows = []
+for m in sorted(set(acc["metoda"]) | set(rej["metoda"])):
+    a, r = acc[acc["metoda"] == m], rej[rej["metoda"] == m]
+    rows.append((f"`{m}`", len(a) + len(r), len(a), a["pseudoslowo"].nunique(), len(r)))
+rows.append(("**all**", len(acc) + len(rej), len(acc), acc["pseudoslowo"].nunique(), len(rej)))
+L.table(rows, ["Generator", "Generated", "Kept", "Kept, distinct strings", "Rejected"])
+```
+
+```{python}
+if uni_broken:
+    L.md(f"""::: {{.callout-warning title="The `unipseudo` rows of this run are not usable"}}
+The {n(len(uni))} kept `unipseudo` rows are copies of {n(uni['pseudoslowo'].nunique())} strings
+({", ".join(f"*{w}*" for w in uni['pseudoslowo'].unique()[:10])}), repeated for every template.
+Step 7 starts the UniPseudo generator but does not read what it prints. It then takes the first rows of whichever CSV
+file lies in `resources/pseudo/unipseudo/`, and in this run that was the six-letter smoke-test file. The strings are
+therefore neither matched to their templates nor newly generated. Count
+{n(acc[acc['metoda'] != 'unipseudo']['pseudoslowo'].nunique())} distinct pseudowords from the other three generators
+as the usable result of this run. The step needs fixing before the full run.
+:::""")
+```
+
+::: {.panel-tabset}
+
+## Kept
+
+```{python}
+L.source("pseudoslowa.csv")
+L.glossary(acc.columns)
+L.dt(acc, page=50)
+```
+
+## Rejected
+
+```{python}
+L.source("pseudoslowa_odrzucone.csv")
+L.glossary(rej.columns)
+front = ["szablon", "pseudoslowo", "metoda", "powod_odrzucenia"]
+L.dt(rej[front + [c for c in rej.columns if c not in front]], page=50)
+```
+
+## Distributions
+
+Mean and standard deviation of four surface features, templates (`prawdziwe`) against kept pseudowords
+(`pseudoslowa`). Similar distributions mean a pupil cannot tell the two groups apart by length or spelling pattern
+alone.
+
+```{python}
+import pandas as pd
+d = pd.read_csv(L.OUT / "pseudoslowa_rozklady.csv", header=[0, 1], index_col=0)
+d.columns = [f"{a} · {b}" for a, b in d.columns]
+d = d.reset_index().rename(columns={d.index.name or "index": "group"})
+L.source("pseudoslowa_rozklady.csv")
+L.df_table(d)
+by = acc.groupby("metoda")[["dlugosc", "syl", "zbitka", "diakryty", "old20"]].mean().round(3).reset_index()
+L.md("Means by generator, kept rows (computed from `pseudoslowa.csv`):")
+L.df_table(by)
+```
+
+:::

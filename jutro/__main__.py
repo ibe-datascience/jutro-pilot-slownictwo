@@ -3,6 +3,7 @@
     python -m jutro run --config config/biologia_sp.yaml            # pełny przebieg
     python -m jutro run --config config/biologia_sp.yaml --probka 50  # próbka 50 materiałów
     python -m jutro run --config ... --kroki korpus,tagowanie         # wybrane kroki
+    python -m jutro site --config config/biologia_sp.yaml --probka 50 # tylko strona Quarto z gotowych wyników
 
 Kroki zapisują wyniki pośrednie w data/<nazwa>/<przebieg>/ i są pomijane, jeśli wynik już istnieje
 (wymuś ponowne wykonanie przez --od-nowa).
@@ -37,7 +38,15 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--kroki", default=None, help="lista kroków po przecinku (domyślnie wszystkie)")
     run.add_argument("--od-nowa", action="store_true", help="nie używaj zapisanych wyników pośrednich")
     run.add_argument("--bez-llm", action="store_true", help="pomiń wywołania API (użyj zapisanych odpowiedzi)")
+    site = sub.add_parser("site", help="tylko przebuduj stronę Quarto (site/ → docs/) z plików w wyniki/")
+    site.add_argument("--config", required=True)
+    site.add_argument("--probka", type=int, default=None, help="który przebieg pokazać (jak w `run`)")
     args = ap.parse_args(argv)
+
+    if args.cmd == "site":
+        from .s08_raport import render_site
+
+        return 0 if render_site(load_ctx(args.config, args.probka)) else 1
 
     ctx = load_ctx(args.config, args.probka)
     ctx.bez_llm = args.bez_llm  # type: ignore[attr-defined]

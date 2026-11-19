@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>NLP tools – JUTRO pilot</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6033a600180109c3731f6a886c29932c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">JUTRO pilot</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./results.html"> 
+<span class="menu-text">Results</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data">    
+        <li>
+    <a class="dropdown-item" href="./candidates.html">
+ <span class="dropdown-text">Candidates (all)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pools.html">
+ <span class="dropdown-text">Pools and concepts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pseudowords.html">
+ <span class="dropdown-text">Pseudowords</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sheets.html">
+ <span class="dropdown-text">Annotation worksheets</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./raport-pl.html"> 
+<span class="menu-text">Raport (PL)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reproduce.html"> 
+<span class="menu-text">Reproduce</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Resources</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
+        <li>
+    <a class="dropdown-item" href="./resources-tools.html">
+ <span class="dropdown-text">NLP tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources-freq.html">
+ <span class="dropdown-text">Frequency lists</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources-pseudo.html">
+ <span class="dropdown-text">Pseudoword resources</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview-table" id="toc-overview-table" class="nav-link active" data-scroll-target="#overview-table">Overview table</a></li>
+  <li><a href="#full-notes" id="toc-full-notes" class="nav-link" data-scroll-target="#full-notes">Full notes</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NLP tools</h1>
+<p class="subtitle lead">Taggers, lemmatisers and term extractors for Polish: availability, licences, how they were run</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="e067c832" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<script type="module">
+    import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
+    set_or_remove_dark_class();
+</script>
+</div>
+</div>
+<p>Notes written while the tools were installed and tried on the machine of the published run (13 November 2026). The tools themselves are not in the repository; <a href="./reproduce.html">Reproduce</a> lists the ones the pipeline uses.</p>
+<section id="overview-table" class="level2">
+<h2 class="anchored" data-anchor-id="overview-table">Overview table</h2>
+<p>From <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/resources/tools/manifest.json"><code>resources/tools/manifest.json</code></a>.</p>
+<div id="15112c50" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<!--| quarto-html-table-processing: none -->
+<table id="itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b" hidden="hidden">
+  <tbody>
+    <tr>
+      <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:var(--itables-logo-paper,#d9d7fc)">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:var(--itables-logo-ink,#1a1366);stroke:var(--itables-logo-ink,#1a1366);">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+        Loading ITables v2.9.1 from the internet...
+        (need <a href="https://itables.org/troubleshooting.html">help</a>?)
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+      <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>tool</th>
+      <th style="border:1px solid #ddd;padding:8px">version</th>
+      <th style="border:1px solid #ddd;padding:8px">status</th>
+      <th style="border:1px solid #ddd;padding:8px">licence</th>
+      <th style="border:1px solid #ddd;padding:8px">url</th>
+      <th style="border:1px solid #ddd;padding:8px">blocker</th>
+      <th style="border:1px solid #ddd;padding:8px">how_to_run</th>
+      <th style="border:1px solid #ddd;padding:8px">notes</th>
+    </tr></thead><tbody>
+<tr><td style="border:1px solid #ddd;padding:8px">TermoPL</td><td style="border:1px solid #ddd;padding:8px">8.1.1</td><td style="border:1px solid #ddd;padding:8px">ready</td><td style="border:1px solid #ddd;padding:8px">BSD 2-clause (Copyright (c) 2016, Institute of Computer Science, Polish Academy of Sciences)</td><td style="border:1px solid #ddd;padding:8px">https://zil.ipipan.waw.pl/TermoPL</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">cd resources/tools/termopl &amp;&amp; ./run_termopl.sh TXT_DIR WORK_DIR OUT_TSV 4   |   direct: cd resources/tools/termopl/TermoPL_Mac_OS_X &amp;&amp; java -Djava.awt.headless=true -Xmx1500M -jar TermoPL.jar -SW -CP -CT -method gt -srch npmi3 -cntx 1 -save "# rank sf bf cvalue length freq_s freq_in context" -exp /abs/path/terms_all.tsv /abs/path/dir_with_conllu_files</td><td style="border:1px solid #ddd;padding:8px">Installed from TermoPL_Mac_OS_X.zip (9,429,888 bytes, arm64 JNI libs) to resources/tools/termopl/TermoPL_Mac_OS_X (21 MB). Input must be tagged and lemmatised: .conllu (FORM, LEMMA, XPOS as NKJP-style tag; UPOS/HEAD/DEPREL only for -method ud) or flat 'form&lt;TAB&gt;lemma&lt;TAB&gt;tag' with empty line between sentences. Stanza CoNLL-U output is read as is (txt2conllu.py). No batch option for maximum term length: filter the exported 'length' column (run_termopl.sh does it). Must be started from its own directory, otherwise UnsatisfiedLinkError with exit status 0 and wrong output. Plain-text input does not work in batch mode (-python is ignored in 8.1.1). Directory arguments are read recursively and must contain only input files. Test: 402 tokens, 0.32 s, 127 terms.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">Morfeusz2 (Python module in main venv; also bundled in TermoPL)</td><td style="border:1px solid #ddd;padding:8px">1.99.15, dictionary pl.sgjp.sgjp-2026.06.01</td><td style="border:1px solid #ddd;padding:8px">ready</td><td style="border:1px solid #ddd;padding:8px">BSD 2-clause (program and SGJP data)</td><td style="border:1px solid #ddd;padding:8px">https://morfeusz.sgjp.pl/</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">. .venv/bin/activate &amp;&amp; python -c "import morfeusz2; print(morfeusz2.Morfeusz().analyse('błonę'))"</td><td style="border:1px solid #ddd;padding:8px">Was already installed; not changed. Gives all readings without disambiguation, so it cannot feed TermoPL alone. Used here to correct Stanza lemmas (txt2conllu.py --morfeusz-lemmas) and as the analyser in front of Concraft-pl (concraft/concraft_tag.py).</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">spaCy pl_core_news_lg</td><td style="border:1px solid #ddd;padding:8px">3.8.0</td><td style="border:1px solid #ddd;padding:8px">licence_unclear</td><td style="border:1px solid #ddd;padding:8px">GNU GPL 3.0 (meta.json of the package)</td><td style="border:1px solid #ddd;padding:8px">https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.8.0/pl_core_news_lg-3.8.0-py3-none-any.whl</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">. .venv/bin/activate &amp;&amp; python -c "import spacy; nlp = spacy.load('pl_core_news_lg'); print([(t.text, t.lemma_, t.tag_, str(t.morph)) for t in nlp('Błona komórkowa oddziela wnętrze komórki.')])"</td><td style="border:1px solid #ddd;padding:8px">Installed and working in the main venv with 'python -m spacy download pl_core_news_lg' (wheel 573.7 MB, 611 MB on disk, 81 s); spacy validate reports it compatible with spaCy 3.8.18. LICENCE FLAG: the package declares GNU GPL 3.0 and lists its source 'UD Polish PDB v2.8' as GNU GPL 3.0, but UD_Polish-PDB states CC BY-NC-SA 4.0 since release v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt). GPL 3.0 is copyleft. token.tag_ holds only the NKJP class (SUBST, ADJ); termopl/spacy2flat.py rebuilds a full tag from token.morph for TermoPL. pip left a copy of the wheel in ~/Library/Caches/pip (573,718,074 bytes).</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">IPI PAN spaCy model pl_spacy_model</td><td style="border:1px solid #ddd;padding:8px">0.1.0</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">GNU GPL 3.0 (meta.json; README of https://github.com/ipipan/spacy-pl)</td><td style="border:1px solid #ddd;padding:8px">https://zil.ipipan.waw.pl/SpacyPL</td><td style="border:1px solid #ddd;padding:8px">spaCy 2.x model: meta.json spacy_version '&gt;=2.2.2', README requires spaCy == 2.2.4. spaCy 2.2.4 has wheels only for cp36-cp38 and none for macOS arm64; incompatible with spaCy 3.8.18 / Python 3.12.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not installed. Metadata read by streaming the archive; nothing stored.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">IPI PAN spaCy model pl_spacy_model_morfeusz</td><td style="border:1px solid #ddd;padding:8px">0.1.3</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">GNU GPL 3.0 (setup.py classifier; README of https://github.com/ipipan/spacy-pl)</td><td style="border:1px solid #ddd;padding:8px">https://zil.ipipan.waw.pl/SpacyPL</td><td style="border:1px solid #ddd;padding:8px">setup.py: install_requires=['spacy==2.3.2', 'distance', 'keras==2.4.3', 'numpy', 'tensorflow==2.3.1']. spaCy 2.3.2 has wheels only for cp36-cp38 and none for macOS arm64.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not installed. Archive is 229,068,993 bytes; only its metadata was read.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">pl_nask (spaCy transformer pipeline, Ryszard Tuora, ICS PAS)</td><td style="border:1px solid #ddd;padding:8px">0.0.7</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">not stated in package metadata (meta.json license field is empty); a GPL v3 text LICENSE.txt is in the same download directory</td><td style="border:1px solid #ddd;padding:8px">https://mozart.ipipan.waw.pl/~rtuora/spacy/</td><td style="border:1px solid #ddd;padding:8px">meta.json: spacy_version '&gt;=3.5.0,&lt;3.6.0', requirements ['spacy-transformers&gt;=1.1.5,&lt;1.2.0']. Conflicts with spaCy 3.8.18 in the main venv; spaCy 3.5.4 has no cp312 wheel (cp36-cp311 only).</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not installed (453 MB archive). LICENCE FLAG: no explicit licence for the model. Not attempted: spaCy 3.5.4 has macOS arm64 wheels for Python 3.10/3.11, so a separate conda environment might work.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">Stanza Polish models (default package: UD_Polish-PDB + NKJP NER)</td><td style="border:1px solid #ddd;padding:8px">resources 1.15.0 for Stanza 1.15.0: tokenize pdb_nocharlm, mwt pdb, pos pdb_charlm, lemma pdb_nocharlm, depparse pdb_charlm, ner nkjp</td><td style="border:1px solid #ddd;padding:8px">licence_unclear</td><td style="border:1px solid #ddd;padding:8px">Apache-2.0 (model card); Stanza code Apache-2.0</td><td style="border:1px solid #ddd;padding:8px">https://huggingface.co/stanfordnlp/stanza-pl</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">. .venv/bin/activate &amp;&amp; python -c "import stanza; nlp = stanza.Pipeline('pl', dir='resources/tools/stanza_resources', processors='tokenize,mwt,pos,lemma', download_method=None, use_gpu=False); print([(w.text, w.lemma, w.xpos) for s in nlp('Fotosynteza zachodzi w chloroplastach.').sentences for w in s.words])"</td><td style="border:1px solid #ddd;padding:8px">Installed and working: stanza.download('pl', model_dir='resources/tools/stanza_resources') (416 MB zip, deleted after unpacking; 436 MB on disk; 25 s). Load 1.8 s, one sentence 0.08 s on CPU. XPOS is the NKJP-style tag TermoPL expects. LICENCE FLAG: model card says Apache-2.0, but the training treebank UD_Polish-PDB is CC BY-NC-SA 4.0 since v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt); Stanza docs say UD models use UD v2.12. Lemmatiser errors on domain words (dwutlenek -&gt; dwutlenka, błonę -&gt; błońa, fotosyntezy -&gt; fotosyntez); use txt2conllu.py --morfeusz-lemmas. The download also left a copy of default.zip in ~/.cache/huggingface/hub/blobs/16/162b914981fee565eeda4a379678d7e24fd1a01e3ed48cf956349363eb9105c4 (416,036,108 bytes).</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">Concraft-pl (prebuilt macOS binary + model trained on NKJP1M-SGJP)</td><td style="border:1px solid #ddd;padding:8px">binary 2.5.0 (x86_64, 2020-05-14); model concraft-pl-model-SGJP-20220221</td><td style="border:1px solid #ddd;padding:8px">licence_unclear</td><td style="border:1px solid #ddd;padding:8px">code: BSD 2-clause (Copyright (c) 2013 Jakub Waszczuk); model: no licence stated on the download page</td><td style="border:1px solid #ddd;padding:8px">https://zil.ipipan.waw.pl/Concraft</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">cd resources/tools/concraft &amp;&amp; . ../../../.venv/bin/activate &amp;&amp; python concraft_tag.py TXT_DIR WORK_DIR OUT_FLAT_DIR   (runs: ./concraft-pl tag concraft-pl-model-SGJP-20220221.gz -i X.dag -o X.tagged.dag)</td><td style="border:1px solid #ddd;padding:8px">Installed and working without Docker or Haskell: Concraft-MacOSX.zip (4.0 MB) runs under Rosetta 2, which is already present on this machine. Model 84,150,136 bytes. About 5 s per file, mostly model loading. Input DAG is produced from Morfeusz2 (expand_tags=True); output is converted to TermoPL flat format. Concraft does not lemmatise: 2 of 402 test segments had several lemmas marked disamb. LICENCE FLAG: no licence given for the model file. No pip package (PyPI concraft-pl and concraft-pl2 return 404); building from source needs the Haskell Tool Stack (not attempted).</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">IPI PAN Multiservice (web service with Concraft among other tools)</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">CC BY 3.0 (software release, per the page)</td><td style="border:1px solid #ddd;padding:8px">https://zil.ipipan.waw.pl/Multiservice</td><td style="border:1px solid #ddd;padding:8px">Public instance not reachable on 2026-11-13: http://multiservice.nlp.ipipan.waw.pl/ returns 404, the SOAP WSDL URL returns 404, Thrift port 20000 refuses connections.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Page last edited 2015-08-31. Self-hosting was not examined.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">CLARIN-PL web services (Postagger via LPMN)</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">needs_decision</td><td style="border:1px solid #ddd;padding:8px">terms of use not found on the pages read</td><td style="border:1px solid #ddd;padding:8px">https://wiki.clarin-pl.eu/pl/nlpservices/list/postagger</td><td style="border:1px solid #ddd;padding:8px">Requires a CLARIN-PL user account (username/password or API token); texts are sent to an external server.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not tried. Access via the lpmn_client_biz Python library or LPMN CLI tool (https://wiki.clarin-pl.eu/pl/nlpservices/lpmn-client). Returns NKJP tags and lemmas; the documentation does not say which tagger is behind it, so it is not known to be Concraft.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">Morfeusz 2 web demo, tab 'Tagowanie (Concraft-pl)'</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">https://morfeusz.sgjp.pl/demo/</td><td style="border:1px solid #ddd;padding:8px">Interactive form limited to 3000 characters; no API documented on the page.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not usable for a corpus.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">COMBO (combo-nlp)</td><td style="border:1px solid #ddd;padding:8px">4.0.14 (with combo-seg 0.1.6); model clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17</td><td style="border:1px solid #ddd;padding:8px">needs_decision</td><td style="border:1px solid #ddd;padding:8px">code: GPL-3.0; Polish parsing and segmentation models: CC BY-NC-SA 4.0; base encoder FacebookAI/xlm-roberta-base: MIT</td><td style="border:1px solid #ddd;padding:8px">https://pypi.org/project/combo-nlp/</td><td style="border:1px solid #ddd;padding:8px">Models are not on disk: the first run downloads 3.36 GB into resources/tools/combo/hf_cache.</td><td style="border:1px solid #ddd;padding:8px">cd resources/tools/combo &amp;&amp; . venv/bin/activate &amp;&amp; export HF_HOME=$PWD/hf_cache WANDB_MODE=disabled TOKENIZERS_PARALLELISM=false &amp;&amp; python -c "from combo import COMBO; nlp = COMBO.from_pretrained('clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17'); print([(t.form, t.lemma, t.xpos) for s in nlp('Dwutlenek węgla przenika przez błonę komórkową.') for t in s])"</td><td style="border:1px solid #ddd;padding:8px">Installed in its own venv (pip install --no-cache-dir combo-nlp==4.0.14, 47 s, 1.0 GB) and verified on Python 3.12 arm64: first load 80.9 s including downloads, two sentences 6.1 s on CPU; XPOS is NKJP-style. The model cache (three files of about 1.1 GB each) was deleted afterwards because it took total downloads to about 5 GB, over the 4 GB budget. LICENCE FLAG: Polish models are CC BY-NC-SA 4.0 (non-commercial, share-alike). Decision needed: accept that licence and 3.4 GB of disk, or remove resources/tools/combo.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">COMBO legacy (combo)</td><td style="border:1px solid #ddd;padding:8px">1.0.7</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">GPL-3.0</td><td style="border:1px solid #ddd;padding:8px">https://gitlab.clarin-pl.eu/syntactic-tools/combo</td><td style="border:1px solid #ddd;padding:8px">setup.py pins allennlp==1.3.0, torch==1.7.1, spacy==2.3.2, transformers==4.0.1, numpy==1.22.0, scipy==1.6.0, scikit-learn==0.23.2.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not attempted. Superseded by combo-nlp on PyPI.</td></tr>
+<tr><td style="border:1px solid #ddd;padding:8px">KRNNT</td><td style="border:1px solid #ddd;padding:8px">1.0.0</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">LGPL-3.0</td><td style="border:1px solid #ddd;padding:8px">https://github.com/kwrobel-nlp/krnnt</td><td style="border:1px solid #ddd;padding:8px">setup.py pins Keras==2.2.5 with tensorflow==1.14.0 (wheels only for cp27 and cp33-cp37 on x86_64; none for Python 3.12 or arm64); also needs Maca and Toki. The supported route is the Docker image djstrong/krnnt:1.0.0, and there is no Docker daemon here.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not on PyPI (404). Not attempted. Trained models are attached to the GitHub releases (reana.zip 20 MB, preana.zip 21 MB, reana10.zip 146 MB); no separate model licence in the README.</td></tr>
+</tbody></table></div><script>document.getElementById("itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b")?.removeAttribute("hidden");document.getElementById("itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b_fallback")?.setAttribute("hidden", "hidden");</script>
+<link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
+
+    document.querySelectorAll("#itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        let dt_args = {
+          "buttons": [{"extend": "colvis", "text": "Columns"}, {"extend": "csvHtml5", "text": "CSV (filtered rows)"}, {"extend": "excelHtml5", "text": "Excel (filtered rows)"}],
+          "classes": ["display", "compact", "nowrap"],
+          "columnDefs": [{"targets": [6, 7], "visible": false}, {"className": "dt-wrap", "targets": [0, 1, 3, 5, 6, 7]}],
+          "column_filters": "footer",
+          "data_json": "[[\"TermoPL\", \"8.1.1\", \"ready\", \"BSD 2-clause (Copyright (c) 2016, Institute of Computer Science, Polish Academy of Sciences)\", \"https://zil.ipipan.waw.pl/TermoPL\", \"\", \"cd resources/tools/termopl &amp;&amp; ./run_termopl.sh TXT_DIR WORK_DIR OUT_TSV 4   |   direct: cd resources/tools/termopl/TermoPL_Mac_OS_X &amp;&amp; java -Djava.awt.headless=true -Xmx1500M -jar TermoPL.jar -SW -CP -CT -method gt -srch npmi3 -cntx 1 -save \\\"# rank sf bf cvalue length freq_s freq_in context\\\" -exp /abs/path/terms_all.tsv /abs/path/dir_with_conllu_files\", \"Installed from TermoPL_Mac_OS_X.zip (9,429,888 bytes, arm64 JNI libs) to resources/tools/termopl/TermoPL_Mac_OS_X (21 MB). Input must be tagged and lemmatised: .conllu (FORM, LEMMA, XPOS as NKJP-style tag; UPOS/HEAD/DEPREL only for -method ud) or flat 'form&lt;TAB&gt;lemma&lt;TAB&gt;tag' with empty line between sentences. Stanza CoNLL-U output is read as is (txt2conllu.py). No batch option for maximum term length: filter the exported 'length' column (run_termopl.sh does it). Must be started from its own directory, otherwise UnsatisfiedLinkError with exit status 0 and wrong output. Plain-text input does not work in batch mode (-python is ignored in 8.1.1). Directory arguments are read recursively and must contain only input files. Test: 402 tokens, 0.32 s, 127 terms.\"], [\"Morfeusz2 (Python module in main venv; also bundled in TermoPL)\", \"1.99.15, dictionary pl.sgjp.sgjp-2026.06.01\", \"ready\", \"BSD 2-clause (program and SGJP data)\", \"https://morfeusz.sgjp.pl/\", \"\", \". .venv/bin/activate &amp;&amp; python -c \\\"import morfeusz2; print(morfeusz2.Morfeusz().analyse('b\\u0142on\\u0119'))\\\"\", \"Was already installed; not changed. Gives all readings without disambiguation, so it cannot feed TermoPL alone. Used here to correct Stanza lemmas (txt2conllu.py --morfeusz-lemmas) and as the analyser in front of Concraft-pl (concraft/concraft_tag.py).\"], [\"spaCy pl_core_news_lg\", \"3.8.0\", \"licence_unclear\", \"GNU GPL 3.0 (meta.json of the package)\", \"https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.8.0/pl_core_news_lg-3.8.0-py3-none-any.whl\", \"\", \". .venv/bin/activate &amp;&amp; python -c \\\"import spacy; nlp = spacy.load('pl_core_news_lg'); print([(t.text, t.lemma_, t.tag_, str(t.morph)) for t in nlp('B\\u0142ona kom\\u00f3rkowa oddziela wn\\u0119trze kom\\u00f3rki.')])\\\"\", \"Installed and working in the main venv with 'python -m spacy download pl_core_news_lg' (wheel 573.7 MB, 611 MB on disk, 81 s); spacy validate reports it compatible with spaCy 3.8.18. LICENCE FLAG: the package declares GNU GPL 3.0 and lists its source 'UD Polish PDB v2.8' as GNU GPL 3.0, but UD_Polish-PDB states CC BY-NC-SA 4.0 since release v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt). GPL 3.0 is copyleft. token.tag_ holds only the NKJP class (SUBST, ADJ); termopl/spacy2flat.py rebuilds a full tag from token.morph for TermoPL. pip left a copy of the wheel in ~/Library/Caches/pip (573,718,074 bytes).\"], [\"IPI PAN spaCy model pl_spacy_model\", \"0.1.0\", \"not_installable\", \"GNU GPL 3.0 (meta.json; README of https://github.com/ipipan/spacy-pl)\", \"https://zil.ipipan.waw.pl/SpacyPL\", \"spaCy 2.x model: meta.json spacy_version '&gt;=2.2.2', README requires spaCy == 2.2.4. spaCy 2.2.4 has wheels only for cp36-cp38 and none for macOS arm64; incompatible with spaCy 3.8.18 / Python 3.12.\", \"\", \"Not installed. Metadata read by streaming the archive; nothing stored.\"], [\"IPI PAN spaCy model pl_spacy_model_morfeusz\", \"0.1.3\", \"not_installable\", \"GNU GPL 3.0 (setup.py classifier; README of https://github.com/ipipan/spacy-pl)\", \"https://zil.ipipan.waw.pl/SpacyPL\", \"setup.py: install_requires=['spacy==2.3.2', 'distance', 'keras==2.4.3', 'numpy', 'tensorflow==2.3.1']. spaCy 2.3.2 has wheels only for cp36-cp38 and none for macOS arm64.\", \"\", \"Not installed. Archive is 229,068,993 bytes; only its metadata was read.\"], [\"pl_nask (spaCy transformer pipeline, Ryszard Tuora, ICS PAS)\", \"0.0.7\", \"not_installable\", \"not stated in package metadata (meta.json license field is empty); a GPL v3 text LICENSE.txt is in the same download directory\", \"https://mozart.ipipan.waw.pl/~rtuora/spacy/\", \"meta.json: spacy_version '&gt;=3.5.0,&lt;3.6.0', requirements ['spacy-transformers&gt;=1.1.5,&lt;1.2.0']. Conflicts with spaCy 3.8.18 in the main venv; spaCy 3.5.4 has no cp312 wheel (cp36-cp311 only).\", \"\", \"Not installed (453 MB archive). LICENCE FLAG: no explicit licence for the model. Not attempted: spaCy 3.5.4 has macOS arm64 wheels for Python 3.10/3.11, so a separate conda environment might work.\"], [\"Stanza Polish models (default package: UD_Polish-PDB + NKJP NER)\", \"resources 1.15.0 for Stanza 1.15.0: tokenize pdb_nocharlm, mwt pdb, pos pdb_charlm, lemma pdb_nocharlm, depparse pdb_charlm, ner nkjp\", \"licence_unclear\", \"Apache-2.0 (model card); Stanza code Apache-2.0\", \"https://huggingface.co/stanfordnlp/stanza-pl\", \"\", \". .venv/bin/activate &amp;&amp; python -c \\\"import stanza; nlp = stanza.Pipeline('pl', dir='resources/tools/stanza_resources', processors='tokenize,mwt,pos,lemma', download_method=None, use_gpu=False); print([(w.text, w.lemma, w.xpos) for s in nlp('Fotosynteza zachodzi w chloroplastach.').sentences for w in s.words])\\\"\", \"Installed and working: stanza.download('pl', model_dir='resources/tools/stanza_resources') (416 MB zip, deleted after unpacking; 436 MB on disk; 25 s). Load 1.8 s, one sentence 0.08 s on CPU. XPOS is the NKJP-style tag TermoPL expects. LICENCE FLAG: model card says Apache-2.0, but the training treebank UD_Polish-PDB is CC BY-NC-SA 4.0 since v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt); Stanza docs say UD models use UD v2.12. Lemmatiser errors on domain words (dwutlenek -&gt; dwutlenka, b\\u0142on\\u0119 -&gt; b\\u0142o\\u0144a, fotosyntezy -&gt; fotosyntez); use txt2conllu.py --morfeusz-lemmas. The download also left a copy of default.zip in ~/.cache/huggingface/hub/blobs/16/162b914981fee565eeda4a379678d7e24fd1a01e3ed48cf956349363eb9105c4 (416,036,108 bytes).\"], [\"Concraft-pl (prebuilt macOS binary + model trained on NKJP1M-SGJP)\", \"binary 2.5.0 (x86_64, 2020-05-14); model concraft-pl-model-SGJP-20220221\", \"licence_unclear\", \"code: BSD 2-clause (Copyright (c) 2013 Jakub Waszczuk); model: no licence stated on the download page\", \"https://zil.ipipan.waw.pl/Concraft\", \"\", \"cd resources/tools/concraft &amp;&amp; . ../../../.venv/bin/activate &amp;&amp; python concraft_tag.py TXT_DIR WORK_DIR OUT_FLAT_DIR   (runs: ./concraft-pl tag concraft-pl-model-SGJP-20220221.gz -i X.dag -o X.tagged.dag)\", \"Installed and working without Docker or Haskell: Concraft-MacOSX.zip (4.0 MB) runs under Rosetta 2, which is already present on this machine. Model 84,150,136 bytes. About 5 s per file, mostly model loading. Input DAG is produced from Morfeusz2 (expand_tags=True); output is converted to TermoPL flat format. Concraft does not lemmatise: 2 of 402 test segments had several lemmas marked disamb. LICENCE FLAG: no licence given for the model file. No pip package (PyPI concraft-pl and concraft-pl2 return 404); building from source needs the Haskell Tool Stack (not attempted).\"], [\"IPI PAN Multiservice (web service with Concraft among other tools)\", \"\", \"not_installable\", \"CC BY 3.0 (software release, per the page)\", \"https://zil.ipipan.waw.pl/Multiservice\", \"Public instance not reachable on 2026-11-13: http://multiservice.nlp.ipipan.waw.pl/ returns 404, the SOAP WSDL URL returns 404, Thrift port 20000 refuses connections.\", \"\", \"Page last edited 2015-08-31. Self-hosting was not examined.\"], [\"CLARIN-PL web services (Postagger via LPMN)\", \"\", \"needs_decision\", \"terms of use not found on the pages read\", \"https://wiki.clarin-pl.eu/pl/nlpservices/list/postagger\", \"Requires a CLARIN-PL user account (username/password or API token); texts are sent to an external server.\", \"\", \"Not tried. Access via the lpmn_client_biz Python library or LPMN CLI tool (https://wiki.clarin-pl.eu/pl/nlpservices/lpmn-client). Returns NKJP tags and lemmas; the documentation does not say which tagger is behind it, so it is not known to be Concraft.\"], [\"Morfeusz 2 web demo, tab 'Tagowanie (Concraft-pl)'\", \"\", \"not_installable\", \"\", \"https://morfeusz.sgjp.pl/demo/\", \"Interactive form limited to 3000 characters; no API documented on the page.\", \"\", \"Not usable for a corpus.\"], [\"COMBO (combo-nlp)\", \"4.0.14 (with combo-seg 0.1.6); model clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17\", \"needs_decision\", \"code: GPL-3.0; Polish parsing and segmentation models: CC BY-NC-SA 4.0; base encoder FacebookAI/xlm-roberta-base: MIT\", \"https://pypi.org/project/combo-nlp/\", \"Models are not on disk: the first run downloads 3.36 GB into resources/tools/combo/hf_cache.\", \"cd resources/tools/combo &amp;&amp; . venv/bin/activate &amp;&amp; export HF_HOME=$PWD/hf_cache WANDB_MODE=disabled TOKENIZERS_PARALLELISM=false &amp;&amp; python -c \\\"from combo import COMBO; nlp = COMBO.from_pretrained('clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17'); print([(t.form, t.lemma, t.xpos) for s in nlp('Dwutlenek w\\u0119gla przenika przez b\\u0142on\\u0119 kom\\u00f3rkow\\u0105.') for t in s])\\\"\", \"Installed in its own venv (pip install --no-cache-dir combo-nlp==4.0.14, 47 s, 1.0 GB) and verified on Python 3.12 arm64: first load 80.9 s including downloads, two sentences 6.1 s on CPU; XPOS is NKJP-style. The model cache (three files of about 1.1 GB each) was deleted afterwards because it took total downloads to about 5 GB, over the 4 GB budget. LICENCE FLAG: Polish models are CC BY-NC-SA 4.0 (non-commercial, share-alike). Decision needed: accept that licence and 3.4 GB of disk, or remove resources/tools/combo.\"], [\"COMBO legacy (combo)\", \"1.0.7\", \"not_installable\", \"GPL-3.0\", \"https://gitlab.clarin-pl.eu/syntactic-tools/combo\", \"setup.py pins allennlp==1.3.0, torch==1.7.1, spacy==2.3.2, transformers==4.0.1, numpy==1.22.0, scipy==1.6.0, scikit-learn==0.23.2.\", \"\", \"Not attempted. Superseded by combo-nlp on PyPI.\"], [\"KRNNT\", \"1.0.0\", \"not_installable\", \"LGPL-3.0\", \"https://github.com/kwrobel-nlp/krnnt\", \"setup.py pins Keras==2.2.5 with tensorflow==1.14.0 (wheels only for cp27 and cp33-cp37 on x86_64; none for Python 3.12 or arm64); also needs Maca and Toki. The supported route is the Docker image djstrong/krnnt:1.0.0, and there is no Docker daemon here.\", \"\", \"Not on PyPI (404). Not attempted. Trained models are attached to the GitHub releases (reana.zip 20 MB, preana.zip 21 MB, reana10.zip 146 MB); no separate model licence in the README.\"]]",
+          "layout": {"bottomEnd": "paging", "bottomStart": "info", "top2Start": "buttons", "topEnd": "search", "topStart": "pageLength"},
+          "lengthMenu": [10, 25, 50, 100, 500],
+          "order": [],
+          "pageLength": 25,
+          "scrollX": true,
+          "style": {"caption-side": "bottom", "table-layout": "auto", "width": "100%"},
+          "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>tool</th>\n      <th>version</th>\n      <th>status</th>\n      <th>licence</th>\n      <th>url</th>\n      <th>blocker</th>\n      <th>how_to_run</th>\n      <th>notes</th>\n    </tr>\n  </thead><tfoot><th>tool</th><th>version</th><th>status</th><th>licence</th><th>url</th><th>blocker</th><th>how_to_run</th><th>notes</th></tfoot></table>",
+          "text_in_header_can_be_selected": true
+        };
+        new ITable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+</section>
+<section id="full-notes" class="level2">
+<h2 class="anchored" data-anchor-id="full-notes">Full notes</h2>
+<div id="a83fd9c0" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display cell-output-markdown">
+<p>Checked on 2026-11-13, macOS (Darwin 25.5.0, arm64), Python 3.12.2, OpenJDK 11.0.22 (Corretto) at <code>/usr/bin/java</code>. Everything below was fetched or run on this machine on that day; where something was not run it says so. Machine-readable version: <code>manifest.json</code> (same directory).</p>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">1. Summary</h3>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Version</th>
+<th>Works here?</th>
+<th>Licence (as declared)</th>
+<th>Open question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TermoPL</td>
+<td>8.1.1</td>
+<td>yes, headless batch mode</td>
+<td>BSD 2-clause</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>Morfeusz2 (already in venv; also bundled in TermoPL)</td>
+<td>1.99.15, SGJP 2026-06-01</td>
+<td>yes</td>
+<td>BSD 2-clause</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>spaCy <code>pl_core_news_lg</code></td>
+<td>3.8.0</td>
+<td>yes</td>
+<td>GNU GPL 3.0</td>
+<td>training treebank says CC BY-NC-SA 4.0 (section 7)</td>
+</tr>
+<tr class="even">
+<td>Stanza <code>pl</code> default package (PDB)</td>
+<td>models for Stanza 1.15.0</td>
+<td>yes</td>
+<td>Apache-2.0 on the model card</td>
+<td>training treebank says CC BY-NC-SA 4.0 (section 7)</td>
+</tr>
+<tr class="odd">
+<td>Concraft-pl</td>
+<td>2.5.0 binary, model SGJP-20220221</td>
+<td>yes, prebuilt x86_64 binary under Rosetta 2</td>
+<td>code BSD 2-clause</td>
+<td>no licence stated for the model</td>
+</tr>
+<tr class="even">
+<td>COMBO (<code>combo-nlp</code>)</td>
+<td>4.0.14</td>
+<td>yes, in its own venv; model cache deleted again (3.4 GB)</td>
+<td>code GPL-3.0, Polish models CC BY-NC-SA 4.0</td>
+<td>non-commercial licence; 3.4 GB of models</td>
+</tr>
+<tr class="odd">
+<td>IPI PAN spaCy models <code>pl_spacy_model</code>, <code>pl_spacy_model_morfeusz</code></td>
+<td>0.1.0 / 0.1.3</td>
+<td>no</td>
+<td>GNU GPL 3.0</td>
+<td>need spaCy 2.2–2.3</td>
+</tr>
+<tr class="even">
+<td><code>pl_nask</code></td>
+<td>0.0.7</td>
+<td>no (not in the main venv)</td>
+<td>none in package metadata</td>
+<td>needs spaCy 3.5.x, no Python 3.12 wheels</td>
+</tr>
+<tr class="odd">
+<td>KRNNT</td>
+<td>1.0.0</td>
+<td>no</td>
+<td>LGPL-3.0</td>
+<td>needs TensorFlow 1.14 / Keras 2.2.5</td>
+</tr>
+<tr class="even">
+<td>COMBO legacy (<code>combo</code> 1.0.7)</td>
+<td>1.0.7</td>
+<td>no</td>
+<td>GPL-3.0</td>
+<td>pins torch 1.7.1, allennlp 1.3.0, spacy 2.3.2</td>
+</tr>
+<tr class="odd">
+<td>IPI PAN Multiservice (web service)</td>
+<td>–</td>
+<td>no, public instance does not answer</td>
+<td>CC BY 3.0 (software)</td>
+<td>–</td>
+</tr>
+<tr class="even">
+<td>CLARIN-PL web services (Postagger)</td>
+<td>–</td>
+<td>not tried</td>
+<td>–</td>
+<td>needs a CLARIN-PL account and API token; texts leave the machine</td>
+</tr>
+</tbody>
+</table>
+<section id="three-things-that-did-not-go-as-instructed" class="level4">
+<h4 class="anchored" data-anchor-id="three-things-that-did-not-go-as-instructed">Three things that did not go as instructed</h4>
+<ol type="1">
+<li><strong>Download budget exceeded.</strong> Total downloads were about 5 GB against the ~4 GB limit. The overshoot comes from COMBO: 205 MB of wheels plus 3.36 GB of models (I had expected about 1.1 GB; the segmenter model and the base encoder are a further 1.1 GB each). The 3.36 GB model cache has been deleted again; the 1.0 GB venv is kept. <code>rm -rf resources/tools/combo</code> removes the rest.</li>
+<li><strong>Two archive copies were written outside <code>resources/tools/</code> by the mandated download commands</strong> (library defaults, noticed afterwards, left untouched because they sit in your personal caches):
+<ul>
+<li><code>~/.cache/huggingface/hub/blobs/16/162b914981fee565eeda4a379678d7e24fd1a01e3ed48cf956349363eb9105c4</code> (416,036,108 bytes, Stanza <code>default.zip</code>), plus the small <code>~/.cache/huggingface/hub/models--stanfordnlp--stanza-pl/</code> entry that points to it. Stanza 1.15.0 downloads through <code>huggingface_hub</code>, which caches there regardless of <code>model_dir</code>.</li>
+<li><code>~/Library/Caches/pip/http-v2/6/b/f/7/a/6bf7a2b408c3b3cb9e4a423e0c004cb23aa2b9b143d351354224e7c1.body</code> (573,718,074 bytes, the <code>pl_core_news_lg</code> wheel in pip’s HTTP cache). Both are safe to delete; together they hold about 1 GB.</li>
+</ul></li>
+<li><strong><code>pyarrow==26.0.1</code> appeared in the main venv at 12:32:37.</strong> It was not installed by this work (the only pip action here was <code>python -m spacy download pl_core_news_lg</code> at 12:26). spacy, stanza, torch, numpy and pandas are unchanged (<code>pip freeze</code> diff before/after shows only <code>pl_core_news_lg</code> and <code>pyarrow</code>).</li>
+</ol>
+</section>
+<section id="disk-use-under-resourcestools-after-clean-up" class="level4">
+<h4 class="anchored" data-anchor-id="disk-use-under-resourcestools-after-clean-up">Disk use under <code>resources/tools/</code> (after clean-up)</h4>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Path</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>termopl/</code> (program 21 MB + scripts + test data)</td>
+<td>22 MB</td>
+</tr>
+<tr class="even">
+<td><code>stanza_resources/</code></td>
+<td>436 MB</td>
+</tr>
+<tr class="odd">
+<td><code>concraft/</code> (binary 16 MB, model 80 MB)</td>
+<td>98 MB</td>
+</tr>
+<tr class="even">
+<td><code>combo/venv/</code></td>
+<td>1.0 GB</td>
+</tr>
+<tr class="odd">
+<td>spaCy model inside <code>.venv/lib/python3.12/site-packages/pl_core_news_lg</code></td>
+<td>611 MB</td>
+</tr>
+</tbody>
+</table>
+<p>All downloaded archives inside <code>resources/tools/</code> were deleted after unpacking (<code>TermoPL_Mac_OS_X.zip</code>, Stanza <code>pl/default.zip</code>, <code>Concraft-MacOSX.zip</code>, <code>format-examples.zip</code>).</p>
+<hr>
+</section>
+</section>
+<section id="termopl-8.1.1" class="level3">
+<h3 class="anchored" data-anchor-id="termopl-8.1.1">2. TermoPL 8.1.1</h3>
+<ul>
+<li>Page: <a href="https://zil.ipipan.waw.pl/TermoPL" class="uri">https://zil.ipipan.waw.pl/TermoPL</a> (“Downloads (current version: 8.1.1)”, page last edited 2025-10-30). The jar’s About class contains the string <code>Version 8.1.1</code>.</li>
+<li>Downloaded: <code>https://zil.ipipan.waw.pl/TermoPL?action=AttachFile&amp;do=get&amp;target=TermoPL_Mac_OS_X.zip</code> (9,429,888 bytes, “Mac OS X (arm_64)” package), unpacked to <code>termopl/TermoPL_Mac_OS_X/</code>. SHA-256 of <code>TermoPL.jar</code>: <code>b46c5aab9a9dfa70ffc1ba51e180c4473201100edb8ccddd59ae562f768c6fb2</code>.</li>
+<li>Package contents: <code>TermoPL.jar</code>, <code>libjmorfeusz.dylib</code> and <code>libmorfeusz2.dylib</code> (both arm64), <code>parse.py</code>, <code>TermoPL-user-manual.pdf</code> (manual “TermoPL 8.1”, dated 22.09.2025), <code>termopl_sw.txt</code> / <code>termopl_cp.txt</code> / <code>termopl_ct.txt</code> (default stop words, compound prepositions, common terms), <code>languages/</code>.</li>
+<li>Licence: BSD 2-clause, “Copyright (c) 2016, Institute of Computer Science, Polish Academy of Sciences”. Text: <code>termopl/LICENSE.txt</code>, from <code>https://zil.ipipan.waw.pl/TermoPL?action=AttachFile&amp;do=get&amp;target=LICENSE.txt</code>. The bundled Morfeusz 2 library is also BSD 2-clause (<a href="https://morfeusz.sgjp.pl/doc/license/" class="uri">https://morfeusz.sgjp.pl/doc/license/</a>).</li>
+<li>Sources (<code>src.zip</code> from the same page) were read to confirm the behaviour described below; they are not kept on disk.</li>
+</ul>
+<section id="input-formats-manual-section-2.1-and-corpusreader.java" class="level4">
+<h4 class="anchored" data-anchor-id="input-formats-manual-section-2.1-and-corpusreader.java">2.1 Input formats (manual section 2.1 and <code>CorpusReader.java</code>)</h4>
+<p>TermoPL needs <strong>morphologically tagged, disambiguated, lemmatised</strong> UTF-8 input. The format is chosen per file:</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Recognised by</th>
+<th>What is read</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CoNLL-U</td>
+<td>extension <code>.conllu</code></td>
+<td>col 2 FORM, col 3 LEMMA, col 4 UPOS, col 5 XPOS (used as the NKJP-style tag), col 6 FEATS, col 7 HEAD, col 8 DEPREL, col 10 MISC (<code>SpaceAfter=No</code>, or <code>start_char=..\|end_char=..</code>, optional <code>ner=</code>). Multi-word-token lines <code>1-2</code> are handled. A comment line containing <code>newdoc</code> starts a new document. All 10 columns must be present.</td>
+</tr>
+<tr class="even">
+<td>Flat text</td>
+<td>any other name whose lines have two tabs</td>
+<td><code>form&lt;TAB&gt;lemma&lt;TAB&gt;tag</code>, or <code>form&lt;TAB&gt;#lemma&lt;TAB&gt;#tag#</code>. Empty line (or <code>&amp;&lt;TAB&gt;&amp;&lt;TAB&gt;interp</code>) ends a sentence. A line starting with <code>%%</code> starts a new document.</td>
+</tr>
+<tr class="odd">
+<td>Legacy flat</td>
+<td>extension <code>.tgt</code></td>
+<td><code>form&lt;TAB&gt;lemma&lt;TAB&gt;tag[&lt;TAB&gt;nps]</code>, sentences end with a line <code>eos</code>.</td>
+</tr>
+<tr class="even">
+<td>XCES / CCL</td>
+<td>extension <code>.ccl</code> or <code>&lt;?xml … &lt;cesAna</code></td>
+<td><code>&lt;tok&gt;&lt;orth&gt;</code>, <code>&lt;lex disamb="1"&gt;&lt;base&gt;</code>, <code>&lt;ctag&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>NKJP TEI</td>
+<td><code>&lt;?xml … &lt;teiCorpus</code></td>
+<td><code>ann_morphosyntax</code>-style <code>fs type="morph"</code> with <code>disamb</code></td>
+</tr>
+<tr class="even">
+<td>Plain text</td>
+<td>anything else</td>
+<td>handed to <code>parse.py</code> (Stanza) to produce a <code>.conllu</code> next to the file. <strong>Does not work in batch mode in 8.1.1</strong>, see 2.4.</td>
+</tr>
+</tbody>
+</table>
+<p>The tag is the NKJP/SGJP positional tag with <code>:</code> separators, e.g.&nbsp;<code>subst:sg:gen:m3</code>, <code>adj:pl:nom:f:pos</code>. The built-in grammar only looks at the class (<code>subst</code>, <code>ger</code>, <code>adj</code>, <code>adja</code>, <code>ppas</code>), at <code>case = gen</code>, at agreement in number/case/gender, and at the form <code>-</code>. The default tagset is defined “by values”, so the order of categories inside the tag does not matter.</p>
+<p>What can produce this input here:</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stanza <code>pl</code> (PDB)</strong></td>
+<td>Directly usable. Stanza’s XPOS column is already the NKJP-style tag, so <code>CoNLL.write_doc2conll</code> output is read as is. Stanza’s lemmatiser makes errors on domain words (below).</td>
+</tr>
+<tr class="even">
+<td><strong>Morfeusz2 alone</strong></td>
+<td>Not usable: it lists all readings, it does not disambiguate. Usable as a lemma check on top of a tagger (<code>txt2conllu.py --morfeusz-lemmas</code>) or as input to Concraft (section 5).</td>
+</tr>
+<tr class="odd">
+<td><strong>Morfeusz2 + Concraft-pl</strong></td>
+<td>Usable via the flat format (<code>concraft/concraft_tag.py</code>).</td>
+</tr>
+<tr class="even">
+<td><strong>spaCy <code>pl_core_news_lg</code></strong></td>
+<td>Usable after conversion: <code>token.tag_</code> holds only the class (<code>SUBST</code>, <code>ADJ</code> …), so the tag has to be rebuilt from <code>token.morph</code> (<code>termopl/spacy2flat.py</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>Scripts written for this (all in <code>termopl/</code>, run with the main venv python):</p>
+<ul>
+<li><code>txt2conllu.py IN_DIR OUT_DIR [--no-depparse] [--morfeusz-lemmas]</code>: Stanza, models from <code>resources/tools/stanza_resources</code>, no network access. <code>--morfeusz-lemmas</code> replaces a Stanza lemma by the Morfeusz2 lemma when exactly one Morfeusz lemma is compatible with the tag Stanza chose (gerunds are left alone).</li>
+<li><code>conllu2flat.py IN_DIR OUT_DIR</code>: CoNLL-U to flat <code>form&lt;TAB&gt;lemma&lt;TAB&gt;tag</code>.</li>
+<li><code>spacy2flat.py IN_DIR OUT_DIR</code>: spaCy to flat format.</li>
+<li><code>run_termopl.sh TXT_DIR WORK_DIR OUT_TSV [MAX_LEN=4] [CONTRAST]</code>: the whole chain, see 2.5.</li>
+</ul>
+<p>Why the Morfeusz lemma check matters. On the 402-token test corpus Stanza produced these lemmas (log of <code>txt2conllu.py --morfeusz-lemmas</code>):</p>
+<pre><code>lemma chloroplastach: chloroplasta -&gt; chloroplast
+lemma fotosyntezy: fotosyntez -&gt; fotosynteza
+lemma dwutlenek: dwutlenka -&gt; dwutlenek
+lemma glukoza: glukoze -&gt; glukoza
+lemma błonę: błońa -&gt; błona
+lemma błonie: błoń -&gt; błona
+lemma cytoplazmy: cytoplazm -&gt; cytoplazma
+lemma utleniana: utlenieć -&gt; utleniać</code></pre>
+<p>18 of 402 lemmas were replaced. Without the check TermoPL splits one term into several rows (<code>test/out/stanza_lemmas_gt.txt</code>):</p>
+<pre><code>1   1   dwutlenka węgiel    [dwutlenek węgla]   4.0 2   4   0   0
+8   3   dwutlenek węgiel    [dwutlenek węgla]   2.0 2   3   1   1
+6   3   błona komórkowy [błona komórkowa]   2.0 2   3   1   1
+12  3   błońa komórkowy [błonę komórkowa]   2.0 2   2   0   0</code></pre>
+<p>With the check (<code>test/out/morf_lemmas_gt.txt</code>) these are single rows: <code>dwutlenek węgiel</code> 6.0 (freq 7), <code>błona komórkowy</code> 5.0 (freq 6).</p>
+</section>
+<section id="batch-mode-and-options-manual-section-7-batchparameters.java-tested" class="level4">
+<h4 class="anchored" data-anchor-id="batch-mode-and-options-manual-section-7-batchparameters.java-tested">2.2 Batch mode and options (manual section 7, <code>BatchParameters.java</code>, tested)</h4>
+<pre><code>java [JVM options] -jar TermoPL.jar [program options] file...</code></pre>
+<p>Any argument switches the program to batch mode (no GUI). Everything after the first non-option argument is treated as an input file or directory. Options can also be put in a file given with <code>-conf FILE</code> (one option per line, input paths as <code>-in PATH</code>); command-line options win.</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Purpose</th>
+<th>Option</th>
+<th>Notes (tested unless marked)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Output: text table</td>
+<td><code>-exp FILE</code></td>
+<td>UTF-8, tab-separated, <strong>no header line</strong></td>
+</tr>
+<tr class="even">
+<td>Output: binary term set</td>
+<td><code>-out FILE.trm</code></td>
+<td>can be reused as input or as contrastive set</td>
+</tr>
+<tr class="odd">
+<td>Output: all forms / sentences / groups</td>
+<td><code>-expf FILE</code>, <code>-exps FILE</code>, <code>-expg FILE.xml</code></td>
+<td><code>-expg</code> not tested</td>
+</tr>
+<tr class="even">
+<td>Columns of <code>-exp</code></td>
+<td><code>-save "# rank sf bf cvalue comp length freq_s freq_in context"</code></td>
+<td>one quoted argument; columns are always written in this fixed order whatever order you list</td>
+</tr>
+<tr class="odd">
+<td>Simplified forms only</td>
+<td><code>-sf</code></td>
+<td>no base (nominative) forms</td>
+</tr>
+<tr class="even">
+<td>Multi-word terms only</td>
+<td><code>-mw</code></td>
+<td>keeps length &gt;= 2</td>
+</tr>
+<tr class="odd">
+<td>Top-ranked only</td>
+<td><code>-tr N</code></td>
+<td>keeps terms with <strong>rank &lt;= N</strong>, not N rows (<code>-tr 10</code> gave 58 rows on the test corpus because of ties)</td>
+</tr>
+<tr class="even">
+<td>Sorting</td>
+<td><code>-sort COL</code> (ascending), <code>-SORT COL</code> (descending)</td>
+<td><code>rank</code>, <code>term</code>, <code>cvalue</code>, <code>comp</code>, <code>length</code>, <code>freq_s</code>, <code>freq_in</code>, <code>context</code>; not tested</td>
+</tr>
+<tr class="odd">
+<td>Extraction method</td>
+<td><code>-method gt</code> (grammar templates, default) or <code>-method ud</code> (UD trees)</td>
+<td><code>ud</code> needs HEAD/DEPREL, i.e.&nbsp;Stanza depparse</td>
+</tr>
+<tr class="even">
+<td>Nested-phrase search (C-value variant)</td>
+<td><code>-srch npmi1\|npmi2\|npmi3\|nonpmi1\|nonpmi2</code></td>
+<td>default <code>npmi3</code>; <code>nonpmi1</code> = all sub-phrases, <code>nonpmi2</code> = trim left to right</td>
+</tr>
+<tr class="odd">
+<td>NPMI preference factor</td>
+<td><code>-pf N</code></td>
+<td>default 120; not tested</td>
+</tr>
+<tr class="even">
+<td>Context counting for C-value</td>
+<td><code>-cntx 1\|2\|3</code></td>
+<td>default 1 (max of distinct left and right contexts)</td>
+</tr>
+<tr class="odd">
+<td>Stop words</td>
+<td><code>-SW</code> (bundled <code>termopl_sw.txt</code>) or <code>-sw FILE</code></td>
+<td>without either, no stop-word filtering</td>
+</tr>
+<tr class="even">
+<td>Compound prepositions</td>
+<td><code>-CP</code> or <code>-cp FILE</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Common (general) terms</td>
+<td><code>-CT</code> or <code>-ct FILE</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Custom grammar / tagset</td>
+<td><code>-grammar FILE</code>, <code>-tagset FILE</code></td>
+<td>examples in <code>languages/pl/</code>; not tested</td>
+</tr>
+<tr class="odd">
+<td>Contrastive corpus</td>
+<td><code>-comp FILE</code> + <code>-cc ll\|tfitf\|csmw\|tw\|no</code></td>
+<td>FILE is a <code>.trm</code> or a text export of another run (3, 8, 9 or 10 columns); adds the <code>comp</code> column. The manual prints <code>csmv</code>, the program only accepts <code>csmw</code> (<code>Bad option: -cc csmv</code>).</td>
+</tr>
+<tr class="even">
+<td>Contrastive thresholds</td>
+<td><code>-frq</code> (frequencies instead of C-values), <code>-freq N</code>, <code>-cval X</code></td>
+<td>not tested</td>
+</tr>
+<tr class="odd">
+<td>Determiners (UD method)</td>
+<td><code>-det include\|exclude\|article</code>, <code>-detr N</code></td>
+<td>not tested</td>
+</tr>
+<tr class="even">
+<td>Case</td>
+<td><code>-ignc yes\|no</code></td>
+<td>default yes</td>
+</tr>
+<tr class="odd">
+<td>WordNet grouping</td>
+<td><code>-wdn plwordnet.xml</code>, <code>-group</code></td>
+<td>not tested; needs the plWordNet XML</td>
+</tr>
+<tr class="even">
+<td>Workspace for relative paths</td>
+<td><code>-wrk DIR</code></td>
+<td>not tested</td>
+</tr>
+<tr class="odd">
+<td>Language</td>
+<td><code>-lang pl</code></td>
+<td>default <code>pl</code></td>
+</tr>
+<tr class="even">
+<td>Python for plain text</td>
+<td><code>-python PATH</code></td>
+<td>accepted but ignored in 8.1.1 (2.4)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>There is no option for maximum term length.</strong> <code>Bad option: -maxlen</code> is what an invented option returns. A min/max length filter exists only in the GUI’s Terms window (<code>Preferences.minLength = 2</code>, <code>maxLength = -1</code>, applied only together with “multi-word terms only”). The cap therefore has to be applied to the exported table using the <code>length</code> column. Longer phrases are still found and still count as contexts for their nested sub-phrases, which is how C-value is meant to work.</p>
+<p>C-value as implemented (manual 3.1): <code>C(p) = l(p) * (f(p) - (1/|LP|) * sum f(lp))</code> if p is nested in other phrases, else <code>l(p) * f(p)</code>; <code>l(p) = log2(length)</code> for multi-word terms and <code>0.1</code> for one-word terms.</p>
+<p>Output columns of <code>-exp</code> (from <code>TermoPLDocument.exportResults</code>):</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Column</th>
+<th><code>-save</code> key</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>row number</td>
+<td><code>#</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>rank (ties share a rank)</td>
+<td><code>rank</code></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>simplified form (lemmas), e.g.&nbsp;<code>dwutlenek węgiel</code></td>
+<td><code>sf</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>base form in square brackets, e.g.&nbsp;<code>[dwutlenek węgla]</code> (no brackets if <code>sf</code> is not exported)</td>
+<td><code>bf</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>C-value</td>
+<td><code>cvalue</code></td>
+</tr>
+<tr class="even">
+<td>(6)</td>
+<td>contrastive coefficient, only with <code>-comp</code></td>
+<td><code>comp</code></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>length in words</td>
+<td><code>length</code></td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>frequency</td>
+<td><code>freq_s</code></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>frequency as nested phrase</td>
+<td><code>freq_in</code></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>number of contexts</td>
+<td><code>context</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="working-command-and-result" class="level4">
+<h4 class="anchored" data-anchor-id="working-command-and-result">2.3 Working command and result</h4>
+<p>Test corpus: <code>termopl/test/txt/biologia_01.txt</code>, <code>biologia_02.txt</code> (5 paragraphs, 402 tokens, written for this test: fotosynteza, błona komórkowa, układ krwionośny, wymiana gazowa, oddychanie komórkowe).</p>
+<p>Tagging (Stanza on CPU: model load 1.4 s, then 0.3–0.4 s per file):</p>
+<pre><code>cd resources/tools/termopl
+. ../../../.venv/bin/activate
+python txt2conllu.py --no-depparse --morfeusz-lemmas test/txt test/work/conllu</code></pre>
+<p>TermoPL (must be started from its own directory):</p>
+<pre><code>cd resources/tools/termopl/TermoPL_Mac_OS_X
+java -Djava.awt.headless=true -Xmx1500M -jar TermoPL.jar \
+  -SW -CP -CT -method gt -srch npmi3 -cntx 1 \
+  -save "# rank sf bf cvalue length freq_s freq_in context" \
+  -exp /Users/michalpalinski/kompetencje_jezykowe/resources/tools/termopl/test/work/terms_all.tsv \
+  /Users/michalpalinski/kompetencje_jezykowe/resources/tools/termopl/test/work/conllu</code></pre>
+<p>Runtime: 0.32 s wall (0.87 s user) for 2 files / 402 tokens; exit status 0; nothing printed. 127 rows. First 20 lines of the output:</p>
+<pre><code>1   1   dwutlenek węgiel    [dwutlenek węgla]   6.0 2   7   1   1
+2   2   błona komórkowy [błona komórkowa]   5.0 2   6   1   1
+3   3   wymiana gazowy  [wymiana gazowa]    4.0 2   4   0   0
+4   4   układ krwionośny    [układ krwionośny]  3.0 2   4   1   1
+5   4   oddychanie komórkowy    [oddychanie komórkowe]  3.0 2   3   0   0
+6   4   pęcherzyk płucny    [pęcherzyk płucny]  3.0 2   4   1   1
+7   5   układ oddechowy [układ oddechowy]   2.0 2   2   0   0
+8   5   komórka zwierzęcy   [komórka zwierzęca] 2.0 2   2   0   0
+9   5   związek organiczny  [związek organiczny]    2.0 2   2   0   0
+10  5   naczynie krwionośny [naczynie krwionośne]   2.0 2   2   0   0
+11  5   komórka roślinny    [komórka roślinna]  2.0 2   2   0   0
+12  5   białko błonowy  [białko błonowe]    2.0 2   2   0   0
+13  6   lewy komora serce   [lewa komora serca] 1.584962500721156   3   1   0   0
+14  6   udział energia świetlny [udział energii świetlnej]  1.584962500721156   3   1   0   0
+15  6   mały obieg krew [mały obieg krwi]   1.584962500721156   3   1   0   0
+16  6   ściana pęcherzyk płucny [ściana pęcherzyków płucnych]   1.584962500721156   3   1   0   0
+17  6   prawy komora serce  [prawa komora serca]    1.584962500721156   3   1   0   0
+18  6   faza ciemny fotosynteza [faza ciemnej fotosyntezy]  1.584962500721156   3   1   0   0
+19  6   stężenie dwutlenek węgiel   [stężenie dwutlenku węgla]  1.584962500721156   3   1   0   0
+20  6   błona komórkowy zbudować    [błona komórkowa zbudowana] 1.584962500721156   3   1   0   0</code></pre>
+<p>Length distribution of the 127 rows: 63 one-word, 48 two-word, 15 three-word, 1 four-word. The test corpus contains no term longer than 4 words, so the cap of 4 removes nothing here; with a cap of 2 the filter keeps 111 rows, which confirms that it works.</p>
+<p>Other runs kept in <code>termopl/test/out/</code>:</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Command difference</th>
+<th>Rows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>stanza_lemmas_gt.txt</code></td>
+<td>input <code>test/conllu</code> (Stanza lemmas unchanged)</td>
+<td>134</td>
+</tr>
+<tr class="even">
+<td><code>morf_lemmas_gt.txt</code></td>
+<td>input <code>test/conllu_morf</code></td>
+<td>127</td>
+</tr>
+<tr class="odd">
+<td><code>morf_lemmas_gt_mw.txt</code></td>
+<td><code>-mw</code></td>
+<td>64</td>
+</tr>
+<tr class="even">
+<td><code>morf_lemmas_ud.txt</code></td>
+<td><code>-method ud</code></td>
+<td>129</td>
+</tr>
+<tr class="odd">
+<td><code>flat_stanza_gt.txt</code></td>
+<td>flat-format input from <code>conllu2flat.py</code></td>
+<td>127, same rows as CoNLL-U input</td>
+</tr>
+<tr class="even">
+<td><code>flat_spacy_gt.txt</code></td>
+<td>flat-format input from <code>spacy2flat.py</code></td>
+<td>132</td>
+</tr>
+<tr class="odd">
+<td><code>contrast.trm</code>, <code>contrast_terms.txt</code></td>
+<td><code>-out</code>/<code>-exp</code> on <code>test/contrast_conllu</code> (one general-language text)</td>
+<td>58</td>
+</tr>
+<tr class="even">
+<td><code>domain_vs_contrast_ll.txt</code></td>
+<td><code>-comp test/out/contrast.trm -cc ll</code></td>
+<td>127, extra column 6</td>
+</tr>
+<tr class="odd">
+<td><code>terms_max4.tsv</code></td>
+<td>output of <code>run_termopl.sh</code> (header added, brackets removed)</td>
+<td>127</td>
+</tr>
+</tbody>
+</table>
+<p>On the contrastive run: the two tiny corpora share no terms, so every log-likelihood value is <code>-Infinity</code> (and <code>Infinity</code> for <code>csmw</code>); <code>tfitf</code> and <code>tw</code> give finite numbers. The option works mechanically; the numbers only become meaningful with a real contrastive corpus. Passing the <code>.trm</code> or the text export as <code>-comp</code> gives byte-identical output.</p>
+</section>
+<section id="pitfalls-found-while-testing" class="level4">
+<h4 class="anchored" data-anchor-id="pitfalls-found-while-testing">2.4 Pitfalls found while testing</h4>
+<ol type="1">
+<li><strong>Start it from <code>TermoPL_Mac_OS_X/</code>.</strong> <code>libjmorfeusz.dylib</code> loads <code>libmorfeusz2.dylib</code> by bare name, which macOS resolves against the current directory. From any other directory (with or without <code>-Djava.library.path=&lt;app dir&gt;</code>) you get <code>java.lang.UnsatisfiedLinkError: no jmorfeusz in java.library.path</code>, <strong>exit status 0</strong>, and an output file with wrong content (rank 0, unsorted, different C-values). <code>-sf</code> (simplified forms only) fails the same way from another directory. Always check stderr.</li>
+<li><strong>Plain-text input does not work in batch mode.</strong> <code>-python PATH</code> is parsed but never passed on (<code>BatchParameters.python</code> is not referenced by any other class in the 8.1.1 jar; checked with <code>javap</code>). Result: <code>Python interpreted not selected.</code>, exit status 0, empty output. Workaround: tag first, pass <code>.conllu</code>. This is also preferable because the bundled <code>parse.py</code> calls <code>stanza.download()</code> on every run.</li>
+<li><strong>A directory argument is read recursively and every file in it is used</strong>, including <code>.DS_Store</code> or leftover <code>.txt</code> files. An unrecognised file triggers pitfall 2 and the whole run yields an empty output. Keep the input directory clean (only <code>.conllu</code>).</li>
+<li><strong>Wildcards are not expanded by the program</strong> (<code>File does not exist -- …/*.conllu</code> followed by a <code>NullPointerException</code>). Give a directory, or let the shell expand the pattern (do not quote it).</li>
+<li><strong>Row order among ties is not stable</strong> between a directory argument and a shell-expanded file list (same rows, same values, different order inside a rank). Repeated runs with the same argument are byte-identical. Sort downstream by C-value and term if a stable order is needed.</li>
+<li><strong><code>~/.TermoPL-8</code></strong>: if the GUI is ever started it saves its preferences there, and batch mode loads that file first. It does not exist on this machine. Settings that batch mode does not override (for example the min/max length used with <code>-mw</code>) would then come from the GUI.</li>
+<li>Stanza lemmatises gerunds as nouns (<code>oddychanie</code>), Morfeusz/Concraft/spaCy as infinitives (<code>oddychać</code>). TermoPL prints the right base form in both cases, but mixing the conventions in one corpus splits terms. <code>txt2conllu.py --morfeusz-lemmas</code> therefore never touches gerunds.</li>
+</ol>
+</section>
+<section id="batch-run-on-a-directory-of-text-files-with-a-4-word-cap" class="level4">
+<h4 class="anchored" data-anchor-id="batch-run-on-a-directory-of-text-files-with-a-4-word-cap">2.5 Batch run on a directory of text files with a 4-word cap</h4>
+<pre><code>cd resources/tools/termopl
+./run_termopl.sh /path/to/txt_dir /path/to/work_dir /path/to/terms_max4.tsv 4
+# optional 5th argument: contrastive term set (.trm or text export), adds comp_ll</code></pre>
+<p>Verified on the test corpus: 3.8 s wall in total, output <code>all terms: 127  kept (length &lt;= 4): 127</code>. The script tags with Stanza (<code>--no-depparse --morfeusz-lemmas</code>), runs the command from 2.3 from inside <code>TermoPL_Mac_OS_X/</code>, fails loudly if stderr contains an exception or the output is empty, then keeps rows with <code>length &lt;= 4</code>, strips the brackets from the base form and adds a header (<code>nr rank simplified_form base_form cvalue length freq_s freq_in contexts</code>). It also writes <code>work_dir/terms.trm</code> (reusable as a contrastive set for another run) and <code>work_dir/terms_all.tsv</code> (unfiltered).</p>
+<p>The filter itself, if you run TermoPL by hand with the <code>-save</code> list above (length is column 6, or column 7 when <code>-comp</code> is used):</p>
+<pre><code>awk -F'\t' '$6 &lt;= 4' terms_all.tsv &gt; terms_max4.tsv</code></pre>
+<p>Memory: the manual states about 1 GB of RAM per 500,000 tokens and suggests <code>-Xmx5G -Xms4G</code> for much larger corpora. Not measured here.</p>
+<hr>
+</section>
+</section>
+<section id="spacy" class="level3">
+<h3 class="anchored" data-anchor-id="spacy">3. spaCy</h3>
+<section id="pl_core_news_lg-3.8.0-installed" class="level4">
+<h4 class="anchored" data-anchor-id="pl_core_news_lg-3.8.0-installed">3.1 <code>pl_core_news_lg</code> 3.8.0 (installed)</h4>
+<pre><code>. .venv/bin/activate
+python -m spacy download pl_core_news_lg</code></pre>
+<pre><code>Collecting pl-core-news-lg==3.8.0
+  Downloading pl_core_news_lg-3.8.0-py3-none-any.whl (573.7 MB)
+Successfully installed pl-core-news-lg-3.8.0
+✔ Download and installation successful</code></pre>
+<p>1 min 21 s. Source: <code>https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.8.0/pl_core_news_lg-3.8.0-py3-none-any.whl</code>. On disk 611 MB. <code>python -m spacy validate</code> reports it compatible (<code>&gt;=3.8.0,&lt;3.9.0</code>, spaCy 3.8.18).</p>
+<p>From the installed <code>meta.json</code>:</p>
+<pre><code>version = 3.8.0
+spacy_version = &gt;=3.8.0,&lt;3.9.0
+license = GNU GPL 3.0
+author = Explosion
+pipeline = ['tok2vec', 'morphologizer', 'parser', 'lemmatizer', 'tagger', 'attribute_ruler', 'ner']
+vectors = {'width': 300, 'vectors': 500000, 'keys': 500000, 'name': 'pl_vectors', 'mode': 'default'}
+sources:
+  UD Polish PDB v2.8 – license 'GNU GPL 3.0'
+  National Corpus of Polish – license 'GNU GPL 3.0'
+  Explosion fastText Vectors (cbow, OSCAR Common Crawl + Wikipedia) – license 'CC0'</code></pre>
+<p>Smoke test (load 1.5 s):</p>
+<pre><code>Błona   błona   NOUN    SUBST   Case=Nom|Gender=Fem|Number=Sing nsubj
+komórkowa   komórkowy   ADJ ADJ Case=Nom|Degree=Pos|Gender=Fem|Number=Sing  amod
+oddziela    oddzielać   VERB    FIN Aspect=Imp|Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act  ROOT
+wnętrze wnętrze NOUN    SUBST   Case=Acc|Gender=Neut|Number=Sing    obj
+komórki komórka NOUN    SUBST   Case=Gen|Gender=Fem|Number=Sing nmod
+od  od  ADP PREP    AdpType=Prep|Variant=Short  case
+środowiska  środowisko  NOUN    SUBST   Case=Gen|Gender=Neut|Number=Sing    nmod
+zewnętrznego    zewnętrzny  ADJ ADJ Case=Gen|Degree=Pos|Gender=Neut|Number=Sing amod
+.   .   PUNCT   SUBST   PunctType=Peri  punct</code></pre>
+<p>Note the final full stop: <code>tag_</code> is <code>SUBST</code> (the model’s output; <code>pos_</code> is correct). <code>spacy2flat.py</code> forces <code>interp</code> for punctuation.</p>
+</section>
+<section id="ipi-pan-models-not-compatible-not-installed" class="level4">
+<h4 class="anchored" data-anchor-id="ipi-pan-models-not-compatible-not-installed">3.2 IPI PAN models: not compatible, not installed</h4>
+<p>Evidence was read from the packages’ own metadata (archives streamed, nothing stored).</p>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th>Package</th>
+<th>Source</th>
+<th>Requirement found</th>
+<th>Why it cannot go into the main venv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pl_spacy_model</code> 0.1.0</td>
+<td><a href="https://zil.ipipan.waw.pl/SpacyPL" class="uri">https://zil.ipipan.waw.pl/SpacyPL</a></td>
+<td><code>meta.json</code>: <code>spacy_version '&gt;=2.2.2'</code>, pipeline <code>tagger, parser, ner</code>; repository README: “Spacy in a version <code>== 2.2.4</code>”</td>
+<td>spaCy 2.x model format; spaCy 2.2.4 has wheels only for cp36–cp38, none for macOS arm64</td>
+</tr>
+<tr class="even">
+<td><code>pl_spacy_model_morfeusz</code> 0.1.3</td>
+<td>same page</td>
+<td><code>setup.py</code>: <code>install_requires=['spacy==2.3.2', 'distance', 'keras==2.4.3', 'numpy', 'tensorflow==2.3.1']</code></td>
+<td>spaCy 2.3.2 has wheels only for cp36–cp38, none for macOS arm64</td>
+</tr>
+<tr class="odd">
+<td><code>pl_nask</code> 0.0.7 (453 MB)</td>
+<td><a href="https://mozart.ipipan.waw.pl/~rtuora/spacy/" class="uri">https://mozart.ipipan.waw.pl/~rtuora/spacy/</a></td>
+<td><code>meta.json</code>: <code>spacy_version '&gt;=3.5.0,&lt;3.6.0'</code>, <code>requirements ['spacy-transformers&gt;=1.1.5,&lt;1.2.0']</code>, pipeline <code>transformer, tagger, morphologizer, parser, ner, morfeusz</code></td>
+<td>conflicts with spaCy 3.8.18; spaCy 3.5.4 has no cp312 wheel (cp36–cp311 only)</td>
+</tr>
+</tbody>
+</table>
+<p>Licence: <code>pl_spacy_model*</code> are GNU GPL 3.0 (<code>meta.json</code> and the README of <a href="https://github.com/ipipan/spacy-pl" class="uri">https://github.com/ipipan/spacy-pl</a>, last push 2022-08-22). <code>pl_nask</code> has an empty <code>license</code> field in <code>meta.json</code> (“License: n/a” in its README); a GPL v3 text <code>LICENSE.txt</code> lies in the same download directory. That is not an explicit licence statement for the model.</p>
+<p>Not attempted: spaCy 3.5.4 does have macOS arm64 wheels for Python 3.10 and 3.11, so <code>pl_nask</code> might install in a separate conda environment. That would be a second spaCy installation and a 453 MB download.</p>
+<hr>
+</section>
+</section>
+<section id="stanza-polish-models" class="level3">
+<h3 class="anchored" data-anchor-id="stanza-polish-models">4. Stanza Polish models</h3>
+<pre><code>. .venv/bin/activate
+export STANZA_RESOURCES_DIR=$PWD/resources/tools/stanza_resources
+python -c "import stanza, os; stanza.download('pl', model_dir=os.environ['STANZA_RESOURCES_DIR'])"</code></pre>
+<pre><code>Downloaded file to …/resources/tools/stanza_resources/resources.json   (resources_1.15.0.json)
+Downloading default packages for language: pl (Polish) ...
+Downloaded file to …/resources/tools/stanza_resources/pl/default.zip
+Finished downloading models and saved to …/resources/tools/stanza_resources</code></pre>
+<p>25 s. <code>pl/default.zip</code> (416,036,108 bytes) was deleted after unpacking; a second copy stayed in <code>~/.cache/huggingface</code> (section 1). Models come from <code>https://huggingface.co/stanfordnlp/stanza-pl</code> (resources version 1.15.0).</p>
+<p>Default package for <code>pl</code> according to <code>resources.json</code>: treebank <strong>PDB</strong> (UD_Polish-PDB), NER from NKJP.</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Processor</th>
+<th>Model</th>
+<th>File</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tokenize</td>
+<td><code>pdb_nocharlm</code></td>
+<td><code>pl/tokenize/pdb_nocharlm.pt</code></td>
+<td>0.6 MB</td>
+</tr>
+<tr class="even">
+<td>mwt</td>
+<td><code>pdb</code></td>
+<td><code>pl/mwt/pdb.pt</code></td>
+<td>0.5 MB</td>
+</tr>
+<tr class="odd">
+<td>pos</td>
+<td><code>pdb_charlm</code></td>
+<td><code>pl/pos/pdb_charlm.pt</code></td>
+<td>36 MB</td>
+</tr>
+<tr class="even">
+<td>lemma</td>
+<td><code>pdb_nocharlm</code></td>
+<td><code>pl/lemma/pdb_nocharlm.pt</code></td>
+<td>2.6 MB</td>
+</tr>
+<tr class="odd">
+<td>depparse</td>
+<td><code>pdb_charlm</code></td>
+<td><code>pl/depparse/pdb_charlm.pt</code></td>
+<td>148 MB</td>
+</tr>
+<tr class="even">
+<td>ner</td>
+<td><code>nkjp</code></td>
+<td><code>pl/ner/nkjp.pt</code></td>
+<td>92 MB</td>
+</tr>
+<tr class="odd">
+<td>pretrain</td>
+<td><code>conll17</code></td>
+<td><code>pl/pretrain/conll17.pt</code></td>
+<td>102 MB</td>
+</tr>
+<tr class="even">
+<td>charlm</td>
+<td><code>oscar</code> forward/backward</td>
+<td><code>pl/{forward,backward}_charlm/oscar.pt</code></td>
+<td>27 MB each</td>
+</tr>
+</tbody>
+</table>
+<p>Total 436 MB. Other packages listed for <code>pl</code> but not downloaded: <code>lfg</code>, <code>mpdt</code>, and HerBERT variants (<code>pdb_herbert</code>).</p>
+<p>Licence: Stanza code Apache-2.0 (<a href="https://raw.githubusercontent.com/stanfordnlp/stanza/main/LICENSE" class="uri">https://raw.githubusercontent.com/stanfordnlp/stanza/main/LICENSE</a>). The model card <a href="https://huggingface.co/stanfordnlp/stanza-pl" class="uri">https://huggingface.co/stanfordnlp/stanza-pl</a> declares <code>license: apache-2.0</code>. See section 7 for the treebank licence.</p>
+<p>Smoke test (<code>processors='tokenize,mwt,pos,lemma'</code>, <code>download_method=None</code>, CPU; load 1.8 s, sentence 0.08 s):</p>
+<pre><code>1   Fotosynteza fotosynteza NOUN    subst:sg:nom:f  Case=Nom|Gender=Fem|Number=Sing
+2   zachodzi    zachodzić   VERB    fin:sg:ter:imperf   Aspect=Imp|Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act
+3   w   w   ADP prep:loc:nwok   AdpType=Prep|Variant=Short
+4   chloroplastach  chloroplasta    NOUN    subst:pl:loc:m3 Animacy=Inan|Case=Loc|Gender=Masc|Number=Plur
+5   komórek komórka NOUN    subst:pl:gen:f  Case=Gen|Gender=Fem|Number=Plur
+6   roślinnych  roślinny    ADJ adj:pl:gen:f:pos    Case=Gen|Degree=Pos|Gender=Fem|Number=Plur
+7   ,   ,   PUNCT   interp  PunctType=Comm
+8   gdzie   gdzie   ADV adv PronType=Rel
+9   chlorofil   chlorofil   NOUN    subst:sg:nom:m3 Animacy=Inan|Case=Nom|Gender=Masc|Number=Sing
+10  pochłania   pochłaniać  VERB    fin:sg:ter:imperf   Aspect=Imp|Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act
+11  światło światło NOUN    subst:sg:acc:n:ncol Case=Acc|Gender=Neut|Number=Sing
+12  .   .   PUNCT   interp  PunctType=Peri</code></pre>
+<p>To use the models without any network access or cache writes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stanza.Pipeline(<span class="st">'pl'</span>, <span class="bu">dir</span><span class="op">=</span><span class="st">'resources/tools/stanza_resources'</span>, processors<span class="op">=</span><span class="st">'tokenize,mwt,pos,lemma'</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                download_method<span class="op">=</span><span class="va">None</span>, use_gpu<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="concraft-pl" class="level3">
+<h3 class="anchored" data-anchor-id="concraft-pl">5. Concraft-pl</h3>
+<p>Sources: <a href="https://zil.ipipan.waw.pl/Concraft" class="uri">https://zil.ipipan.waw.pl/Concraft</a> (page last edited 2022-02-22), <a href="https://github.com/kawu/concraft-pl" class="uri">https://github.com/kawu/concraft-pl</a> (last push 2021-04-06, no GitHub releases).</p>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Finding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Prebuilt macOS binary</strong></td>
+<td>Exists: <code>Concraft-MacOSX.zip</code> on the IPI PAN page (4.0 MB; one file <code>concraft-pl</code>, 17.3 MB, dated 2020-05-14, <code>Mach-O 64-bit executable x86_64</code>, <code>Concraft-pl 2.5.0</code>). No arm64 build. It runs here because Rosetta 2 is already installed (<code>arch -x86_64 /usr/bin/true</code> succeeds). Links only against system libraries. <strong>Installed and working.</strong></td>
+</tr>
+<tr class="even">
+<td>Build from source</td>
+<td>Needs the Haskell Tool Stack (<code>stack install</code>). Not attempted (no Haskell toolchain, long compilation).</td>
+</tr>
+<tr class="odd">
+<td>pip package</td>
+<td>None: <code>https://pypi.org/pypi/concraft-pl/json</code> and <code>…/concraft-pl2/json</code> return 404. The repository has a Python client (<code>bindings/python</code>) that only talks to a running <code>concraft-pl server</code>.</td>
+</tr>
+<tr class="even">
+<td>IPI PAN Multiservice</td>
+<td><a href="https://zil.ipipan.waw.pl/Multiservice" class="uri">https://zil.ipipan.waw.pl/Multiservice</a> documents a Thrift service (<code>multiservice.nlp.ipipan.waw.pl:20000</code>) and a SOAP WSDL. Today: <code>http://multiservice.nlp.ipipan.waw.pl/</code> returns 404, the WSDL URL returns 404, port 20000 does not accept connections. Not usable.</td>
+</tr>
+<tr class="odd">
+<td>Morfeusz web demo</td>
+<td><a href="https://morfeusz.sgjp.pl/demo/" class="uri">https://morfeusz.sgjp.pl/demo/</a> has a “Tagowanie (Concraft-pl)” tab; interactive form, maximum 3000 characters, no API documented on the page. Not suitable for a corpus.</td>
+</tr>
+<tr class="even">
+<td>CLARIN-PL services</td>
+<td><a href="https://wiki.clarin-pl.eu/pl/nlpservices/first-steps" class="uri">https://wiki.clarin-pl.eu/pl/nlpservices/first-steps</a>: use requires a CLARIN-PL user account. Programmatic access through the <code>lpmn_client_biz</code> Python library or the LPMN CLI tool, authenticated with CLARIN-PL username/password or an API token (<a href="https://wiki.clarin-pl.eu/pl/nlpservices/lpmn-client" class="uri">https://wiki.clarin-pl.eu/pl/nlpservices/lpmn-client</a>). The “Postagger” service (<a href="https://wiki.clarin-pl.eu/pl/nlpservices/list/postagger" class="uri">https://wiki.clarin-pl.eu/pl/nlpservices/list/postagger</a>) returns NKJP tags and lemmas; the wiki page does not say which tagger it runs, so it is not known to be Concraft. Not tried: needs an account, and the texts would be sent to an external server. No terms-of-use page was found on the pages read.</td>
+</tr>
+</tbody>
+</table>
+<p>Installed files (<code>resources/tools/concraft/</code>):</p>
+<pre><code>curl -L -o Concraft-MacOSX.zip "https://zil.ipipan.waw.pl/Concraft?action=AttachFile&amp;do=get&amp;target=Concraft-MacOSX.zip"                               # 4,024,213 bytes
+curl -L -o concraft-pl-model-SGJP-20220221.gz "https://zil.ipipan.waw.pl/Concraft?action=AttachFile&amp;do=get&amp;target=concraft-pl-model-SGJP-20220221.gz"   # 84,150,136 bytes, 76 s
+curl -L -o format-examples.zip "https://zil.ipipan.waw.pl/Concraft?action=AttachFile&amp;do=get&amp;target=format-examples.zip"
+unzip Concraft-MacOSX.zip &amp;&amp; chmod +x concraft-pl</code></pre>
+<p>SHA-256: binary <code>a2fbe4afa051230b06658c09bafff269c81b9138f7fb8e49a54a5eedab903ceb</code>, model <code>55cbdd4a42705210201eba00d1dfdb1f74038e33bfdb1f07a92b94bd180837fe</code>. The page says this model is “for Morfeusz 1.99.5 (2022/02/20) and newer”; the venv has Morfeusz 1.99.15 with dictionary <code>pl.sgjp.sgjp-2026.06.01</code>.</p>
+<p>Licence: Concraft-pl code BSD 2-clause, “Copyright (c) 2013 Jakub Waszczuk” (<a href="https://raw.githubusercontent.com/kawu/concraft-pl/master/LICENSE" class="uri">https://raw.githubusercontent.com/kawu/concraft-pl/master/LICENSE</a>). <strong>The page states no licence for the model file</strong> (“trained on NKJP1M-SGJP … financed by CLARIN-PL”), and no licence for the prebuilt binaries beyond that of the source.</p>
+<p>Working pipeline (main venv python; Morfeusz2 analysis, Concraft disambiguation, flat file for TermoPL):</p>
+<pre><code>cd resources/tools/concraft
+. ../../../.venv/bin/activate
+python concraft_tag.py ../termopl/test/txt test/work test/flat</code></pre>
+<pre><code>biologia_01.txt: 163 tokens, concraft 5.9s
+biologia_02.txt: 239 tokens, concraft 4.1s</code></pre>
+<p>10 s in total; almost all of it is loading the model once per file (the binary also has a <code>server</code> mode that loads it once; not tested). The tagging command inside the script is <code>./concraft-pl tag concraft-pl-model-SGJP-20220221.gz -i X.dag -o X.tagged.dag</code>.</p>
+<p>Input DAG format (one line per Morfeusz interpretation, 11 tab-separated columns, blank line after each paragraph): start node, end node, form, lemma, tag, commonness, qualifiers, probability (<code>0.0</code>), interpretation meta, eos, segment meta. The output adds the probability, <code>eos</code> in column 10 at sentence ends, and <code>disamb</code> in column 12 on the chosen interpretation. Example from the test run:</p>
+<pre><code>4   5   w   w   prep:acc:nwok           0.0000
+4   5   w   w   prep:loc:nwok           1.0000              disamb</code></pre>
+<p>Concraft does not lemmatise: when several lemmas share the chosen tag, all are marked <code>disamb</code> (2 of 402 segments here: <code>Ściana:Sf</code>/<code>ściana</code>, <code>stężeć</code>/<code>stężyć</code>). <code>concraft_tag.py</code> takes the first lemma that starts with a lower-case letter.</p>
+<p>TermoPL on the Concraft output (<code>concraft/test/out/terms_concraft.txt</code>, 128 rows) gives the same top 12 rows as the Stanza-based run. One difference further down: <code>różnica stężeć gazy [różnica stężeń gazów]</code>, where Concraft chose a gerund reading for “stężeń”.</p>
+<hr>
+</section>
+<section id="combo-and-krnnt-optional" class="level3">
+<h3 class="anchored" data-anchor-id="combo-and-krnnt-optional">6. COMBO and KRNNT (optional)</h3>
+<section id="combo" class="level4">
+<h4 class="anchored" data-anchor-id="combo">6.1 COMBO</h4>
+<p>Two different packages exist:</p>
+<ul>
+<li><strong>Legacy COMBO 1.0.7</strong> (<a href="https://gitlab.clarin-pl.eu/syntactic-tools/combo" class="uri">https://gitlab.clarin-pl.eu/syntactic-tools/combo</a>, <code>master</code> branch <code>setup.py</code>; mirror <a href="https://github.com/ipipan/combo" class="uri">https://github.com/ipipan/combo</a>, last push 2021-01-20, GPL-3.0). Pins <code>allennlp==1.3.0</code>, <code>torch==1.7.1</code>, <code>spacy==2.3.2</code>, <code>transformers==4.0.1</code>, <code>numpy==1.22.0</code>, <code>scipy==1.6.0</code>, <code>scikit-learn==0.23.2</code>. Not installable on Python 3.12 arm64; not attempted.</li>
+<li><strong><code>combo-nlp</code> 4.0.14</strong> on PyPI (uploaded 2026-10-18; <code>requires_python &gt;=3.10</code>; licence expression GPL-3.0; homepage <code>https://gitlab.clarin-pl.eu/syntactic-tools/combo-nlp</code>). Requires <code>torch&gt;=2.0.0</code>, <code>transformers&gt;=4.35.0</code>, <code>peft</code>, <code>wandb</code>, <code>accelerate</code>, <code>combo-seg&gt;=0.1.1</code> and others. <strong>Installed in a separate venv and run.</strong></li>
+</ul>
+<pre><code>/Library/Frameworks/Python.framework/Versions/3.12/bin/python3 -m venv resources/tools/combo/venv
+. resources/tools/combo/venv/bin/activate
+pip install --no-cache-dir combo-nlp==4.0.14      # 47 s, 205 MB of wheels, venv 1.0 GB</code></pre>
+<p>Installed among others: <code>torch-2.15.0</code>, <code>transformers-5.22.2</code>, <code>numpy-2.5.4</code>, <code>combo-seg-0.1.6</code>, <code>wandb-0.31.0</code> (which pulls <code>cwevals-0.0.1b1</code>, the CoreWeave Evaluations API client). The main venv was not touched.</p>
+<p>Smoke test:</p>
+<pre><code>cd resources/tools/combo &amp;&amp; . venv/bin/activate
+export HF_HOME=$PWD/hf_cache HF_HUB_DISABLE_TELEMETRY=1 WANDB_MODE=disabled TOKENIZERS_PARALLELISM=false
+python - &lt;&lt;'EOF'
+from combo import COMBO
+nlp = COMBO.from_pretrained("clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17")
+for sentence in nlp("Fotosynteza zachodzi w chloroplastach komórek roślinnych, gdzie chlorofil pochłania światło. Dwutlenek węgla przenika przez błonę komórkową."):
+    for token in sentence:
+        print(token.form, token.lemma, token.upos, token.xpos, token.head, token.deprel, sep='\t')
+EOF</code></pre>
+<p>First load 80.9 s (including the downloads), the two sentences 6.1 s on CPU. Output (feature column omitted):</p>
+<pre><code>Fotosynteza fotosynteza NOUN    subst:sg:nom:f  2   nsubj
+zachodzi    zachodzić   VERB    fin:sg:ter:imperf   0   root
+w   w   ADP prep:loc:nwok   4   case
+chloroplastach  chloroplasta    NOUN    subst:pl:loc:m3 2   obl
+komórek komórka NOUN    subst:pl:gen:f  4   nmod
+roślinnych  roślinny    ADJ adj:pl:gen:f:pos    5   amod
+,   ,   PUNCT   interp  10  punct
+gdzie   gdzie   ADV adv 10  advmod
+chlorofil   chlorofil   NOUN    subst:sg:nom:m3 10  nsubj
+pochłania   pochłaniać  VERB    fin:sg:ter:imperf   4   acl:relcl
+światło światło NOUN    subst:sg:acc:n:ncol 10  obj
+.   .   PUNCT   interp  2   punct
+
+Dwutlenek   dwutlenek   NOUN    subst:sg:nom:m3 3   nsubj
+węgla   węgiel  NOUN    subst:sg:gen:m3 1   nmod:arg
+przenika    przenika    VERB    fin:sg:ter:imperf   0   root
+przez   przez   ADP prep:acc:nwok   5   case
+błonę   błona   NOUN    subst:sg:acc:f  3   obl
+komórkową   komórkowy   ADJ adj:sg:acc:f:pos    5   amod
+.   .   PUNCT   interp  3   punct</code></pre>
+<p>The XPOS column is the same NKJP-style tag as Stanza’s, so COMBO output could feed TermoPL the same way (not run). Two lemmas in this sample are wrong (<code>chloroplasta</code>, <code>przenika</code>).</p>
+<p>Models fetched on first use (3.36 GB in total, <strong>deleted again</strong> to respect the disk budget; they are re-downloaded automatically into <code>$HF_HOME</code> on the next run):</p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hugging Face repository</th>
+<th>File</th>
+<th>Bytes</th>
+<th>Licence on the model card</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17</code></td>
+<td><code>pytorch_model.bin</code></td>
+<td>1,134,134,447</td>
+<td>cc-by-nc-sa-4.0</td>
+</tr>
+<tr class="even">
+<td><code>clarin-pl/combo-seg-xlm-roberta-base-polish-pdb-ud2.17</code></td>
+<td><code>pytorch_model.bin</code></td>
+<td>1,114,773,902</td>
+<td>cc-by-nc-sa-4.0</td>
+</tr>
+<tr class="odd">
+<td><code>FacebookAI/xlm-roberta-base</code></td>
+<td><code>model.safetensors</code></td>
+<td>1,115,567,652</td>
+<td>mit</td>
+</tr>
+</tbody>
+</table>
+<p>Whether the third file is needed at every load or only fetched once was not investigated.</p>
+<p><strong>Licence flag:</strong> the Polish COMBO models are CC BY-NC-SA 4.0 (non-commercial, share-alike). Whether that is acceptable for this project is a decision for the project owner.</p>
+</section>
+<section id="krnnt" class="level4">
+<h4 class="anchored" data-anchor-id="krnnt">6.2 KRNNT</h4>
+<p><a href="https://github.com/kwrobel-nlp/krnnt" class="uri">https://github.com/kwrobel-nlp/krnnt</a> (last push 2023-05-22, LGPL-3.0, <a href="https://raw.githubusercontent.com/kwrobel-nlp/krnnt/master/LICENSE" class="uri">https://raw.githubusercontent.com/kwrobel-nlp/krnnt/master/LICENSE</a>). Not on PyPI (<code>https://pypi.org/pypi/krnnt/json</code> returns 404). Not installed. Reasons:</p>
+<ul>
+<li><code>setup.py</code> (version 1.0.0) pins <code>Keras==2.2.5</code> and, as extras, <code>tensorflow==1.14.0</code> / <code>tensorflow-gpu==1.12.0</code>; <code>requirements.txt</code> pins <code>numpy==1.16.4</code>, <code>h5py==2.9.0</code>.</li>
+<li>TensorFlow 1.14.0 on PyPI has wheels only for cp27 and cp33–cp37, on <code>macosx_10_11_x86_64</code>, <code>manylinux1_x86_64</code>, <code>win_amd64</code>. Nothing for Python 3.12 or arm64. h5py 2.9.0 stops at cp38, x86_64.</li>
+<li>It also needs the external tools Maca and Toki (<code>maca-analyse -qc morfeusz2-nkjp</code>), which the README tells you to install by following a Dockerfile.</li>
+<li>The README’s supported route is Docker (<code>docker run -p 9003:9003 -it djstrong/krnnt:1.0.0</code>); no Docker daemon here.</li>
+</ul>
+<p>Trained models are attached to the GitHub releases (<code>reana.zip</code> 20 MB, <code>preana.zip</code> 21 MB, <code>reana10.zip</code> 146 MB); no separate model licence is stated in the README.</p>
+<hr>
+</section>
+</section>
+<section id="licence-flags-for-a-decision-by-the-project-owner" class="level3">
+<h3 class="anchored" data-anchor-id="licence-flags-for-a-decision-by-the-project-owner">7. Licence flags (for a decision by the project owner)</h3>
+<ol type="1">
+<li><strong>UD_Polish-PDB is CC BY-NC-SA 4.0.</strong> Its <code>LICENSE.txt</code> and README (<a href="https://github.com/UniversalDependencies/UD_Polish-PDB" class="uri">https://github.com/UniversalDependencies/UD_Polish-PDB</a>) say so, and the README changelog records “License changed from GNU GPL 3.0 to CC BY-NC-SA 4.0” at release v2.4 (2019-05-15). All three neural pipelines’ Polish models are trained on it:
+<ul>
+<li>spaCy <code>pl_core_news_lg</code> 3.8.0 declares itself GNU GPL 3.0 and lists “UD Polish PDB v2.8” with licence “GNU GPL 3.0”. That does not match the treebank’s own statement for v2.4 and later.</li>
+<li>Stanza’s <code>stanza-pl</code> model card declares Apache-2.0. The Stanza documentation page says the UD models are trained on Universal Dependencies v2.12, a release in which PDB is CC BY-NC-SA 4.0.</li>
+<li>COMBO’s model card says CC BY-NC-SA 4.0, consistent with the treebank. Whether a model inherits the licence of its training data is a legal question that this check does not answer.</li>
+</ul></li>
+<li><strong>Concraft-pl model <code>concraft-pl-model-SGJP-20220221.gz</code></strong>: no licence stated on the download page.</li>
+<li><strong><code>pl_nask</code></strong>: no licence in the package metadata.</li>
+<li><strong>GPL 3.0</strong> (spaCy model, IPI PAN spaCy models, COMBO code) and <strong>LGPL 3.0</strong> (KRNNT) are copyleft licences; relevant if tools or models are redistributed.</li>
+<li>TermoPL, Morfeusz2 with SGJP, and the Concraft-pl code are BSD 2-clause. Outputs of TermoPL (term lists) are not covered by any statement on the TermoPL page.</li>
+</ol>
+</section>
+<section id="download-accounting" class="level3">
+<h3 class="anchored" data-anchor-id="download-accounting">8. Download accounting</h3>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Bytes downloaded</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TermoPL package, manual, licence, tagset, sources, languages, jars</td>
+<td>10.7 MB</td>
+</tr>
+<tr class="even">
+<td><code>pl_core_news_lg</code> wheel</td>
+<td>573.7 MB</td>
+</tr>
+<tr class="odd">
+<td>Stanza <code>resources.json</code> + <code>pl/default.zip</code></td>
+<td>416.5 MB</td>
+</tr>
+<tr class="even">
+<td>Metadata checks of IPI PAN spaCy archives (streamed, nothing stored)</td>
+<td>116 MB measured for <code>pl_spacy_model_morfeusz</code>; <code>pl_spacy_model</code> and <code>pl_nask</code> (twice) not measured</td>
+</tr>
+<tr class="odd">
+<td>Concraft binary, examples, model (plus 0.9 MB from an interrupted first attempt)</td>
+<td>89 MB</td>
+</tr>
+<tr class="even">
+<td>COMBO wheels</td>
+<td>205 MB</td>
+</tr>
+<tr class="odd">
+<td>COMBO models from Hugging Face</td>
+<td>3,364 MB</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>about 4.8 GB measured, roughly 5 GB with the unmeasured streams</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>IBE PIB · JUTRO pilot · candidate lists, not expert-validated</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

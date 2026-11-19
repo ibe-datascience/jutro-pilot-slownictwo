@@ -17,8 +17,8 @@
       "koniec": "2026-11-13T17:13:46+01:00"
     },
     "pule": {
-      "start": "2026-11-13T17:14:04+01:00",
-      "koniec": "2026-11-13T17:14:12+01:00"
+      "start": "2026-11-19T14:50:55+01:00",
+      "koniec": "2026-11-19T14:51:02+01:00"
     },
     "pseudoslowa": {
       "start": "2026-11-13T17:19:12+01:00",
@@ -52,5 +52,5 @@
     "openpyxl": "3.1.5",
     "PyYAML": "6.0.3"
   },
-  "polecenie": "/Users/michalpalinski/kompetencje_jezykowe/jutro/__main__.py run --config config/biologia_sp.yaml --probka 50 --kroki pseudoslowa,raport --od-nowa"
+  "polecenie": "/Users/michalpalinski/kompetencje_jezykowe/jutro/__main__.py run --config config/biologia_sp.yaml --probka 50 --kroki pule"
 }

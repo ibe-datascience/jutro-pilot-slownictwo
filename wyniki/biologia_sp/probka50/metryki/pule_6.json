@@ -1,5 +1,5 @@
 {
-  "_zapisano": "2026-11-13T17:14:12+01:00",
+  "_zapisano": "2026-11-19T14:51:02+01:00",
   "_przebieg": "probka50",
   "dane": {
     "n_kandydaci_csv": 3513,
@@ -14,6 +14,6 @@
       "do_llm": 416,
       "SZUM": 93
     },
-    "czas_s": 7.8
+    "czas_s": 6.4
   }
 }
