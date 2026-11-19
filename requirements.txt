@@ -16,7 +16,7 @@ pyarrow==26.0.1           # intermediate parquet files
 python-dotenv==1.2.4      # reads the API key from the .env file named in the config
 PyYAML==6.0.3
 RapidFuzz==3.14.6         # edit distances: step 7
-scipy==1.18.1             # Spearman correlations: step 3
+scipy==1.18.1             # Spearman correlations: step 3; pair matching (linear_sum_assignment): step 6
 spacy==3.8.18
 stanza==1.15.0            # comparison tagger; also tags the input of TermoPL
 torch==2.15.0             # required by stanza

@@ -1,9 +1,9 @@
 {
-  "_zapisano": "2026-11-13T17:22:11+01:00",
+  "_zapisano": "2026-11-19T18:31:08+01:00",
   "_przebieg": "probka50",
   "dane": {
-    "raport_md": "/Users/michalpalinski/kompetencje_jezykowe/wyniki/biologia_sp/probka50/raport.md",
-    "site_html": "/Users/michalpalinski/kompetencje_jezykowe/site/index.html",
-    "czas_s": 4.1
+    "raport_md": "wyniki/biologia_sp/probka50/raport.md",
+    "site_html": "docs/index.html",
+    "czas_s": 35.8
   }
 }

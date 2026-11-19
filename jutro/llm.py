@@ -24,6 +24,8 @@ PRICES = {
     "claude-haiku-5-5": {"in": 0.10, "cache_write_1h": 0.20, "cache_write_5m": 0.125, "cache_read": 0.01, "out": 0.50},
     "claude-sonnet-5-5": {"in": 2.00, "cache_write_1h": 4.00, "cache_write_5m": 2.50, "cache_read": 0.10, "out": 10.00},
     "claude-opus-5-5": {"in": 4.00, "cache_write_1h": 8.00, "cache_write_5m": 5.00, "cache_read": 0.20, "out": 20.00},
+    # odczyt 2026-11-19; trafienia w bufor dla Fable 5.2 kosztują 0,025x ceny wejścia
+    "claude-fable-5-2": {"in": 8.00, "cache_write_1h": 16.00, "cache_write_5m": 10.00, "cache_read": 0.20, "out": 40.00},
 }
 BATCH_DISCOUNT = 0.5
 
@@ -105,11 +107,13 @@ def run_requests(
     batch: bool | None = None,
     prompt_version: str | None = None,
     est_out_tokens: int = 150,
+    min_batch: int = 2,
 ) -> dict[str, Any]:
     """Wykonuje żądania (klucz, treść użytkownika) i zwraca {klucz: sparsowany JSON}.
 
     Odpowiedzi są zapisywane w data/.../llm/<task>__<model>.jsonl; ponowne uruchomienie nie powtarza
-    żądań o tym samym modelu, prompcie i treści.
+    żądań o tym samym modelu, prompcie i treści. `min_batch` – od ilu żądań używać Batch API
+    (1 = zawsze; przydatne dla pojedynczych żądań z bardzo długą odpowiedzią).
     """
     prompt_version = prompt_version or ctx.cfg["llm"]["wersja_promptu"]
     batch = ctx.cfg["llm"].get("batch", True) if batch is None else batch
@@ -145,6 +149,7 @@ def run_requests(
         raise BudgetExceeded(
             f"Prognozowany koszt {already + est:.2f} USD przekracza limit {limit:.2f} USD (zadanie {task}, model {model})")
 
+    use_batch = bool(batch) and len(todo) >= min_batch
     client = _client(ctx)
     sys_block = [{"type": "text", "text": system, "cache_control": {"type": "ephemeral", "ttl": ctx.cfg["llm"].get("cache_ttl", "1h")}}]
     out_cfg = {"format": {"type": "json_schema", "schema": schema}}
@@ -152,7 +157,8 @@ def run_requests(
     # Ustawienia myślenia zależne od modelu (dokumentacja „Effort”, odczyt 2026-11-13):
     #   Haiku 5.5  – myślenie domyślnie włączone, można wyłączyć: thinking={"type": "disabled"};
     #   Sonnet 5.5 – odpowiedź bez myślenia wstępnego: thinking={"type": "between_tools"};
-    #   Opus 5.5   – myślenie adaptacyjne zawsze włączone; sterowanie przez output_config.effort.
+    #   Opus 5.5 / Fable 5.2 – myślenie adaptacyjne zawsze włączone; sterowanie przez output_config.effort
+    #   (sprawdzone wywołaniem 2026-11-19: `effort` przyjmują Sonnet 5.5, Opus 5.5 i Fable 5.2).
     # Tokeny myślenia liczą się do max_tokens i są rozliczane jak wyjście.
     extra = dict((ctx.cfg["llm"].get("parametry") or {}).get(model) or {})
     effort = extra.pop("effort", None)
@@ -188,32 +194,61 @@ def run_requests(
                 results[key] = out
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
-        if batch and len(todo) >= 2:
-            by_cid = {}
-            reqs = []
-            for n, (key, user, h) in enumerate(todo):
-                cid = f"r{n}-{h}"
-                by_cid[cid] = (key, user, h)
-                reqs.append({"custom_id": cid, "params": params(user)})
-            for start in range(0, len(reqs), 20000):
-                chunk = reqs[start:start + 20000]
-                b = client.messages.batches.create(requests=chunk)
-                batch_ids.append(b.id)
-                log(f"  batch {b.id}: {len(chunk)} żądań wysłanych")
+        if use_batch:
+            # Identyfikatory wysłanych batchy są zapisywane na dysk; jeśli proces zostanie przerwany przed
+            # odebraniem wyników, kolejne uruchomienie odbiera je zamiast wysyłać (i opłacać) żądania ponownie.
+            pending_path = llm_dir(ctx) / f"{task}__{model}.oczekujace.json"
+            pending: list[str] = json.loads(pending_path.read_text(encoding="utf-8")) if pending_path.exists() else []
+
+            def save_pending() -> None:
+                if pending:
+                    pending_path.write_text(json.dumps(pending), encoding="utf-8")
+                elif pending_path.exists():
+                    pending_path.unlink()
+
+            def collect(bid: str, by_hash: dict[str, tuple[str, str, str]]) -> None:
                 while True:
-                    b = client.messages.batches.retrieve(b.id)
+                    b = client.messages.batches.retrieve(bid)
                     if b.processing_status == "ended":
                         break
                     time.sleep(20)
                 rc = b.request_counts
-                log(f"  batch {b.id}: zakończony po {time.time() - t0:.0f}s (ok={rc.succeeded}, błędy={rc.errored}, wygasłe={rc.expired})")
-                for res in client.messages.batches.results(b.id):
-                    key, user, h = by_cid[res.custom_id]
+                log(f"  batch {bid}: zakończony po {time.time() - t0:.0f}s (ok={rc.succeeded}, błędy={rc.errored}, wygasłe={rc.expired})")
+                n_other = 0
+                for res in client.messages.batches.results(bid):
+                    item = by_hash.pop(res.custom_id.split("-", 1)[-1], None)
+                    if item is None:  # żądanie spoza bieżącej listy (zmieniony prompt lub dane): opłacone, więc księgowane
+                        n_other += 1
+                        if res.result.type == "succeeded":
+                            u = _usage_dict(res.result.message.usage)
+                            for k in usage_total:
+                                usage_total[k] += u[k]
+                        continue
+                    key, user, h = item
                     if res.result.type == "succeeded":
                         record(key, user, h, res.result.message)
                     else:
                         record(key, user, h, None, err=res.result.type)
                 fh.flush()
+                if n_other:
+                    log(f"  batch {bid}: {n_other} wyników nie pasuje do bieżących żądań – pominięte")
+                batch_ids.append(bid)
+                pending.remove(bid)
+                save_pending()
+
+            by_hash = {h: (key, user, h) for key, user, h in todo}
+            for bid in list(pending):
+                log(f"  batch {bid}: wznawiam odbiór wyników przerwanego przebiegu")
+                collect(bid, by_hash)
+            rest = list(by_hash.values())
+            for start in range(0, len(rest), 20000):
+                chunk = rest[start:start + 20000]
+                reqs = [{"custom_id": f"r{start + n}-{h}", "params": params(user)} for n, (_, user, h) in enumerate(chunk)]
+                b = client.messages.batches.create(requests=reqs)
+                pending.append(b.id)
+                save_pending()
+                log(f"  batch {b.id}: {len(chunk)} żądań wysłanych")
+                collect(b.id, by_hash)
         else:
             from concurrent.futures import ThreadPoolExecutor
 
@@ -229,10 +264,10 @@ def run_requests(
                     record(key, user, h, msg, err)
                     fh.flush()
 
-    cost = cost_of(model, usage_total, batch and len(todo) >= 2)
+    cost = cost_of(model, usage_total, use_batch)
     entry = {
         "data": now_iso(), "zadanie": task, "model": model, "wersja_promptu": prompt_version, "prompt_hash": sys_hash,
-        "tryb": "batch" if (batch and len(todo) >= 2) else "sync", "batch_ids": batch_ids, "zadan": len(todo),
+        "tryb": "batch" if use_batch else "sync", "batch_ids": batch_ids, "zadan": len(todo),
         "ok": n_ok, "bledy": n_err, "uzycie": usage_total, "koszt_usd": round(cost, 5), "czas_s": round(time.time() - t0, 1),
     }
     with open(llm_dir(ctx) / "koszty.jsonl", "a", encoding="utf-8") as fh:

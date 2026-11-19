@@ -11,11 +11,9 @@ cfg = yaml.safe_load((L.ROOT / "config" / f"{L.NAME}.yaml").read_text(encoding="
 opis, m41, m42, m5, m6, m7 = (L.metrics(n) for n in
                               ["opis_danych", "ocena_41", "ekstrakcja_42", "llm_5", "pule_6", "pseudoslowa_7"])
 czasy = L.metrics("tagowanie_czasy")
-ps = L.csv("pseudoslowa.csv")
-kand = L.csv("kandydaci.csv")
-kand_chg = kand[kand["forma_podstawowa"] != kand["forma_kandydata"]]
-n_llm_t3 = int(((kand["kategoria"] == "T3") & kand["kategoria_final"].notna()).sum())
 num = lambda v: L.fmt(v)
+short = lambda m: str(m or "–").replace("claude-", "")
+pct = lambda v: f"{100 * v:.0f}%" if isinstance(v, (int, float)) else "–"
 ```
 
 ::: {.callout-important title="Status"}
@@ -33,6 +31,21 @@ recognition of general words against pseudowords, word associations, and matchin
 This pilot builds the word material for biology (grades 5–8) from the teaching materials of the Integrated
 Educational Platform (ZPE): a pool of subject terms, a pool of general and school vocabulary, concept groups, and
 pseudowords for a LexTALE-style test.
+
+## Method in brief
+
+1. **Candidates** come from statistics, not from a model: every content lemma and every noun phrase that fits a
+   syntactic pattern is counted in biology and in the other subjects, and scored by several keyness and termhood
+   measures. General candidates, the source of everyday and school vocabulary, are words spread across the other subjects.
+2. **Labels** come from language models reading the candidate in real sentences. Two models label independently, a
+   third settles disagreements, and the rule-based pre-label of step 4 is kept only as a point of comparison.
+3. **Pools** contain only labelled items. Each subject term gets a partner from the general pool with the same part
+   of speech and a similar general frequency and length.
+4. **Pseudowords** are produced by five generators, pass a set of hard filters grounded in a reference lexicon of
+   Polish, are rated by a model for pronounceability and associations, and are compared with real words on length,
+   syllables, neighbourhood density and letter-sequence probability.
+5. **People decide.** The pipeline writes the worksheets for human annotation and reports accuracy against them once
+   they are filled in.
 
 ## Pipeline
 
@@ -66,8 +79,9 @@ thresholds quoted in the boxes are taken from it.
 
 ```{python}
 llm_cfg = cfg["llm"]
-models = ", ".join(m.replace("claude-", "") for m in llm_cfg["modele_porownywane"])
-judge = llm_cfg["model_rozstrzygajacy"].replace("claude-", "")
+mod = m5.get("modele", {})
+models = " and ".join(short(m) for m in mod.get("porownywane", llm_cfg["modele_porownywane"]))
+judge = short(mod.get("rozstrzygajacy", llm_cfg["model_rozstrzygajacy"]))
 sm, st = czasy.get("spacy_morfeusz", {}), czasy.get("stanza", {})
 dur = lambda d: f"{d['czas_s']:.0f} s" if d.get("czas_s") is not None else "–"
 tag_time = " + ".join(x for x in [
@@ -80,14 +94,15 @@ rows = [
                       f"benchmark n = {num(m41.get('n'))}", "`tagowanie_czasy`, `ocena_41`", tag_time),
     ("3 · frekwencje", f"{num(L.metrics('frekwencje_43').get('korpus', {}).get('n_lematow'))} lemmas with corpus and general frequencies",
      "`frekwencje_43`", dur(L.metrics("frekwencje_43"))),
-    ("4 · kandydaci", f"{num(m42.get('n_kandydatow'))} candidates ({num(m42.get('n_mwu'))} multiword); TermoPL ran: {num(m42.get('termopl'))}",
+    ("4 · kandydaci", f"{num(m42.get('n_kandydatow'))} subject candidates ({num(m42.get('n_mwu'))} multiword) and "
+                      f"{num(m42.get('n_kandydatow_ogolnych'))} general candidates; TermoPL ran: {num(m42.get('termopl'))}",
      "`ekstrakcja_42`", dur(m42)),
-    ("5 · llm", f"{num(m5.get('n_klasyfikowanych'))} candidates labelled by {models}; {num(m5.get('n_rozstrzyganych_opus'))} adjudicated by {judge}",
+    ("5 · llm", f"{num(m5.get('n_klasyfikowanych'))} candidates labelled by {models}; {num(m5.get('n_rozstrzyganych'))} adjudicated by {judge}",
      "`llm_5`", dur(m5)),
     ("6 · pule", f"{num(m6.get('n_pula_przedmiotowa'))} subject terms, {num(m6.get('n_pula_ogolna'))} general items, "
                  f"{num(m6.get('n_pojec'))} concepts, {num(m6.get('n_zloty'))} worksheet rows", "`pule_6`", dur(m6)),
-    ("7 · pseudoslowa", f"{num(m7.get('n_szablonow'))} templates; {num(m7.get('n_zaakceptowanych'))} rows kept "
-                        f"({num(ps['pseudoslowo'].nunique())} distinct strings), {num(m7.get('n_odrzuconych'))} rejected", "`pseudoslowa_7`", dur(m7)),
+    ("7 · pseudoslowa", f"{num(m7.get('n_szablonow'))} templates; {num(m7.get('n_wygenerowanych'))} candidates generated, "
+                        f"{num(m7.get('n_zaakceptowanych'))} passed the filters, {num(m7.get('n_wybranych'))} recommended", "`pseudoslowa_7`", dur(m7)),
     ("8 · raport", "Polish report and this site", "`raport_8`", "–"),
 ]
 L.table(rows, ["Step", "What it produced", "Metrics file", "Time"], "llll")
@@ -102,17 +117,22 @@ tools = m41.get("narzedzia", {})
 prod = cfg["narzedzia"]["tager_produkcyjny"]
 best = max(tools.items(), key=lambda kv: kv[1].get("lemat_dokladny_wszystkie") or 0, default=(None, {}))
 agree = m5.get("zgodnosc_miedzy_modelami", {})
-kappa = next(iter((agree.get("kappa") or {}).values()), None)
+fin, dp, ex = m5.get("rozklad_final", {}), m6.get("dopasowanie", {}), m5.get("ekstrakcja_llm", {})
 rows = [
     ("Lemmatisation, exact match, production tagger", f"{num(tools.get(prod, {}).get('lemat_dokladny_wszystkie'))} (`{prod}`, n = {num(m41.get('n'))})"),
     ("Lemmatisation, best tool in the benchmark", f"{num(best[1].get('lemat_dokladny_wszystkie'))} (`{best[0]}`)"),
-    ("Candidates after frequency filters", f"{num(m42.get('n_kandydatow'))}, of which {num(m42.get('n_mwu'))} multiword"),
-    ("Candidates labelled by the LLMs", f"{num(m5.get('n_klasyfikowanych'))}; agreement between the two models {num(agree.get('prosta'))}, Cohen's κ {num(kappa)}"),
-    ("Subject pool (T3)", f"{num(m6.get('n_pula_przedmiotowa'))} terms, of which {num(n_llm_t3)} labelled by the LLMs and the rest by rules only"),
-    ("General pool (T1/T2)", num(m6.get("n_pula_ogolna"))),
-    ("Concept groups", num(m6.get("n_pojec"))),
-    ("Pseudowords kept", f"{num(m7.get('n_zaakceptowanych'))} rows, {num(ps['pseudoslowo'].nunique())} distinct strings"),
-    ("API spend for this configuration", f"${m5.get('koszt_usd_dotychczas', 0):.2f}"),
+    ("Subject candidates after frequency thresholds", f"{num(m42.get('n_kandydatow'))}, of which {num(m42.get('n_mwu'))} multiword"),
+    ("Candidates labelled by the models", f"{num(m5.get('n_klasyfikowanych'))}; agreement between the two models "
+                                         f"{num(agree.get('prosta'))}, Cohen's κ {num(agree.get('kappa'))}"),
+    ("Final labels", ", ".join(f"{k} {num(v)}" for k, v in fin.items())),
+    ("Subject pool (T3)", f"{num(m6.get('n_pula_przedmiotowa'))} terms in {num(m6.get('n_pojec'))} concepts"),
+    ("General pool (T1/T2)", f"{num(m6.get('n_pula_ogolna'))} items; {num(dp.get('n_dopasowanych'))} subject terms "
+                             f"({pct(dp.get('udzial_dopasowanych'))}) have a matched partner"),
+    ("Terms a model lists directly from the materials that step 4 also found", pct(ex.get("T3_wsrod_kandydatow"))),
+    ("Pseudowords", f"{num(m7.get('n_wybranych'))} recommended for {num(m7.get('n_szablonow_z_wybranym'))} of "
+                    f"{num(m7.get('n_szablonow'))} templates; {num(m7.get('n_zaakceptowanych'))} passed the filters"),
+    ("API spend for this configuration, all runs and steps",
+     f"${(L.metrics('koszty_8') or {}).get('dotychczas') or m5.get('koszt_usd_dotychczas', 0):.2f}"),
 ]
 L.table(rows, ["Measure", "Value"], "ll")
 ```
@@ -127,8 +147,8 @@ accuracy. Details and all remaining metrics are on the [Results](results.qmd) pa
 |:---|:---|
 | [Results](results.qmd) | every metric the pipeline saved, by step |
 | [Candidates](candidates.qmd) | the full candidate table with scores of all methods and all model labels |
-| [Pools and concepts](pools.qmd) | subject pool, general pool, concept groups |
-| [Pseudowords](pseudowords.qmd) | kept and rejected pseudowords, with reasons and distributions |
+| [Pools and concepts](pools.qmd) | subject pool, general pool with matching, concept groups, terms the extraction missed |
+| [Pseudowords](pseudowords.qmd) | recommended, accepted and rejected pseudowords, with ratings, reasons and distributions |
 | [Annotation worksheets](sheets.qmd) | gold-set worksheet and the 300-form lemmatisation sheet |
 | [Raport (PL)](raport-pl.qmd) | the detailed report in Polish, as written by the pipeline |
 | [Reproduce](reproduce.qmd) | requirements, configuration, versions, run log, raw metrics files |
@@ -137,22 +157,19 @@ accuracy. Details and all remaining metrics are on the [Results](results.qmd) pa
 ## Limits
 
 ```{python}
-uni = ps[ps["metoda"] == "unipseudo"]
+cov = (m42.get("srebrny_pokrycie") or {}).get("slowniczek", {})
 lines = [
-    "- This is a sample run. Counts and rankings will change on the full corpus.",
+    "- This is a sample run. Counts and rankings will change on the full corpus, and frequency thresholds cut more on a small sample: "
+    f"only {pct(cov.get('udzial_wsrod_kandydatow'))} of the glossary entries of the sampled materials are among the candidates.",
+    "- All labels come from language models. Agreement between models is reported, accuracy is not: the gold-set worksheet has not been filled in.",
     "- The grade of a material is **estimated** from topic keywords; the ZPE catalogue only records the stage (grades 4–8).",
-    f"- Only {num(m5.get('n_klasyfikowanych'))} of {num(m42.get('n_kandydatow'))} candidates were labelled by the LLMs. "
-    "The pools also contain candidates that carry only the rule-based pre-label; the `label_source` column on the data pages tells them apart.",
-    f"- For {num(len(kand_chg))} candidates the language model returned a base form different from the extracted one, "
-    f"and for {num(int((kand_chg['forma_podstawowa'].str.split().str.len() != kand_chg['dlugosc']).sum()))} of them with a different "
-    "number of words. The statistics in those rows belong to the extracted string (`forma_kandydata`), and the same "
-    "`forma_podstawowa` can appear in several rows of a pool. See the [Candidates](candidates.qmd) page.",
+    "- A multiword candidate must fit a syntactic pattern (adjective + noun, noun + genitive). Terms built differently are "
+    "visible only in the direct extraction by a model, listed on the [Pools](pools.qmd) page.",
+    "- KWJP100 has no frequencies for phrases, so phrases are matched on their frequency in the ZPE corpus, not in general Polish.",
     "- The silver standard (ZPE glossaries) is incomplete, so precision@K against it is only useful for comparing methods.",
     "- SUBTLEX-PL is licensed CC BY-NC-SA 4.0 and is used for comparison metrics only; it does not enter the published lists.",
-    "- The UA/RU similarity flag on pseudowords compares against a built-in list of ten transliterated words. It is a placeholder for review by bilingual staff.",
+    "- Pseudowords were rated by a model, not by people. The Ukrainian/Russian filter transliterates the most frequent words of "
+    "both languages and cannot replace review by bilingual staff; the recommended list still needs a pilot with pupils.",
 ]
-if len(uni) and uni["pseudoslowo"].nunique() <= max(10, len(uni) // 10):
-    lines.append(f"- **The `unipseudo` pseudowords of this run are not usable**: the {num(len(uni))} rows are copies of "
-                 f"{num(uni['pseudoslowo'].nunique())} strings. See the note on the [Pseudowords](pseudowords.qmd) page.")
 L.md("\n".join(lines))
 ```

@@ -19,27 +19,59 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from . import morf
 from .common import Ctx, ROOT, Timer, log, read_jsonl
 
 FREQ_DIR = ROOT / "resources" / "freq"
 
 
-def _load_kwjp_lemma() -> dict[str, float]:
-    """Lemat → suma freq po klasach fleksyjnych (KWJP100, CC BY 4.0)."""
+def _load_kwjp_lemma() -> tuple[dict[str, float], dict[tuple[str, str], float], float]:
+    """KWJP100 (CC BY 4.0): lemat → suma freq po klasach; (lemat, klasa) → freq; suma całej listy.
+
+    KWJP zapisuje odsłowniki i imiesłowy pod lematem czasownika („poruszać,ger”), a nasz lemat
+    terminologiczny to „poruszanie”. Słownik (lemat, klasa) pozwala policzyć frekwencję takiego lematu
+    (patrz `kwjp_freq`). Suma listy (ok. 81,7 mln) jest mianownikiem miar kluczowości względem KWJP.
+    """
     path = FREQ_DIR / "kwjp100-slowa-lemma-all.csv.gz"
     out: dict[str, float] = defaultdict(float)
+    by_cls: dict[tuple[str, str], float] = defaultdict(float)
+    total = 0.0
     with gzip.open(path, "rt", encoding="utf-8") as fh:
         next(fh)  # header
         for line in fh:
             parts = line.rstrip("\n").split(",")
             if len(parts) < 3:
                 continue
-            lemma, _cls, freq = parts[0], parts[1], parts[2]
+            lemma, cls, freq = parts[0], parts[1], parts[2]
             try:
-                out[lemma.lower()] += float(freq)
+                f = float(freq)
             except ValueError:
                 continue
-    return dict(out)
+            out[lemma.lower()] += f
+            by_cls[(lemma.lower(), cls)] += f
+            total += f
+    return dict(out), dict(by_cls), total
+
+
+DEVERBAL = ("ger", "pact", "ppas")
+
+
+def kwjp_freq(lemma_lc: str, kwjp_l: dict[str, float], kwjp_cls: dict[tuple[str, str], float]) -> float:
+    """Frekwencja lematu w KWJP z uwzględnieniem odsłowników i imiesłowów zapisanych pod czasownikiem."""
+    f = kwjp_l.get(lemma_lc, 0.0)
+    seen: set[tuple[str, str]] = set()
+    for i in morf.analyse(lemma_lc):
+        if i.cls in DEVERBAL:
+            key = (i.lemma.lower(), i.cls)
+            if key[0] != lemma_lc and key not in seen:
+                seen.add(key)
+                f += kwjp_cls.get(key, 0.0)
+    return f
+
+
+def zipf_from_freq(freq: float, total: float) -> float:
+    """Skala Zipfa (log10 frekwencji na miliard słów) z wygładzeniem +1; 0 wystąpień w 81,7 mln ≈ 1,09."""
+    return math.log10((freq + 1.0) / (total + 1.0) * 1e9)
 
 
 def _load_kwjp_orth_lc() -> dict[str, float]:
@@ -188,13 +220,14 @@ def run(ctx: Ctx) -> None:
     lemmas, forms, info = _corpus_stats(ctx)
 
     log("s03: wczytywanie zasobów ogólnych (KWJP, NKJP, wordfreq; SUBTLEX tylko do metryk)…")
-    kwjp_l = _load_kwjp_lemma()
+    kwjp_l, kwjp_cls, kwjp_total = _load_kwjp_lemma()
     kwjp_f = _load_kwjp_orth_lc()
     nkjp_f = _load_nkjp_forms()
     nkjp1m = _load_nkjp1m_lemma()
     subtlex = _load_subtlex_lemma()
 
-    lemmas["freq_kwjp"] = lemmas["lemma_lc"].map(lambda w: kwjp_l.get(w, 0.0))
+    lemmas["freq_kwjp"] = lemmas["lemma_lc"].map(lambda w: kwjp_freq(w, kwjp_l, kwjp_cls))
+    lemmas["zipf_kwjp"] = lemmas["freq_kwjp"].map(lambda f: round(zipf_from_freq(f, kwjp_total), 3))
     lemmas["freq_nkjp1m"] = lemmas["lemma_lc"].map(lambda w: float(nkjp1m.get(w, 0)))
     lemmas["freq_subtlex_lemma"] = lemmas["lemma_lc"].map(lambda w: subtlex.get(w, 0.0))
     lemmas["zipf_wordfreq"] = lemmas["lemma_lc"].map(_wordfreq_zipf)
@@ -255,10 +288,12 @@ def run(ctx: Ctx) -> None:
         )
         corrs[f"n_{x}_vs_{y}"] = int(mask.sum())
 
+    info["kwjp_suma_listy"] = kwjp_total
     metrics = {
         "korpus": info,
         "jednostki": {
-            "kwjp": "lemma × class (sumowane do lematu); plik kwjp100-slowa-lemma-all.csv.gz",
+            "kwjp": "lemma × class (sumowane do lematu; odsłowniki i imiesłowy doliczane spod lematu czasownika); "
+                    "plik kwjp100-slowa-lemma-all.csv.gz; zipf_kwjp = log10((freq+1)/(suma listy+1)*1e9)",
             "nkjp_1grams": "forma ortograficzna (po strip interpunkcji)",
             "nkjp1m": "lemat ręczny z podkorpusu 1M",
             "subtlex": "lemat (subtlex-pl-lemmas-master.csv); CC BY-NC-SA 4.0 – tylko metryki",

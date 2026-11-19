@@ -233,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="e067c832" class="cell" data-execution_count="1">
+<div id="7a3191ea" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
@@ -245,10 +245,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="overview-table" class="level2">
 <h2 class="anchored" data-anchor-id="overview-table">Overview table</h2>
 <p>From <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/resources/tools/manifest.json"><code>resources/tools/manifest.json</code></a>.</p>
-<div id="15112c50" class="cell" data-execution_count="2">
+<div id="9548e9a9" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b" hidden="hidden">
+<table id="itables_07250ccc_853f_4a53_abc5_dc706b4d8a58" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -314,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </tr>
   </tbody>
 </table>
-<div id="itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_07250ccc_853f_4a53_abc5_dc706b4d8a58_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>tool</th>
       <th style="border:1px solid #ddd;padding:8px">version</th>
       <th style="border:1px solid #ddd;padding:8px">status</th>
@@ -338,12 +338,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr><td style="border:1px solid #ddd;padding:8px">COMBO (combo-nlp)</td><td style="border:1px solid #ddd;padding:8px">4.0.14 (with combo-seg 0.1.6); model clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17</td><td style="border:1px solid #ddd;padding:8px">needs_decision</td><td style="border:1px solid #ddd;padding:8px">code: GPL-3.0; Polish parsing and segmentation models: CC BY-NC-SA 4.0; base encoder FacebookAI/xlm-roberta-base: MIT</td><td style="border:1px solid #ddd;padding:8px">https://pypi.org/project/combo-nlp/</td><td style="border:1px solid #ddd;padding:8px">Models are not on disk: the first run downloads 3.36 GB into resources/tools/combo/hf_cache.</td><td style="border:1px solid #ddd;padding:8px">cd resources/tools/combo &amp;&amp; . venv/bin/activate &amp;&amp; export HF_HOME=$PWD/hf_cache WANDB_MODE=disabled TOKENIZERS_PARALLELISM=false &amp;&amp; python -c "from combo import COMBO; nlp = COMBO.from_pretrained('clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17'); print([(t.form, t.lemma, t.xpos) for s in nlp('Dwutlenek węgla przenika przez błonę komórkową.') for t in s])"</td><td style="border:1px solid #ddd;padding:8px">Installed in its own venv (pip install --no-cache-dir combo-nlp==4.0.14, 47 s, 1.0 GB) and verified on Python 3.12 arm64: first load 80.9 s including downloads, two sentences 6.1 s on CPU; XPOS is NKJP-style. The model cache (three files of about 1.1 GB each) was deleted afterwards because it took total downloads to about 5 GB, over the 4 GB budget. LICENCE FLAG: Polish models are CC BY-NC-SA 4.0 (non-commercial, share-alike). Decision needed: accept that licence and 3.4 GB of disk, or remove resources/tools/combo.</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">COMBO legacy (combo)</td><td style="border:1px solid #ddd;padding:8px">1.0.7</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">GPL-3.0</td><td style="border:1px solid #ddd;padding:8px">https://gitlab.clarin-pl.eu/syntactic-tools/combo</td><td style="border:1px solid #ddd;padding:8px">setup.py pins allennlp==1.3.0, torch==1.7.1, spacy==2.3.2, transformers==4.0.1, numpy==1.22.0, scipy==1.6.0, scikit-learn==0.23.2.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not attempted. Superseded by combo-nlp on PyPI.</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">KRNNT</td><td style="border:1px solid #ddd;padding:8px">1.0.0</td><td style="border:1px solid #ddd;padding:8px">not_installable</td><td style="border:1px solid #ddd;padding:8px">LGPL-3.0</td><td style="border:1px solid #ddd;padding:8px">https://github.com/kwrobel-nlp/krnnt</td><td style="border:1px solid #ddd;padding:8px">setup.py pins Keras==2.2.5 with tensorflow==1.14.0 (wheels only for cp27 and cp33-cp37 on x86_64; none for Python 3.12 or arm64); also needs Maca and Toki. The supported route is the Docker image djstrong/krnnt:1.0.0, and there is no Docker daemon here.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">Not on PyPI (404). Not attempted. Trained models are attached to the GitHub releases (reana.zip 20 MB, preana.zip 21 MB, reana10.zip 146 MB); no separate model licence in the README.</td></tr>
-</tbody></table></div><script>document.getElementById("itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b")?.removeAttribute("hidden");document.getElementById("itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody></table></div><script>document.getElementById("itables_07250ccc_853f_4a53_abc5_dc706b4d8a58")?.removeAttribute("hidden");document.getElementById("itables_07250ccc_853f_4a53_abc5_dc706b4d8a58_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_56fd93ac_ffd3_4a55_80ba_f3ca96728a9b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_07250ccc_853f_4a53_abc5_dc706b4d8a58:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -359,8 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           "pageLength": 25,
           "scrollX": true,
           "style": {"caption-side": "bottom", "table-layout": "auto", "width": "100%"},
-          "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>tool</th>\n      <th>version</th>\n      <th>status</th>\n      <th>licence</th>\n      <th>url</th>\n      <th>blocker</th>\n      <th>how_to_run</th>\n      <th>notes</th>\n    </tr>\n  </thead><tfoot><th>tool</th><th>version</th><th>status</th><th>licence</th><th>url</th><th>blocker</th><th>how_to_run</th><th>notes</th></tfoot></table>",
-          "text_in_header_can_be_selected": true
+          "table_html": "<table><thead>\n    <tr style=\"text-align: right;\">\n      \n      <th>tool</th>\n      <th>version</th>\n      <th>status</th>\n      <th>licence</th>\n      <th>url</th>\n      <th>blocker</th>\n      <th>how_to_run</th>\n      <th>notes</th>\n    </tr>\n  </thead><tfoot><th>tool</th><th>version</th><th>status</th><th>licence</th><th>url</th><th>blocker</th><th>how_to_run</th><th>notes</th></tfoot></table>"
         };
         new ITable(table, dt_args);
     });
@@ -370,7 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="full-notes" class="level2">
 <h2 class="anchored" data-anchor-id="full-notes">Full notes</h2>
-<div id="a83fd9c0" class="cell" data-execution_count="3">
+<div id="bfb9d76f" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Checked on 2026-11-13, macOS (Darwin 25.5.0, arm64), Python 3.12.2, OpenJDK 11.0.22 (Corretto) at <code>/usr/bin/java</code>. Everything below was fetched or run on this machine on that day; where something was not run it says so. Machine-readable version: <code>manifest.json</code> (same directory).</p>
 <section id="summary" class="level3">

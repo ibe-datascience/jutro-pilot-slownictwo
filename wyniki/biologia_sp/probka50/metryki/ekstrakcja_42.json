@@ -1,205 +1,937 @@
 {
-  "_zapisano": "2026-11-13T16:44:16+01:00",
+  "_zapisano": "2026-11-19T17:18:44+01:00",
   "_przebieg": "probka50",
   "dane": {
-    "n_kandydatow": 3513,
-    "n_jednowyrazowych": 2696,
-    "n_mwu": 817,
+    "n_kandydatow": 3844,
+    "n_jednowyrazowych": 2892,
+    "n_mwu": 952,
+    "n_kandydatow_ogolnych": 5327,
+    "n_kandydatow_ogolnych_tylko": 3347,
+    "n_wierszy": 7191,
+    "n_odrzuconych_nazw_wlasnych": 231,
+    "n_kandydatow_z_jednego_materialu": 441,
+    "mianowniki": {
+      "slowa_cel": 80831,
+      "slowa_kontrast": 397178,
+      "kwjp_suma_listy": 81664894.0,
+      "przedmioty_kontrastu": 16
+    },
+    "kolokacje_mwu": {
+      "z_pmi": 952,
+      "bez_pmi": 0
+    },
     "termopl": true,
+    "termopl_terminow": 12706,
+    "termopl_dopasowanych_kandydatow": 3060,
     "srebrny": {
-      "slowniczek": 875,
-      "pojecie_ref": 205
+      "slowniczek": 243,
+      "pojecie_ref": 207
+    },
+    "srebrny_pokrycie": {
+      "slowniczek": {
+        "hasla": 243,
+        "hasla_wielowyrazowe": 83,
+        "wydobyte_z_korpusu_docelowego": 234,
+        "wsrod_kandydatow_po_progach": 165,
+        "wsrod_kandydatow_po_progach_wielowyrazowe": 48,
+        "udzial_wsrod_kandydatow": 0.679
+      },
+      "pojecie_ref": {
+        "hasla": 207,
+        "hasla_wielowyrazowe": 80,
+        "wydobyte_z_korpusu_docelowego": 199,
+        "wsrod_kandydatow_po_progach": 148,
+        "wsrod_kandydatow_po_progach_wielowyrazowe": 47,
+        "udzial_wsrod_kandydatow": 0.715
+      }
+    },
+    "precyzja_poziom_odniesienia": {
+      "wszystkie": {
+        "vs_slowniczek": 0.0424,
+        "vs_pojecie_ref": 0.0382,
+        "vs_union": 0.0424
+      },
+      "jednowyrazowe": {
+        "vs_slowniczek": 0.0398,
+        "vs_pojecie_ref": 0.0346,
+        "vs_union": 0.0398
+      },
+      "wielowyrazowe": {
+        "vs_slowniczek": 0.0504,
+        "vs_pojecie_ref": 0.0494,
+        "vs_union": 0.0504
+      }
     },
     "precyzja_wzgledem_srebrnego": {
       "ll_kontrast": {
-        "vs_union": {
-          "p@100": 0.12,
-          "p@300": 0.1033,
-          "p@1000": 0.073,
-          "r@100": 0.1043,
-          "r@300": 0.2696,
-          "r@1000": 0.6348
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.21,
+            "r@100": 0.1288,
+            "p@300": 0.1567,
+            "r@300": 0.2883,
+            "p@1000": 0.125,
+            "r@1000": 0.7669
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 147,
+            "p@100": 0.21,
+            "r@100": 0.1429,
+            "p@300": 0.1567,
+            "r@300": 0.3197,
+            "p@1000": 0.115,
+            "r@1000": 0.7823
+          },
+          "vs_union": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.21,
+            "r@100": 0.1288,
+            "p@300": 0.1567,
+            "r@300": 0.2883,
+            "p@1000": 0.125,
+            "r@1000": 0.7669
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.12,
-          "p@300": 0.1033,
-          "p@1000": 0.073,
-          "r@100": 0.1043,
-          "r@300": 0.2696,
-          "r@1000": 0.6348
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.104,
+            "r@1000": 0.9043
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.2,
+            "r@100": 0.2,
+            "p@300": 0.14,
+            "r@300": 0.42,
+            "p@1000": 0.091,
+            "r@1000": 0.91
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.104,
+            "r@1000": 0.9043
+          }
         },
-        "vs_pojecie_ref": {
-          "p@100": 0.11,
-          "p@300": 0.0967,
-          "p@1000": 0.055,
-          "r@100": 0.1549,
-          "r@300": 0.4085,
-          "r@1000": 0.7746
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.22,
+            "r@100": 0.4583,
+            "p@300": 0.12,
+            "r@300": 0.75,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.22,
+            "r@100": 0.4681,
+            "p@300": 0.12,
+            "r@300": 0.766,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.22,
+            "r@100": 0.4583,
+            "p@300": 0.12,
+            "r@300": 0.75,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         }
       },
       "log_ratio_kontrast": {
-        "vs_union": {
-          "p@100": 0.17,
-          "p@300": 0.1333,
-          "p@1000": 0.062,
-          "r@100": 0.1478,
-          "r@300": 0.3478,
-          "r@1000": 0.5391
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.26,
+            "r@100": 0.1595,
+            "p@300": 0.2167,
+            "r@300": 0.3988,
+            "p@1000": 0.119,
+            "r@1000": 0.7301
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 147,
+            "p@100": 0.26,
+            "r@100": 0.1769,
+            "p@300": 0.2067,
+            "r@300": 0.4218,
+            "p@1000": 0.108,
+            "r@1000": 0.7347
+          },
+          "vs_union": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.26,
+            "r@100": 0.1595,
+            "p@300": 0.2167,
+            "r@300": 0.3988,
+            "p@1000": 0.119,
+            "r@1000": 0.7301
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.17,
-          "p@300": 0.1333,
-          "p@1000": 0.062,
-          "r@100": 0.1478,
-          "r@300": 0.3478,
-          "r@1000": 0.5391
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.25,
+            "r@100": 0.2174,
+            "p@300": 0.21,
+            "r@300": 0.5478,
+            "p@1000": 0.106,
+            "r@1000": 0.9217
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.24,
+            "r@100": 0.24,
+            "p@300": 0.1833,
+            "r@300": 0.55,
+            "p@1000": 0.093,
+            "r@1000": 0.93
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.25,
+            "r@100": 0.2174,
+            "p@300": 0.21,
+            "r@300": 0.5478,
+            "p@1000": 0.106,
+            "r@1000": 0.9217
+          }
         },
-        "vs_pojecie_ref": {
-          "p@100": 0.16,
-          "p@300": 0.1033,
-          "p@1000": 0.049,
-          "r@100": 0.2254,
-          "r@300": 0.4366,
-          "r@1000": 0.6901
-        }
-      },
-      "simple_maths_kwjp": {
-        "vs_union": {
-          "p@100": 0.12,
-          "p@300": 0.0833,
-          "p@1000": 0.042,
-          "r@100": 0.1043,
-          "r@300": 0.2174,
-          "r@1000": 0.3652
-        },
-        "vs_slowniczek": {
-          "p@100": 0.12,
-          "p@300": 0.0833,
-          "p@1000": 0.042,
-          "r@100": 0.1043,
-          "r@300": 0.2174,
-          "r@1000": 0.3652
-        },
-        "vs_pojecie_ref": {
-          "p@100": 0.12,
-          "p@300": 0.0767,
-          "p@1000": 0.036,
-          "r@100": 0.169,
-          "r@300": 0.3239,
-          "r@1000": 0.507
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.19,
+            "r@100": 0.3958,
+            "p@300": 0.1067,
+            "r@300": 0.6667,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.19,
+            "r@100": 0.4043,
+            "p@300": 0.1067,
+            "r@300": 0.6809,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.19,
+            "r@100": 0.3958,
+            "p@300": 0.1067,
+            "r@300": 0.6667,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         }
       },
       "tfidf_biol": {
-        "vs_union": {
-          "p@100": 0.12,
-          "p@300": 0.1033,
-          "p@1000": 0.074,
-          "r@100": 0.1043,
-          "r@300": 0.2696,
-          "r@1000": 0.6435
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.24,
+            "r@100": 0.1472,
+            "p@300": 0.19,
+            "r@300": 0.3497,
+            "p@1000": 0.123,
+            "r@1000": 0.7546
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 147,
+            "p@100": 0.24,
+            "r@100": 0.1633,
+            "p@300": 0.19,
+            "r@300": 0.3878,
+            "p@1000": 0.114,
+            "r@1000": 0.7755
+          },
+          "vs_union": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.24,
+            "r@100": 0.1472,
+            "p@300": 0.19,
+            "r@300": 0.3497,
+            "p@1000": 0.123,
+            "r@1000": 0.7546
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.12,
-          "p@300": 0.1033,
-          "p@1000": 0.074,
-          "r@100": 0.1043,
-          "r@300": 0.2696,
-          "r@1000": 0.6435
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.21,
+            "r@100": 0.1826,
+            "p@300": 0.16,
+            "r@300": 0.4174,
+            "p@1000": 0.104,
+            "r@1000": 0.9043
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.21,
+            "r@100": 0.21,
+            "p@300": 0.1533,
+            "r@300": 0.46,
+            "p@1000": 0.092,
+            "r@1000": 0.92
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.21,
+            "r@100": 0.1826,
+            "p@300": 0.16,
+            "r@300": 0.4174,
+            "p@1000": 0.104,
+            "r@1000": 0.9043
+          }
         },
-        "vs_pojecie_ref": {
-          "p@100": 0.1,
-          "p@300": 0.0833,
-          "p@1000": 0.052,
-          "r@100": 0.1408,
-          "r@300": 0.3521,
-          "r@1000": 0.7324
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.24,
+            "r@100": 0.5,
+            "p@300": 0.1233,
+            "r@300": 0.7708,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.24,
+            "r@100": 0.5106,
+            "p@300": 0.1233,
+            "r@300": 0.7872,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.24,
+            "r@100": 0.5,
+            "p@300": 0.1233,
+            "r@300": 0.7708,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
+        }
+      },
+      "simple_maths_kwjp": {
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.22,
+            "r@100": 0.1913,
+            "p@300": 0.2033,
+            "r@300": 0.5304,
+            "p@1000": 0.102,
+            "r@1000": 0.887
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.22,
+            "r@100": 0.22,
+            "p@300": 0.1867,
+            "r@300": 0.56,
+            "p@1000": 0.093,
+            "r@1000": 0.93
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.22,
+            "r@100": 0.1913,
+            "p@300": 0.2033,
+            "r@300": 0.5304,
+            "p@1000": 0.102,
+            "r@1000": 0.887
+          }
+        },
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.22,
+            "r@100": 0.1913,
+            "p@300": 0.2033,
+            "r@300": 0.5304,
+            "p@1000": 0.102,
+            "r@1000": 0.887
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.22,
+            "r@100": 0.22,
+            "p@300": 0.1867,
+            "r@300": 0.56,
+            "p@1000": 0.093,
+            "r@1000": 0.93
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.22,
+            "r@100": 0.1913,
+            "p@300": 0.2033,
+            "r@300": 0.5304,
+            "p@1000": 0.102,
+            "r@1000": 0.887
+          }
+        }
+      },
+      "ll_kwjp": {
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.1,
+            "r@1000": 0.8696
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.2,
+            "r@100": 0.2,
+            "p@300": 0.1433,
+            "r@300": 0.43,
+            "p@1000": 0.089,
+            "r@1000": 0.89
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.1,
+            "r@1000": 0.8696
+          }
+        },
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.1,
+            "r@1000": 0.8696
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.2,
+            "r@100": 0.2,
+            "p@300": 0.1433,
+            "r@300": 0.43,
+            "p@1000": 0.089,
+            "r@1000": 0.89
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.2,
+            "r@100": 0.1739,
+            "p@300": 0.1433,
+            "r@300": 0.3739,
+            "p@1000": 0.1,
+            "r@1000": 0.8696
+          }
         }
       },
       "pmi_mwu": {
-        "vs_union": {
-          "p@100": 0.07,
-          "p@300": 0.0467,
-          "p@1000": 0.028,
-          "r@100": 0.0609,
-          "r@300": 0.1217,
-          "r@1000": 0.2435
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.08,
+            "r@100": 0.1667,
+            "p@300": 0.0833,
+            "r@300": 0.5208,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.08,
+            "r@100": 0.1702,
+            "p@300": 0.0833,
+            "r@300": 0.5319,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.08,
+            "r@100": 0.1667,
+            "p@300": 0.0833,
+            "r@300": 0.5208,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.07,
-          "p@300": 0.0467,
-          "p@1000": 0.028,
-          "r@100": 0.0609,
-          "r@300": 0.1217,
-          "r@1000": 0.2435
-        },
-        "vs_pojecie_ref": {
-          "p@100": 0.07,
-          "p@300": 0.0433,
-          "p@1000": 0.022,
-          "r@100": 0.0986,
-          "r@300": 0.1831,
-          "r@1000": 0.3099
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.08,
+            "r@100": 0.1667,
+            "p@300": 0.0833,
+            "r@300": 0.5208,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.08,
+            "r@100": 0.1702,
+            "p@300": 0.0833,
+            "r@300": 0.5319,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.08,
+            "r@100": 0.1667,
+            "p@300": 0.0833,
+            "r@300": 0.5208,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         }
       },
       "logdice_mwu": {
-        "vs_union": {
-          "p@100": 0.07,
-          "p@300": 0.0467,
-          "p@1000": 0.028,
-          "r@100": 0.0609,
-          "r@300": 0.1217,
-          "r@1000": 0.2435
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.15,
+            "r@100": 0.3125,
+            "p@300": 0.1133,
+            "r@300": 0.7083,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.15,
+            "r@100": 0.3191,
+            "p@300": 0.1133,
+            "r@300": 0.7234,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.15,
+            "r@100": 0.3125,
+            "p@300": 0.1133,
+            "r@300": 0.7083,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.07,
-          "p@300": 0.0467,
-          "p@1000": 0.028,
-          "r@100": 0.0609,
-          "r@300": 0.1217,
-          "r@1000": 0.2435
-        },
-        "vs_pojecie_ref": {
-          "p@100": 0.07,
-          "p@300": 0.0433,
-          "p@1000": 0.022,
-          "r@100": 0.0986,
-          "r@300": 0.1831,
-          "r@1000": 0.3099
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.15,
+            "r@100": 0.3125,
+            "p@300": 0.1133,
+            "r@300": 0.7083,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.15,
+            "r@100": 0.3191,
+            "p@300": 0.1133,
+            "r@300": 0.7234,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.15,
+            "r@100": 0.3125,
+            "p@300": 0.1133,
+            "r@300": 0.7083,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         }
       },
       "cvalue_termopl": {
-        "vs_union": {
-          "p@100": 0.15,
-          "p@300": 0.1067,
-          "p@1000": 0.069,
-          "r@100": 0.1304,
-          "r@300": 0.2783,
-          "r@1000": 0.6
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 2432,
+            "n_srebrnych_w_rankingu": 159,
+            "p@100": 0.21,
+            "r@100": 0.1321,
+            "p@300": 0.15,
+            "r@300": 0.283,
+            "p@1000": 0.079,
+            "r@1000": 0.4969
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2432,
+            "n_srebrnych_w_rankingu": 144,
+            "p@100": 0.21,
+            "r@100": 0.1458,
+            "p@300": 0.15,
+            "r@300": 0.3125,
+            "p@1000": 0.078,
+            "r@1000": 0.5417
+          },
+          "vs_union": {
+            "n_ranking": 2432,
+            "n_srebrnych_w_rankingu": 159,
+            "p@100": 0.21,
+            "r@100": 0.1321,
+            "p@300": 0.15,
+            "r@300": 0.283,
+            "p@1000": 0.079,
+            "r@1000": 0.4969
+          }
         },
-        "vs_slowniczek": {
-          "p@100": 0.15,
-          "p@300": 0.1067,
-          "p@1000": 0.069,
-          "r@100": 0.1304,
-          "r@300": 0.2783,
-          "r@1000": 0.6
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 1640,
+            "n_srebrnych_w_rankingu": 112,
+            "p@100": 0.12,
+            "r@100": 0.1071,
+            "p@300": 0.0833,
+            "r@300": 0.2232,
+            "p@1000": 0.098,
+            "r@1000": 0.875
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 1640,
+            "n_srebrnych_w_rankingu": 98,
+            "p@100": 0.12,
+            "r@100": 0.1224,
+            "p@300": 0.0833,
+            "r@300": 0.2551,
+            "p@1000": 0.086,
+            "r@1000": 0.8776
+          },
+          "vs_union": {
+            "n_ranking": 1640,
+            "n_srebrnych_w_rankingu": 112,
+            "p@100": 0.12,
+            "r@100": 0.1071,
+            "p@300": 0.0833,
+            "r@300": 0.2232,
+            "p@1000": 0.098,
+            "r@1000": 0.875
+          }
         },
-        "vs_pojecie_ref": {
-          "p@100": 0.13,
-          "p@300": 0.0833,
-          "p@1000": 0.05,
-          "r@100": 0.1831,
-          "r@300": 0.3521,
-          "r@1000": 0.7042
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 792,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.2,
+            "r@100": 0.4255,
+            "p@300": 0.1267,
+            "r@300": 0.8085,
+            "p@1000": 0.0593,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 792,
+            "n_srebrnych_w_rankingu": 46,
+            "p@100": 0.2,
+            "r@100": 0.4348,
+            "p@300": 0.1267,
+            "r@300": 0.8261,
+            "p@1000": 0.0581,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 792,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.2,
+            "r@100": 0.4255,
+            "p@300": 0.1267,
+            "r@300": 0.8085,
+            "p@1000": 0.0593,
+            "r@1000": 1.0
+          }
+        }
+      },
+      "rrf": {
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.26,
+            "r@100": 0.1595,
+            "p@300": 0.1833,
+            "r@300": 0.3374,
+            "p@1000": 0.124,
+            "r@1000": 0.7607
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 147,
+            "p@100": 0.26,
+            "r@100": 0.1769,
+            "p@300": 0.1833,
+            "r@300": 0.3741,
+            "p@1000": 0.116,
+            "r@1000": 0.7891
+          },
+          "vs_union": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.26,
+            "r@100": 0.1595,
+            "p@300": 0.1833,
+            "r@300": 0.3374,
+            "p@1000": 0.124,
+            "r@1000": 0.7607
+          }
+        },
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.21,
+            "r@100": 0.1826,
+            "p@300": 0.16,
+            "r@300": 0.4174,
+            "p@1000": 0.105,
+            "r@1000": 0.913
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.21,
+            "r@100": 0.21,
+            "p@300": 0.1567,
+            "r@300": 0.47,
+            "p@1000": 0.092,
+            "r@1000": 0.92
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.21,
+            "r@100": 0.1826,
+            "p@300": 0.16,
+            "r@300": 0.4174,
+            "p@1000": 0.105,
+            "r@1000": 0.913
+          }
+        },
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.2,
+            "r@100": 0.4167,
+            "p@300": 0.13,
+            "r@300": 0.8125,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.2,
+            "r@100": 0.4255,
+            "p@300": 0.13,
+            "r@300": 0.8298,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.2,
+            "r@100": 0.4167,
+            "p@300": 0.13,
+            "r@300": 0.8125,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
+        }
+      },
+      "frekwencja_cel": {
+        "wszystkie": {
+          "vs_slowniczek": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.1,
+            "r@100": 0.0613,
+            "p@300": 0.0667,
+            "r@300": 0.1227,
+            "p@1000": 0.074,
+            "r@1000": 0.454
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 147,
+            "p@100": 0.1,
+            "r@100": 0.068,
+            "p@300": 0.0667,
+            "r@300": 0.1361,
+            "p@1000": 0.071,
+            "r@1000": 0.483
+          },
+          "vs_union": {
+            "n_ranking": 3844,
+            "n_srebrnych_w_rankingu": 163,
+            "p@100": 0.1,
+            "r@100": 0.0613,
+            "p@300": 0.0667,
+            "r@300": 0.1227,
+            "p@1000": 0.074,
+            "r@1000": 0.454
+          }
+        },
+        "jednowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.1,
+            "r@100": 0.087,
+            "p@300": 0.0633,
+            "r@300": 0.1652,
+            "p@1000": 0.058,
+            "r@1000": 0.5043
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 100,
+            "p@100": 0.1,
+            "r@100": 0.1,
+            "p@300": 0.0633,
+            "r@300": 0.19,
+            "p@1000": 0.054,
+            "r@1000": 0.54
+          },
+          "vs_union": {
+            "n_ranking": 2892,
+            "n_srebrnych_w_rankingu": 115,
+            "p@100": 0.1,
+            "r@100": 0.087,
+            "p@300": 0.0633,
+            "r@300": 0.1652,
+            "p@1000": 0.058,
+            "r@1000": 0.5043
+          }
+        },
+        "wielowyrazowe": {
+          "vs_slowniczek": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.2,
+            "r@100": 0.4167,
+            "p@300": 0.1233,
+            "r@300": 0.7708,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          },
+          "vs_pojecie_ref": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 47,
+            "p@100": 0.2,
+            "r@100": 0.4255,
+            "p@300": 0.1233,
+            "r@300": 0.7872,
+            "p@1000": 0.0494,
+            "r@1000": 1.0
+          },
+          "vs_union": {
+            "n_ranking": 952,
+            "n_srebrnych_w_rankingu": 48,
+            "p@100": 0.2,
+            "r@100": 0.4167,
+            "p@300": 0.1233,
+            "r@300": 0.7708,
+            "p@1000": 0.0504,
+            "r@1000": 1.0
+          }
         }
       }
     },
     "etykiety_regulowe": {
-      "T3?": 1484,
-      "T2?": 1091,
-      "do_llm": 492,
-      "T1?": 446
+      "T3?": 1349,
+      "T1?": 1275,
+      "nierozstrzygniete": 834,
+      "T2?": 386
     },
-    "czas_s": 202.0
+    "progi": {
+      "min_frekw_cel": 3,
+      "min_materialow": 2,
+      "min_frekw_jeden_material": 5,
+      "ogolne_min_przedmiotow": 3,
+      "ogolne_min_materialow": 3,
+      "ogolne_min_frekw": 5,
+      "max_udzial_nazw_wlasnych": 0.5,
+      "max_dlugosc": 4
+    },
+    "czas_s": 6.1
   }
 }

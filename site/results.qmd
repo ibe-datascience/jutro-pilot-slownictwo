@@ -14,6 +14,9 @@ opis, dobor = L.metrics("opis_danych"), L.metrics("dobor_materialow")
 czasy, m41, m42, m43 = (L.metrics(n) for n in ["tagowanie_czasy", "ocena_41", "ekstrakcja_42", "frekwencje_43"])
 m5, m6, m7 = (L.metrics(n) for n in ["llm_5", "pule_6", "pseudoslowa_7"])
 kand = L.csv("kandydaci.csv")
+cfg = __import__("yaml").safe_load((L.ROOT / "config" / f"{L.NAME}.yaml").read_text(encoding="utf-8"))
+short = lambda m: str(m or "–").replace("claude-", "")
+pct = lambda v: f"{100 * v:.1f}%" if isinstance(v, (int, float)) else "–"
 plt.rcParams.update({"figure.dpi": 110, "axes.spines.top": False, "axes.spines.right": False, "font.size": 9})
 INK, ACCENT, MUTED = "#2c3e50", "#18bc9c", "#b4bcc2"
 
@@ -266,58 +269,132 @@ L.table([(" vs ".join(names.get(x, x) for x in k.split("_vs_")), v) for k, v in 
 ## 4 · Candidate extraction {#extraction}
 
 ```{python}
-L.table([("Candidates after frequency filters", m42.get("n_kandydatow")), ("… single-word", m42.get("n_jednowyrazowych")),
-         ("… multiword", m42.get("n_mwu")), ("TermoPL ran", m42.get("termopl")),
-         ("Silver standard: glossary entries", m42.get("srebrny", {}).get("slowniczek")),
-         ("Silver standard: editors' base forms", m42.get("srebrny", {}).get("pojecie_ref"))], ["Measure", "Value"])
-L.md("Rule-based pre-labels (thresholds on dispersion and frequency; a starting point for step 5, not a result):")
-kv(m42.get("etykiety_regulowe", {}), ("Pre-label", "Candidates"), sort=True)
+mian, pr = m42.get("mianowniki", {}), m42.get("progi", {})
+L.table([("Subject candidates after the thresholds", m42.get("n_kandydatow")), ("… single-word", m42.get("n_jednowyrazowych")),
+         ("… multiword", m42.get("n_mwu")),
+         ("… found in one material only (kept because frequent there)", m42.get("n_kandydatow_z_jednego_materialu")),
+         ("General candidates (source of T1/T2 items)", m42.get("n_kandydatow_ogolnych")),
+         ("… not among the subject candidates", m42.get("n_kandydatow_ogolnych_tylko")),
+         ("Lemmas dropped as proper names", m42.get("n_odrzuconych_nazw_wlasnych")),
+         ("Terms returned by TermoPL", m42.get("termopl_terminow")),
+         ("… linked to a candidate", m42.get("termopl_dopasowanych_kandydatow"))], ["Measure", "Value"])
 ```
+
+A subject candidate needs at least `{python} num(pr.get("min_frekw_cel"))` occurrences in at least
+`{python} num(pr.get("min_materialow"))` biology materials, or at least `{python} num(pr.get("min_frekw_jeden_material"))`
+occurrences if it is found in a single material. A general candidate needs at least
+`{python} num(pr.get("ogolne_min_frekw"))` occurrences in at least `{python} num(pr.get("ogolne_min_materialow"))`
+materials of at least `{python} num(pr.get("ogolne_min_przedmiotow"))` other subjects. Keyness is computed with the
+true corpus sizes: `{python} num(mian.get("slowa_cel"))` words of biology, `{python} num(mian.get("slowa_kontrast"))`
+words of contrast, `{python} num(int(mian.get("kwjp_suma_listy") or 0))` words behind the KWJP100 list. For a
+multiword candidate PMI and logDice are computed for each pair of adjacent words and the lowest value is kept, so a
+phrase scores high only if every link in it is strong.
+
+### How much of the silver standard is reachable
+
+```{python}
+cov = m42.get("srebrny_pokrycie", {})
+lab = {"slowniczek": "Glossary entries", "pojecie_ref": "Editors' base forms of linked terms"}
+L.table([(lab.get(k, k), d.get("hasla"), d.get("hasla_wielowyrazowe"), d.get("wydobyte_z_korpusu_docelowego"),
+          d.get("wsrod_kandydatow_po_progach"), d.get("wsrod_kandydatow_po_progach_wielowyrazowe"), pct(d.get("udzial_wsrod_kandydatow")))
+         for k, d in cov.items()],
+        ["Silver standard (target materials)", "Entries", "… multiword", "Found in the corpus by the extraction",
+         "Among candidates after the thresholds", "… multiword", "Share among candidates"])
+```
+
+The last column is the ceiling for recall of any ranking: an entry that is not a candidate cannot be ranked. Entries
+are lost mostly to the frequency thresholds, which matter more on a small sample.
 
 ### Precision and recall at K against the silver standards
 
-Each method ranks all candidates; the table shows what share of its top K is in the silver standard (P@K) and what
-share of the silver items present among the candidates it has reached by K (R@K).
+Each method ranks the candidates it can score; P@K is the share of its top K that is in the silver standard, R@K the
+share of the silver items among the candidates that it has reached by K. The *baseline* row is the share of silver
+items among all candidates, which is what a random ranking would achieve.
 
 ```{python}
-prec = m42.get("precyzja_wzgledem_srebrnego", {})
+prec, base = m42.get("precyzja_wzgledem_srebrnego", {}), m42.get("precyzja_poziom_odniesienia", {})
 mlab = {"ll_kontrast": "log-likelihood vs contrast", "log_ratio_kontrast": "log ratio vs contrast",
-        "simple_maths_kwjp": "Simple Maths vs KWJP100", "tfidf_biol": "TF-IDF across subjects",
-        "pmi_mwu": "PMI (multiword)", "logdice_mwu": "logDice (multiword)", "cvalue_termopl": "TermoPL C-value"}
-sets = {"vs_union": "Union of both", "vs_slowniczek": "Glossary entries", "vs_pojecie_ref": "Editors' base forms"}
+        "simple_maths_kwjp": "Simple Maths vs KWJP100", "ll_kwjp": "log-likelihood vs KWJP100", "tfidf_biol": "TF-IDF across subjects",
+        "pmi_mwu": "PMI (multiword)", "logdice_mwu": "logDice (multiword)", "cvalue_termopl": "TermoPL C-value",
+        "rrf": "reciprocal-rank fusion of the methods", "frekwencja_cel": "frequency in biology alone"}
+univ = {"wszystkie": "All candidates", "jednowyrazowe": "Single words", "wielowyrazowe": "Multiword"}
 parts = ["::: {.panel-tabset}"]
-for key, title in sets.items():
-    rows = []
+for u, title in univ.items():
+    rows = [("*baseline: random ranking*", "", *[base.get(u, {}).get("vs_union")] * 3, "", "", "")]
     for m, d in prec.items():
-        if "status" in d:
-            rows.append((mlab.get(m, m), d["status"], *[""] * 5))
-        else:
-            v = d.get(key, {})
-            rows.append((mlab.get(m, m), *[v.get(f"{x}@{k}") for x in "pr" for k in (100, 300, 1000)]))
-    parts += [f"#### {title}", L.table_md(rows, ["Method", "P@100", "P@300", "P@1000", "R@100", "R@300", "R@1000"])]
+        v = (d.get(u) or {}).get("vs_union")
+        if v:
+            rows.append((mlab.get(m, m), v.get("n_ranking"), *[v.get(f"{x}@{k}") for x in "pr" for k in (100, 300, 1000)]))
+    parts += [f"#### {title}", L.table_md(rows, ["Method", "Candidates ranked", "P@100", "P@300", "P@1000", "R@100", "R@300", "R@1000"])]
 L.md("\n\n".join(parts + [":::"]))
 ```
 
-The silver standard only contains what ZPE editors chose to put in glossaries, so low precision does not mean the
-top candidates are wrong. It supports comparison between methods only.
+Both silver standards are taken together here; the figures for each one separately are in the raw metrics file. The
+silver standard only contains what ZPE editors chose to explain, so low precision does not mean the top candidates
+are wrong. It supports comparison between methods only.
+
+```{python}
+mv = m5.get("metody_wzgledem_etykiet_llm", {})
+if mv:
+    L.md("### The same rankings against the final labels of step 5\n\nShare of the top K that the models finally "
+         "labelled **T3**. The labels come from language models, not from people, so this is a second imperfect "
+         "yardstick, but unlike the glossaries it covers every candidate.")
+    parts = ["::: {.panel-tabset}"]
+    for u, title in univ.items():
+        rows = [("*baseline: share of T3 among candidates*", "", "", *[mv.get("poziom_odniesienia", {}).get(u)] * 3, "", "", "")]
+        for m, d in mv.items():
+            v = d.get(u) if m != "poziom_odniesienia" else None
+            if v:
+                rows.append((mlab.get(m, m), v.get("n_ranking"), v.get("n_T3"), *[v.get(f"{x}@{k}") for x in "pr" for k in (100, 300, 1000)]))
+        parts += [f"#### {title}", L.table_md(rows, ["Method", "Candidates ranked", "T3 among them", "P@100", "P@300", "P@1000", "R@100", "R@300", "R@1000"])]
+    L.md("\n\n".join(parts + [":::"]))
+```
+
+```{python}
+#| fig-cap: "Precision at 300 of each ranking against the final T3 label, all candidates."
+#| fig-alt: "Horizontal bar chart of precision at 300 by extraction method, with the baseline share of T3 as a vertical line."
+rows = sorted(((mlab.get(m, m), (d.get("wszystkie") or {}).get("p@300")) for m, d in mv.items() if m != "poziom_odniesienia"),
+              key=lambda x: x[1] or 0)
+rows = [r for r in rows if r[1] is not None]
+if rows:
+    fig, ax = plt.subplots(figsize=(6.4, 0.32 * len(rows) + 1))
+    bars = ax.barh([r[0] for r in rows], [r[1] for r in rows], color=INK)
+    ax.bar_label(bars, fmt="%.2f", padding=3)
+    b0 = mv.get("poziom_odniesienia", {}).get("wszystkie")
+    if b0:
+        ax.axvline(b0, color=ACCENT, lw=1.5); ax.text(b0, len(rows) - 0.4, " share of T3", color=ACCENT, va="bottom", fontsize=8)
+    ax.set_xlim(0, 1); ax.set_xlabel("P@300 against the final T3 label")
+    plt.tight_layout(); plt.show()
+```
 
 ## 5 · LLM classification {#llm}
 
 ```{python}
-ag = m5.get("zgodnosc_miedzy_modelami", {})
-rows = [("Candidates labelled", m5.get("n_klasyfikowanych")), ("Adjudicated (models disagreed or low confidence)", m5.get("n_rozstrzyganych_opus")),
-        ("Agreement between the two models", ag.get("prosta"))]
-rows += [(f"Cohen's κ, {k.replace('_vs_', ' vs ')}", v) for k, v in (ag.get("kappa") or {}).items()]
-rows += [("Materials used for direct LLM term extraction", m5.get("n_materialow_ekstrakcja")), ("Prompt version", m5.get("wersja_promptu")),
-         ("API spend so far for this configuration, all runs", f"${m5.get('koszt_usd_dotychczas', 0):.4f}"),
-         ("Wall-clock time of the step", f"{num(m5.get('czas_s'))} s")]
+mod, ag = m5.get("modele", {}), m5.get("zgodnosc_miedzy_modelami", {})
+a_name, b_name = (short(x) for x in (mod.get("porownywane") or ["–", "–"])[:2])
+judge = short(mod.get("rozstrzygajacy"))
+```
+
+Two models, **`{python} a_name`** and **`{python} b_name`**, label every candidate independently. Each sees the
+candidate, its counts in biology and in the other subjects, and up to three sentences from the corpus; neither sees
+the rule-based pre-label or the other model's answer. Where the two labels differ, or either model reports low
+confidence, **`{python} judge`** labels the candidate as well and the majority of the three decides. If all three
+differ, the adjudicator's label is used and the row is marked for review.
+
+```{python}
+rows = [("Candidates labelled", m5.get("n_klasyfikowanych")), ("… subject candidates", m5.get("n_klasyfikowanych_przedmiotowych")),
+        ("… general candidates only (stratified sample)", m5.get("n_klasyfikowanych_ogolnych")),
+        (f"Agreement between {a_name} and {b_name}", ag.get("prosta")), ("Cohen's κ", ag.get("kappa")),
+        ("Adjudicated", m5.get("n_rozstrzyganych")), ("Left for review after adjudication", m5.get("n_do_przegladu")),
+        ("Base forms corrected by the models", m5.get("n_form_poprawionych")), ("Prompt version", m5.get("wersja_promptu")),
+        ("Wall-clock time of the step", f"{num(m5.get('czas_s'))} s")]
 L.table(rows, ["Measure", "Value"])
 ```
 
 ::: {.callout-warning title="Agreement is not accuracy"}
 There are no human labels yet. The worksheet for double annotation is on the
-[Annotation worksheets](sheets.qmd) page; precision, recall and F1 against people can be reported only after it is
-filled in.
+[Annotation worksheets](sheets.qmd) page; once it is filled in, step 6 reports precision, recall and F1 of the
+final labels against people.
 :::
 
 ::: {.panel-tabset}
@@ -325,99 +402,227 @@ filled in.
 #### Final labels
 
 ```{python}
-cat = {"T3": "T3 · subject term", "T2": "T2 · school / academic vocabulary", "T1": "T1 · everyday vocabulary", "SZUM": "SZUM · noise"}
-L.table([(cat.get(k, k), v) for k, v in m5.get("rozklad_final", {}).items()], ["Final label of LLM-labelled candidates", "Candidates"])
+cat = {"T3": "T3 · biology term", "T3_INNY": "T3_INNY · term of another subject", "T2": "T2 · school / academic vocabulary",
+       "T1": "T1 · everyday vocabulary", "SZUM": "SZUM · not usable as a test item"}
+fa, fs, fg = (m5.get(k, {}) for k in ("rozklad_final", "rozklad_final_przedmiotowe", "rozklad_final_tylko_ogolne"))
+L.table([(cat[k], fa.get(k, 0), fs.get(k, 0), fg.get(k, 0)) for k in cat], ["Final label", "All", "Subject candidates", "General candidates only"])
+noise = {"fragment_terminu": "part of a longer term", "luzne_polaczenie": "free word combination", "nazwa_wlasna": "proper name",
+         "blad_ekstrakcji": "extraction error", "interfejs": "platform interface or instruction text", "inne": "other",
+         "brak": "not specified"}
+L.md("Kinds of noise:")
+L.table([(noise.get(k, k), v) for k, v in m5.get("typy_szumu", {}).items()], ["Kind", "Candidates"])
+```
+
+#### Agreement by group
+
+```{python}
+seg = {"wszystkie": "all", "przedmiotowe": "subject candidates", "tylko_ogolne": "general candidates only",
+       "jednowyrazowe": "single words", "wielowyrazowe": "multiword"}
+L.table([(seg.get(k, k), d.get("n"), d.get("prosta"), d.get("kappa")) for k, d in ag.get("wg_segmentu", {}).items()],
+        ["Candidates", "n", "Agreement", "Cohen's κ"])
+vf = m5.get("zgodnosc_z_etykieta_koncowa", {})
+L.md("Agreement of each model with the final label:")
+L.table([(k.replace("_", " "), d.get("n"), d.get("prosta"), d.get("kappa")) for k, d in vf.items()], ["Model", "n", "Agreement", "Cohen's κ"])
 ```
 
 #### Model against model
 
 ```{python}
-mcols = [c for c in kand.columns if c.endswith("_kategoria") and not c.startswith("opus")]
-if len(mcols) >= 2:
-    a, b = mcols[:2]
-    sub = kand.dropna(subset=[a, b])
-    ct = pd.crosstab(sub[a], sub[b]).reset_index().rename(columns={a: f"{a.replace('_kategoria', '')} ↓ / {b.replace('_kategoria', '')} →"})
-    L.df_table(ct)
-    L.md(f"Computed from `kandydaci.csv`, {num(len(sub))} candidates labelled by both models.")
+mp = m5.get("macierz_pomylek", {})
+data, order = mp.get("dane", {}), list(cat)
+cols = [c for c in order if c in data]
+rows = [(r, *[data.get(c, {}).get(r, 0) for c in cols]) for r in order if any(r in data.get(c, {}) for c in cols)]
+L.table(rows, [f"{mp.get('wiersze', '').replace('_', ' ')} ↓ / {mp.get('kolumny', '').replace('_', ' ')} →", *cols])
 ```
 
-#### Adjudicated cases
+#### Adjudication
 
 ```{python}
-ocols = [c for c in kand.columns if c.startswith("opus") and c.endswith("_kategoria")]
-if ocols and len(mcols) >= 2:
-    adj = kand.dropna(subset=ocols[:1])
-    rows = [(m.replace("_kategoria", ""), int((adj[m] == adj[ocols[0]]).sum()), len(adj)) for m in mcols[:2]]
-    L.table(rows, ["Model", "Cases where the adjudicator chose the same label", "Adjudicated cases"])
+js = m5.get("rozstrzygniecia", {})
+rows = [("Cases sent to the adjudicator", js.get("n")), ("… because the two labels differed", js.get("powod_rozbieznosc_etykiet")),
+        ("… labels agreed, but a model reported low confidence", js.get("powod_niska_pewnosc_przy_zgodzie"))]
+rows += [(f"Adjudicator chose the label of {k.replace('_', ' ')}", v) for k, v in js.get("zgodny_z", {}).items()]
+rows += [("Adjudicator chose a third label", js.get("inny_niz_oba"))]
+L.table(rows, ["Measure", "Cases"])
+L.md("Where the two models agreed with each other, the adjudicator's agreement is counted for both.")
+```
+
+#### Rules against models
+
+```{python}
+rl = m5.get("regula_wzgledem_llm", {})
+L.md("Step 4 also assigns a pre-label from thresholds on dispersion and frequency alone. It is not shown to the models "
+     "and not used for the pools; the table shows how far such rules would get.")
+L.table([("Subject candidates with a final label", rl.get("n_kandydatow_przedmiotowych")),
+         ("… for which the rules gave a label", rl.get("regula_rozstrzygnela")),
+         ("Agreement of the rule label with the final label", pct(rl.get("zgodnosc_z_etykieta_koncowa"))),
+         ("Precision of the rule label T3", pct(rl.get("precyzja_T3_reguly"))),
+         ("Recall of the rule label T3", pct(rl.get("pelnosc_T3_reguly")))], ["Measure", "Value"])
 ```
 
 :::
+
+### Direct extraction by a language model
+
+```{python}
+ex = m5.get("ekstrakcja_llm", {})
+if ex.get("n_terminow"):
+    L.md(f"As an independent check of step 4, {short(ex.get('model'))} read {num(ex.get('n_materialow'))} biology materials "
+         "and listed the terms in them. The table shows how many of those terms the statistical extraction had also found.")
+    L.table([("Distinct terms listed", ex.get("n_terminow")), ("… labelled as biology terms (T3)", ex.get("n_terminow_T3")),
+             ("… … multiword", ex.get("n_terminow_T3_wielowyrazowych")),
+             ("Share of those T3 terms that are candidates of step 4", pct(ex.get("T3_wsrod_kandydatow"))),
+             ("… single words", pct(ex.get("T3_jednowyrazowe_wsrod_kandydatow"))),
+             ("… multiword", pct(ex.get("T3_wielowyrazowe_wsrod_kandydatow"))),
+             ("Share that also carry the final label T3", pct(ex.get("T3_z_etykieta_koncowa_T3")))], ["Measure", "Value"])
+    L.md("The terms that are not candidates are listed on the [Pools](pools.qmd) page. On a sample, most are missing "
+         "because they occur fewer times than the frequency threshold.")
+else:
+    L.md("Not run.")
+```
+
+### Concepts
+
+```{python}
+pj = m5.get("pojecia", {})
+L.table([("Model", short(pj.get("model"))), ("Subject terms given to the model", pj.get("n_terminow")),
+         ("Groups of two or more terms", pj.get("n_grup")), ("Terms in such groups", pj.get("n_terminow_w_grupach")),
+         ("Terms in the answer that were not on the list (ignored)", pj.get("n_terminow_spoza_listy_pominietych"))], ["Measure", "Value"], "ll")
+```
+
+### Cost
+
+```{python}
+# stan księgi kosztów zapisany przez krok raportu (obejmuje też żądania wysłane po kroku 5, np. pseudosłowa)
+m8k = L.metrics("koszty_8") or {"wg_zadania": m5.get("koszty_usd_wg_zadania", {}), "przebieg": m5.get("koszt_usd_przebieg"),
+                                "dotychczas": m5.get("koszt_usd_dotychczas")}
+costs = m8k.get("wg_zadania") or {}
+L.table([(k.split(" / ")[0], short(k.split(" / ")[-1]), f"{v:.2f}") for k, v in costs.items()], ["Task", "Model", "USD"], "llr")
+L.md(f"All API tasks of the pipeline are listed, not only step 5: the lemmatisation benchmark (step 2), classification, "
+     f"direct extraction and concepts (step 5), pseudoword generation and rating (step 7), and test requests. "
+     f"Sum for this run: **{m8k.get('przebieg') or 0:.2f} USD**; for all runs of this configuration so far: "
+     f"**{m8k.get('dotychczas') or 0:.2f} USD**. Tasks of earlier prompt versions are included. Requests go through "
+     "the Batch API with prompt caching; the limit set in the configuration is "
+     f"{cfg['llm']['limit_kosztu_usd']} USD.")
+```
 
 ## 6 · Pools {#pools}
 
 ```{python}
+dp = m6.get("dopasowanie", {})
 L.table([("Rows in `kandydaci.csv`", m6.get("n_kandydaci_csv")), ("Subject pool (T3)", m6.get("n_pula_przedmiotowa")),
-         ("General pool (T1 + T2)", m6.get("n_pula_ogolna")), ("Concept groups", m6.get("n_pojec")),
+         ("… multiword terms", m6.get("n_pula_przedmiotowa_wielowyrazowe")),
+         ("General pool", m6.get("n_pula_ogolna")), ("… T1", m6.get("n_pula_ogolna_T1")), ("… T2", m6.get("n_pula_ogolna_T2")),
+         ("Concepts", m6.get("n_pojec")), ("… grouping more than one term", m6.get("n_pojec_wieloterminowych")),
+         ("Rows left out as duplicates after correction of the base form", m6.get("n_duplikatow_formy")),
+         ("Pool items marked for review", m6.get("n_do_przegladu_w_pulach")),
          ("Rows in the gold-set worksheet", m6.get("n_zloty"))], ["Measure", "Value"])
-src = kand["kategoria_final"].notna().map({True: "LLM", False: "rule only"})
-ct = pd.crosstab(kand["kategoria"], src)
-ct["all"] = ct.sum(axis=1)
-ct = ct.sort_values("all", ascending=False).reset_index().rename(columns={"kategoria": "Label used for the pools"})
-L.md("Where the label of each candidate comes from:")
-L.df_table(ct)
-```
-
-```{python}
-#| fig-cap: "Candidates by label and by source of the label."
-#| fig-alt: "Stacked horizontal bar chart of candidate counts per label, split into LLM-labelled and rule-only."
-fig, ax = plt.subplots(figsize=(6.2, 2.3))
-lab = ct.iloc[::-1]
-left = None
-for colname, color in [("LLM", INK), ("rule only", MUTED)]:
-    if colname in lab:
-        ax.barh(lab.iloc[:, 0], lab[colname], left=left, color=color, label=colname)
-        left = lab[colname] if left is None else left + lab[colname]
-ax.legend(frameon=False); ax.set_xlabel("candidates")
-plt.tight_layout(); plt.show()
-```
-
-`do_llm` are candidates the rules left undecided and that were not among those sent to the models; they are in
-neither pool.
-
-## 7 · Pseudowords {#pseudowords}
-
-```{python}
-acc, rej = L.csv("pseudoslowa.csv"), L.csv("pseudoslowa_odrzucone.csv")
-L.table([("Templates (real words)", m7.get("n_szablonow")), ("Pseudoword rows kept", m7.get("n_zaakceptowanych")),
-         ("… distinct strings", acc["pseudoslowo"].nunique()), ("Rows rejected by the filters", m7.get("n_odrzuconych"))], ["Measure", "Value"])
-rows = []
-for m in sorted(set(acc["metoda"]) | set(rej["metoda"])):
-    a, r = acc[acc["metoda"] == m], rej[rej["metoda"] == m]
-    rows.append((f"`{m}`", len(a) + len(r), len(a), a["pseudoslowo"].nunique(), len(r)))
-L.table(rows, ["Generator", "Generated", "Kept", "Kept, distinct strings", "Rejected"])
 ```
 
 ::: {.panel-tabset}
 
-#### Rejection reasons
+#### Labels of all rows
 
 ```{python}
-why = {"znane_morfeusz": "known to Morfeusz2 (a real word form)", "sufiks_na_istniejacym": "productive suffix on an existing stem",
-       "prefiks_na_istniejacym": "productive prefix on an existing stem", "literowka_edit1": "one edit away from a real word",
-       "wordfreq_istnieje": "found in wordfreq", "homofon_wordfreq": "homophone of a real word",
-       "w_leksykonie_korpusu": "occurs in the corpus", "niealfabetyczne": "contains non-letters"}
-L.table([(why.get(k, k), v) for k, v in m7.get("odrzucenia_powody", {}).items()], ["Reason", "Rows"])
+kv({cat.get(k, "not sent to the models" if k == "nieklasyfikowany" else k): v for k, v in m6.get("rozklad_kategorii", {}).items()},
+   ("Label in `kandydaci.csv`", "Rows"), sort=True)
 ```
 
-#### Real words against pseudowords
+#### Parts of speech
 
 ```{python}
-ro = m7.get("rozklady", {})
-feat = {"dlugosc": "Length in letters", "syl": "Syllables", "zbitka": "Longest run of consonant letters", "diakryty": "Diacritic letters"}
-rows = [(f, *[ro.get(p, {}).get(f"{k}_{s}") for p in ("prawdziwe", "pseudoslowa") for s in ("mean", "std")]) for k, f in feat.items()]
-L.table(rows, ["Feature", "Templates, mean", "Templates, SD", "Pseudowords, mean", "Pseudowords, SD"])
+pos = {"rzeczownik": "noun", "przymiotnik": "adjective", "czasownik": "verb", "przysłówek": "adverb", "fraza": "multiword", "inne": "other"}
+a, b = m6.get("pula_przedmiotowa_pos", {}), m6.get("pula_ogolna_pos", {})
+L.table([(pos.get(k, k), a.get(k, 0), b.get(k, 0)) for k in sorted(set(a) | set(b), key=lambda k: -(a.get(k, 0) + b.get(k, 0)))],
+        ["Part of speech", "Subject pool", "General pool"])
+```
+
+#### Imageability of subject terms
+
+```{python}
+im = {"tak": "yes", "czesciowo": "partly", "nie": "no"}
+kv({im.get(k, k): v for k, v in m6.get("obrazowalnosc_T3", {}).items()}, ("Can be shown in a picture (model judgement)", "Terms"), sort=True)
 ```
 
 :::
 
-The lists themselves, and a note on the `unipseudo` rows, are on the [Pseudowords](pseudowords.qmd) page.
+### Matching the general pool to the subject pool
+
+```{python}
+L.table([("Subject terms", dp.get("n_terminow")), ("… with a matched general item", dp.get("n_dopasowanych")),
+         ("Share matched", pct(dp.get("udzial_dopasowanych"))),
+         ("Mean absolute difference in Zipf frequency within pairs", dp.get("srednia_abs_delta_zipf")),
+         ("Mean absolute difference in letters within pairs", dp.get("srednia_abs_delta_liter"))], ["Measure", "Value"])
+L.md("Balance: standardised mean difference between subject terms and general items, before matching (whole pools) "
+     "and after (pairs only). Values near 0 mean the two groups do not differ on that feature.")
+L.table([("Zipf frequency", dp.get("smd_zipf_przed"), dp.get("smd_zipf_po")), ("Length in letters", dp.get("smd_liter_przed"), dp.get("smd_liter_po"))],
+        ["Feature", "Before matching", "After matching"])
+st = {"rzeczownik": "nouns", "przymiotnik": "adjectives", "czasownik": "verbs", "przysłówek": "adverbs", "inne": "other single words",
+      "fraza 2": "two-word phrases", "fraza 3": "phrases of three or more words"}
+L.table([(st.get(k, k), d.get("terminy"), d.get("pula_ogolna"), d.get("dopasowane"), pct(d.get("udzial")))
+         for k, d in sorted(dp.get("wg_warstwy", {}).items(), key=lambda x: -x[1].get("terminy", 0))],
+        ["Stratum", "Subject terms", "General items available", "Matched", "Share"])
+```
+
+Subject terms are on average rarer in general Polish than everyday and school words, so not every term can have a
+partner within the calipers; unmatched terms stay in the pool with an empty `dopasowanie_ogolne`.
+
+```{python}
+ge = m6.get("zloty_ocena")
+if ge and ge.get("n_oznaczonych_A"):
+    L.md("### Final labels against the human annotation")
+    L.md(f"````json\n{json.dumps(ge, ensure_ascii=False, indent=2)}\n````")
+```
+
+## 7 · Pseudowords {#pseudowords}
+
+```{python}
+L.table([("Templates (real nouns and verbs)", m7.get("n_szablonow")), ("Candidates generated", m7.get("n_wygenerowanych")),
+         ("Rejected by the hard filters", m7.get("n_odrzuconych")), ("Distinct strings that passed", m7.get("n_zaakceptowanych")),
+         ("Rated by the model", m7.get("n_ocenianych")), ("… rated positively", m7.get("n_ocena_pozytywna")),
+         ("Recommended list", m7.get("n_wybranych")), ("Templates with at least one recommended pseudoword", m7.get("n_szablonow_z_wybranym")),
+         ("Generating model", short(m7.get("model_generujacy"))), ("Rating model", short(m7.get("model_oceniajacy")))], ["Measure", "Value"], "ll")
+```
+
+::: {.panel-tabset}
+
+#### By generator
+
+```{python}
+rows = [(f"`{m}`", d.get("wygenerowane"), d.get("przyjete"), pct(d.get("udzial_przyjetych")), d.get("oceniane"), pct(d.get("udzial_pozytywnych")),
+         d.get("srednia_wymawialnosc"), d.get("srednie_podobienstwo"), d.get("srednie_old20"), d.get("wybrane")) for m, d in m7.get("wg_metody", {}).items()]
+L.table(rows, ["Generator", "Generated", "Passed the filters", "… share", "Rated", "Rated positively", "Pronounceability (1–5)",
+               "Similarity to a word (0–3)", "OLD20", "Recommended"])
+```
+
+#### Rejection reasons
+
+```{python}
+why = {"znaki_spoza_alfabetu": "characters outside the alphabet", "istniejace_slowo": "existing word",
+       "ksztalt_niezgodny_ze_wzorcem": "length, syllables or ending differ from the template",
+       "za_blisko_wzorca": "one letter from the template", "ortotaktyka": "untypical letter pattern",
+       "literowka_czestego_slowa": "one edit from a frequent word", "homofon": "sounds like an existing word",
+       "przejrzysta_budowa": "existing stem with an affix, or a compound", "skojarzenie_wulgarne": "vulgar association",
+       "slowo_ukrainskie_lub_rosyjskie": "Ukrainian or Russian word"}
+reasons = list(m7.get("odrzucenia_powody", {}))
+meths = list(m7.get("wg_metody", {}))
+L.table([(why.get(r, r), m7["odrzucenia_powody"][r], *[m7["wg_metody"][m].get("powody", {}).get(r, 0) for m in meths]) for r in reasons],
+        ["Reason (first filter failed)", "All", *[f"`{m}`" for m in meths]])
+```
+
+#### Templates against pseudowords
+
+```{python}
+ro = m7.get("rozklady", [])
+feat = {"dlugosc": "Length in letters", "syl": "Syllables", "zbitka": "Longest consonant run", "diakryty": "Diacritic letters",
+        "old20": "OLD20", "bigram_lp": "Mean log bigram probability"}
+g = {(r["grupa"], r["cecha"]): r for r in ro} if isinstance(ro, list) else {}
+rows = [(f, g.get(("szablony", k), {}).get("srednia"), g.get(("pseudoslowa_przyjete", k), {}).get("srednia"),
+         g.get(("pseudoslowa_przyjete", k), {}).get("smd_wzgledem_szablonow"), g.get(("pseudoslowa_wybrane", k), {}).get("srednia"),
+         g.get(("pseudoslowa_wybrane", k), {}).get("smd_wzgledem_szablonow")) for k, f in feat.items()]
+L.table(rows, ["Feature", "Templates, mean", "Passed the filters, mean", "… standardised difference", "Recommended, mean", "… standardised difference"])
+```
+
+:::
+
+The lists themselves are on the [Pseudowords](pseudowords.qmd) page.

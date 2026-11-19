@@ -1,25 +1,487 @@
 {
-  "_zapisano": "2026-11-13T17:13:46+01:00",
+  "_zapisano": "2026-11-19T17:47:39+01:00",
   "_przebieg": "probka50",
   "dane": {
-    "n_klasyfikowanych": 925,
-    "n_rozstrzyganych_opus": 246,
-    "rozklad_final": {
-      "T3": 415,
-      "T2": 248,
-      "T1": 169,
-      "SZUM": 93
+    "wersja_promptu": "v2",
+    "modele": {
+      "porownywane": [
+        "claude-sonnet-5-5",
+        "claude-opus-5-5"
+      ],
+      "rozstrzygajacy": "claude-fable-5-2",
+      "ekstrakcji": "claude-opus-5-5",
+      "pojec": "claude-fable-5-2"
     },
+    "n_klasyfikowanych": 5344,
+    "n_klasyfikowanych_przedmiotowych": 3844,
+    "n_klasyfikowanych_ogolnych": 1500,
+    "n_rozstrzyganych": 1544,
+    "n_do_przegladu": 335,
+    "rozklad_final": {
+      "T2": 1729,
+      "T1": 1495,
+      "SZUM": 1104,
+      "T3": 797,
+      "T3_INNY": 219
+    },
+    "rozklad_final_przedmiotowe": {
+      "T1": 1101,
+      "T2": 1098,
+      "T3": 788,
+      "SZUM": 788,
+      "T3_INNY": 69
+    },
+    "rozklad_final_tylko_ogolne": {
+      "T2": 631,
+      "T1": 394,
+      "SZUM": 316,
+      "T3_INNY": 150,
+      "T3": 9
+    },
+    "typy_szumu": {
+      "luzne_polaczenie": 690,
+      "fragment_terminu": 238,
+      "interfejs": 103,
+      "nazwa_wlasna": 58,
+      "blad_ekstrakcji": 11,
+      "inne": 4
+    },
+    "n_form_poprawionych": 82,
     "zgodnosc_miedzy_modelami": {
-      "prosta": 0.7762,
-      "kappa": {
-        "haiku_5_5_vs_sonnet_5_5": 0.6562
+      "para": "sonnet_5_5 vs opus_5_5",
+      "prosta": 0.8093,
+      "kappa": 0.7484,
+      "wg_segmentu": {
+        "wszystkie": {
+          "n": 5344,
+          "prosta": 0.8093,
+          "kappa": 0.7484
+        },
+        "przedmiotowe": {
+          "n": 3844,
+          "prosta": 0.815,
+          "kappa": 0.7549
+        },
+        "tylko_ogolne": {
+          "n": 1500,
+          "prosta": 0.7947,
+          "kappa": 0.7151
+        },
+        "jednowyrazowe": {
+          "n": 4004,
+          "prosta": 0.7877,
+          "kappa": 0.6911
+        },
+        "wielowyrazowe": {
+          "n": 1340,
+          "prosta": 0.8739,
+          "kappa": 0.7519
+        }
       }
     },
+    "macierz_pomylek": {
+      "wiersze": "opus_5_5",
+      "kolumny": "sonnet_5_5",
+      "dane": {
+        "SZUM": {
+          "SZUM": 1016,
+          "T1": 2,
+          "T2": 12,
+          "T3": 27,
+          "T3_INNY": 16
+        },
+        "T1": {
+          "SZUM": 87,
+          "T1": 1246,
+          "T2": 370,
+          "T3": 157,
+          "T3_INNY": 62
+        },
+        "T2": {
+          "SZUM": 76,
+          "T1": 23,
+          "T2": 1276,
+          "T3": 55,
+          "T3_INNY": 62
+        },
+        "T3": {
+          "SZUM": 39,
+          "T1": 0,
+          "T2": 1,
+          "T3": 654,
+          "T3_INNY": 0
+        },
+        "T3_INNY": {
+          "SZUM": 10,
+          "T1": 0,
+          "T2": 1,
+          "T3": 19,
+          "T3_INNY": 133
+        }
+      }
+    },
+    "zgodnosc_z_etykieta_koncowa": {
+      "sonnet_5_5": {
+        "n": 5344,
+        "prosta": 0.8976,
+        "kappa": 0.865
+      },
+      "opus_5_5": {
+        "n": 5344,
+        "prosta": 0.8952,
+        "kappa": 0.8597
+      }
+    },
+    "rozstrzygniecia": {
+      "n": 1544,
+      "zgodny_z": {
+        "sonnet_5_5": 926,
+        "opus_5_5": 913
+      },
+      "inny_niz_oba": 159,
+      "powod_rozbieznosc_etykiet": 1019,
+      "powod_niska_pewnosc_przy_zgodzie": 525
+    },
+    "regula_wzgledem_llm": {
+      "n_kandydatow_przedmiotowych": 3844,
+      "regula_rozstrzygnela": 3010,
+      "zgodnosc_z_etykieta_koncowa": 0.5086,
+      "precyzja_T3_reguly": 0.4418,
+      "pelnosc_T3_reguly": 0.7563
+    },
+    "metody_wzgledem_etykiet_llm": {
+      "poziom_odniesienia": {
+        "wszystkie": 0.205,
+        "jednowyrazowe": 0.1656,
+        "wielowyrazowe": 0.3246
+      },
+      "ll_kontrast": {
+        "wszystkie": {
+          "n_ranking": 3844,
+          "n_T3": 788,
+          "p@100": 0.47,
+          "p@300": 0.49,
+          "p@1000": 0.448,
+          "r@100": 0.0596,
+          "r@300": 0.1865,
+          "r@1000": 0.5685
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.46,
+          "p@300": 0.4467,
+          "p@1000": 0.376,
+          "r@100": 0.096,
+          "r@300": 0.2797,
+          "r@1000": 0.785
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.66,
+          "p@300": 0.52,
+          "p@1000": 0.3246,
+          "r@100": 0.2136,
+          "r@300": 0.5049,
+          "r@1000": 1.0
+        }
+      },
+      "log_ratio_kontrast": {
+        "wszystkie": {
+          "n_ranking": 3844,
+          "n_T3": 788,
+          "p@100": 0.73,
+          "p@300": 0.6733,
+          "p@1000": 0.498,
+          "r@100": 0.0926,
+          "r@300": 0.2563,
+          "r@1000": 0.632
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.71,
+          "p@300": 0.6467,
+          "p@1000": 0.421,
+          "r@100": 0.1482,
+          "r@300": 0.405,
+          "r@1000": 0.8789
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.67,
+          "p@300": 0.5233,
+          "p@1000": 0.3246,
+          "r@100": 0.2168,
+          "r@300": 0.5081,
+          "r@1000": 1.0
+        }
+      },
+      "tfidf_biol": {
+        "wszystkie": {
+          "n_ranking": 3844,
+          "n_T3": 788,
+          "p@100": 0.56,
+          "p@300": 0.5433,
+          "p@1000": 0.416,
+          "r@100": 0.0711,
+          "r@300": 0.2069,
+          "r@1000": 0.5279
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.55,
+          "p@300": 0.4767,
+          "p@1000": 0.351,
+          "r@100": 0.1148,
+          "r@300": 0.2985,
+          "r@1000": 0.7328
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.69,
+          "p@300": 0.5367,
+          "p@1000": 0.3246,
+          "r@100": 0.2233,
+          "r@300": 0.521,
+          "r@1000": 1.0
+        }
+      },
+      "simple_maths_kwjp": {
+        "wszystkie": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.74,
+          "p@300": 0.68,
+          "p@1000": 0.417,
+          "r@100": 0.1545,
+          "r@300": 0.4259,
+          "r@1000": 0.8706
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.74,
+          "p@300": 0.68,
+          "p@1000": 0.417,
+          "r@100": 0.1545,
+          "r@300": 0.4259,
+          "r@1000": 0.8706
+        }
+      },
+      "ll_kwjp": {
+        "wszystkie": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.47,
+          "p@300": 0.44,
+          "p@1000": 0.358,
+          "r@100": 0.0981,
+          "r@300": 0.2756,
+          "r@1000": 0.7474
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.47,
+          "p@300": 0.44,
+          "p@1000": 0.358,
+          "r@100": 0.0981,
+          "r@300": 0.2756,
+          "r@1000": 0.7474
+        }
+      },
+      "pmi_mwu": {
+        "wszystkie": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.38,
+          "p@300": 0.46,
+          "p@1000": 0.3246,
+          "r@100": 0.123,
+          "r@300": 0.4466,
+          "r@1000": 1.0
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.38,
+          "p@300": 0.46,
+          "p@1000": 0.3246,
+          "r@100": 0.123,
+          "r@300": 0.4466,
+          "r@1000": 1.0
+        }
+      },
+      "logdice_mwu": {
+        "wszystkie": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.53,
+          "p@300": 0.5167,
+          "p@1000": 0.3246,
+          "r@100": 0.1715,
+          "r@300": 0.5016,
+          "r@1000": 1.0
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.53,
+          "p@300": 0.5167,
+          "p@1000": 0.3246,
+          "r@100": 0.1715,
+          "r@300": 0.5016,
+          "r@1000": 1.0
+        }
+      },
+      "cvalue_termopl": {
+        "wszystkie": {
+          "n_ranking": 2432,
+          "n_T3": 677,
+          "p@100": 0.53,
+          "p@300": 0.4933,
+          "p@1000": 0.375,
+          "r@100": 0.0783,
+          "r@300": 0.2186,
+          "r@1000": 0.5539
+        },
+        "jednowyrazowe": {
+          "n_ranking": 1640,
+          "n_T3": 374,
+          "p@100": 0.22,
+          "p@300": 0.27,
+          "p@1000": 0.277,
+          "r@100": 0.0588,
+          "r@300": 0.2166,
+          "r@1000": 0.7406
+        },
+        "wielowyrazowe": {
+          "n_ranking": 792,
+          "n_T3": 303,
+          "p@100": 0.69,
+          "p@300": 0.56,
+          "p@1000": 0.3826,
+          "r@100": 0.2277,
+          "r@300": 0.5545,
+          "r@1000": 1.0
+        }
+      },
+      "rrf": {
+        "wszystkie": {
+          "n_ranking": 3844,
+          "n_T3": 788,
+          "p@100": 0.6,
+          "p@300": 0.5967,
+          "p@1000": 0.471,
+          "r@100": 0.0761,
+          "r@300": 0.2272,
+          "r@1000": 0.5977
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.56,
+          "p@300": 0.5133,
+          "p@1000": 0.384,
+          "r@100": 0.1169,
+          "r@300": 0.3215,
+          "r@1000": 0.8017
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.66,
+          "p@300": 0.57,
+          "p@1000": 0.3246,
+          "r@100": 0.2136,
+          "r@300": 0.5534,
+          "r@1000": 1.0
+        }
+      },
+      "frekwencja_cel": {
+        "wszystkie": {
+          "n_ranking": 3844,
+          "n_T3": 788,
+          "p@100": 0.16,
+          "p@300": 0.18,
+          "p@1000": 0.227,
+          "r@100": 0.0203,
+          "r@300": 0.0685,
+          "r@1000": 0.2881
+        },
+        "jednowyrazowe": {
+          "n_ranking": 2892,
+          "n_T3": 479,
+          "p@100": 0.16,
+          "p@300": 0.17,
+          "p@1000": 0.182,
+          "r@100": 0.0334,
+          "r@300": 0.1065,
+          "r@1000": 0.38
+        },
+        "wielowyrazowe": {
+          "n_ranking": 952,
+          "n_T3": 309,
+          "p@100": 0.62,
+          "p@300": 0.5067,
+          "p@1000": 0.3246,
+          "r@100": 0.2006,
+          "r@300": 0.4919,
+          "r@1000": 1.0
+        }
+      }
+    },
+    "ekstrakcja_llm": {
+      "model": "claude-opus-5-5",
+      "n_materialow": 30,
+      "n_odpowiedzi": 30,
+      "n_terminow": 1535,
+      "n_terminow_T3": 1230,
+      "n_terminow_T3_wielowyrazowych": 598,
+      "T3_wsrod_kandydatow": 0.5098,
+      "T3_jednowyrazowe_wsrod_kandydatow": 0.6234,
+      "T3_wielowyrazowe_wsrod_kandydatow": 0.3896,
+      "T3_z_etykieta_koncowa_T3": 0.4049,
+      "uwaga": "Terminy wypisane przez model z próbki materiałów; kandydat = jednostka z kroku 4 po progach frekwencji. Termin spoza kandydatów mógł wystąpić za rzadko albo nie pasować do wzorca składniowego."
+    },
+    "pojecia": {
+      "model": "claude-fable-5-2",
+      "n_terminow": 790,
+      "n_grup": 122,
+      "n_terminow_w_grupach": 275,
+      "n_terminow_spoza_listy_pominietych": 0,
+      "odpowiedz_otrzymana": true
+    },
+    "koszty_usd_wg_zadania": {
+      "ekstrakcja_terminow / claude-sonnet-5-5": 0.1685,
+      "ekstrakcja_terminow_v2 / claude-opus-5-5": 1.1898,
+      "klasyfikacja / claude-haiku-5-5": 0.0508,
+      "klasyfikacja / claude-sonnet-5-5": 1.0036,
+      "klasyfikacja_rozstrzygniecie / claude-opus-5-5": 0.6306,
+      "klasyfikacja_v2 / claude-opus-5-5": 12.6298,
+      "klasyfikacja_v2 / claude-sonnet-5-5": 6.4891,
+      "klasyfikacja_v2_rozstrzygniecie / claude-fable-5-2": 6.7484,
+      "lematyzacja_proba / claude-haiku-5-5": 0.0097,
+      "lematyzacja_proba / claude-sonnet-5-5": 0.133,
+      "lematyzacja_referencja / claude-opus-5-5": 0.4251,
+      "pojecia_v2 / claude-fable-5-2": 0.1271,
+      "pseudoslowa / claude-haiku-5-5": 0.0021,
+      "test_smoke / claude-haiku-5-5": 0.0001,
+      "test_smoke2 / claude-haiku-5-5": 0.0002,
+      "test_smoke2 / claude-opus-5-5": 0.0105,
+      "test_smoke2 / claude-sonnet-5-5": 0.0032,
+      "test_v2 / claude-fable-5-2": 0.8364,
+      "test_v2 / claude-opus-5-5": 0.4265,
+      "test_v2 / claude-sonnet-5-5": 0.215
+    },
+    "koszt_usd_przebieg": 31.0997,
+    "koszt_usd_dotychczas": 31.0997,
     "uwaga": "Zgodność między modelami NIE jest miarą trafności – brak etykiet ludzkich ze złotego zbioru.",
-    "n_materialow_ekstrakcja": 30,
-    "koszt_usd_dotychczas": 2.4354,
-    "czas_s": 1576.6,
-    "wersja_promptu": "v1"
+    "czas_s": 538.8
   }
 }

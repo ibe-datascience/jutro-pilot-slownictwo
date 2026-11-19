@@ -1,0 +1,697 @@
+termin,kategoria_ekstrakcji,n_materialow,dlugosc
+zweryfikować,T2,5,1
+mięczak,T3,3,1
+organellum,T3,3,1
+oś,T2,3,1
+ośrodkowy układ nerwowy,T3,3,3
+szkiełko podstawowe,T3,3,2
+ameba,T3,2,1
+cudzożywność,T3,2,1
+interpretować,T2,2,1
+kolagen,T3,2,1
+komórka mięśniowa,T3,2,2
+komórka nerwowa,T3,2,2
+krtań,T3,2,1
+odcinek krzyżowy,T3,2,2
+odcinek ogonowy,T3,2,2
+odcinek piersiowy,T3,2,2
+odcinek szyjny,T3,2,2
+organizm eukariotyczny,T3,2,2
+parzydełkowiec,T3,2,1
+patogen,T3,2,1
+pałeczka okrężnicy,T3,2,2
+ph,T2,2,1
+pleśń,T3,2,1
+pożywka,T3,2,1
+proporcja,T2,2,1
+roztocze,T3,2,1
+ruch pełzakowaty,T3,2,2
+runo leśne,T3,2,2
+sformułować,T2,2,1
+skrzela,T3,2,1
+szczep,T3,2,1
+szczepienie ochronne,T3,2,2
+trzon kręgu,T3,2,2
+tyflomapa,T2,2,1
+ubarwienie maskujące,T3,2,2
+wielocukier,T3,2,1
+związek nieorganiczny,T3,2,2
+aglutynina,T3,1,1
+aktywacja,T2,1,1
+akwarystyka,T3,1,1
+aminopeptydaza,T3,1,1
+amylaza jelitowa,T3,1,2
+amylaza trzustkowa,T3,1,2
+amylaza ślinowa,T3,1,2
+amyloplast,T3,1,1
+anemia,T3,1,1
+angina,T3,1,1
+antonim,T2,1,1
+antybiotykoterapia,T3,1,1
+aparat gębowy gryząco-liżący,T3,1,3
+aparat gębowy gryzący,T3,1,3
+aparat gębowy kłująco-ssący,T3,1,3
+aparat gębowy liżący,T3,1,3
+aparat gębowy ssący,T3,1,3
+aparat lotny,T3,1,2
+aparat słuchowy,T3,1,2
+astma,T3,1,1
+autotomia,T3,1,1
+badanie diagnostyczne,T3,1,2
+badanie naukowe,T2,1,2
+badanie radiologiczne,T3,1,2
+bakteria jelitowa,T3,1,2
+bakterie beztlenowe,T3,1,2
+bakterie chorobotwórcze,T3,1,2
+bakterie gnilne,T3,1,2
+bakterie tlenowe,T3,1,2
+bakteriobójczy,T3,1,1
+barwienie,T3,1,1
+barwnik oddechowy,T3,1,2
+behawioralny,T2,1,1
+behawioryzm,T3,1,1
+bezpłodność,T3,1,1
+biała krwinka,T3,1,2
+białe ciałka krwi,T3,1,3
+białko receptorowe,T3,1,2
+bielnik biały,T3,1,2
+bierne palenie,T3,1,2
+biohumus,T3,1,1
+biorca uniwersalny,T3,1,2
+borowina,T3,1,1
+brodawka sutkowa,T3,1,2
+brunatnica,T3,1,1
+budowa anatomiczna,T3,1,2
+bulwa,T3,1,1
+błona śluzowa,T3,1,2
+błonnik,T3,1,1
+błędnik,T3,1,1
+cecha morfologiczna,T3,1,2
+cecha płciowa,T3,1,2
+charakteryzować się,T2,1,2
+chlorek sodu,T2,1,2
+choroba autoimmunologiczna,T3,1,2
+choroba lekooporna,T3,1,2
+choroba przenoszona drogą płciową,T3,1,4
+choroba zakaźna,T3,1,2
+chrząstka,T3,1,1
+ciśnienie atmosferyczne,T2,1,2
+cyjanowodór,T3,1,1
+cykl miesiączkowy,T3,1,2
+cytoplazmatyczny,T3,1,1
+czas podwojenia,T3,1,2
+czepek,T3,1,1
+czerw,T3,1,1
+czerwone ciałko krwi,T3,1,3
+czynnik abiotyczny,T3,1,2
+czynnik biotyczny,T3,1,2
+czynnik rakotwórczy,T3,1,2
+czynnik rh,T3,1,2
+czynniki chorobotwórcze,T3,1,2
+częstomocz,T3,1,1
+decybel,T2,1,1
+deformacja,T2,1,1
+diagnostyka,T3,1,1
+diagnozowanie,T2,1,1
+diagram,T2,1,1
+dializa,T3,1,1
+dietetyka,T3,1,1
+dno kwiatowe,T3,1,2
+dno lasu,T3,1,2
+dobór naturalny,T3,1,2
+dobór sztuczny,T3,1,2
+dojrzały płciowo,T3,1,2
+dowód ewolucji,T3,1,2
+drapieżnictwo,T3,1,1
+droga kropelkowa,T3,1,2
+drogi oddechowe,T3,1,2
+drogi rodne,T3,1,2
+drożdże,T3,1,1
+dwoinka rzeżączki,T3,1,2
+dyfuzja,T3,1,1
+dym tytoniowy,T3,1,2
+dyskopatia,T3,1,1
+dziupla,T3,1,1
+dzięcioł duży,T3,1,2
+długosz królewski,T3,1,2
+dźwigacz,T3,1,1
+dżul,T3,1,1
+echolokacja,T3,1,1
+efektywny,T2,1,1
+ekologicznie,T3,1,1
+elektrownia geotermalna,T3,1,2
+elektrownia jądrowa,T3,1,2
+elektrownia wodna,T3,1,2
+elektrownia węglowa,T3,1,2
+elementy morfotyczne krwi,T3,1,3
+emisja,T3,1,1
+emocja,T2,1,1
+energetyka,T3,1,1
+energia odnawialna,T3,1,2
+energia wiatru,T3,1,2
+energochłonny,T3,1,1
+energooszczędny,T3,1,1
+erozja,T3,1,1
+etykieta energetyczna,T3,1,2
+euglena zielona,T3,1,2
+ewolucyjny wyścig zbrojeń,T3,1,3
+fałdopłetwe,T3,1,1
+fenek pustynny,T3,1,2
+fermentacja alkoholowa,T3,1,2
+filtracja,T3,1,1
+fiołek leśny,T3,1,2
+fizykochemiczny,T2,1,1
+fotoreceptor,T3,1,1
+fototropizm,T3,1,1
+fototropizm dodatni,T3,1,2
+fragmentacja,T3,1,1
+fruktoza,T3,1,1
+funkcja przetrwalna,T3,1,2
+funkcja życiowa,T3,1,2
+gametofit,T3,1,1
+gatunek zagrożony wyginięciem,T3,1,3
+gaz cieplarniany,T3,1,2
+gaz ziemny,T3,1,2
+gigawat,T2,1,1
+ginekolog,T3,1,1
+globulina,T3,1,1
+gniazdowanie,T3,1,1
+gody,T3,1,1
+grawitacja,T2,1,1
+gronkowiec,T3,1,1
+gruczoł przędny,T3,1,2
+gruczoł wapienny,T3,1,2
+grupa systematyczna,T3,1,2
+hemolimfa,T3,1,1
+herc,T2,1,1
+hibernacja,T3,1,1
+hipotetyczny,T2,1,1
+hirudyna,T3,1,1
+hydroelektrownia,T3,1,1
+hydroid,T3,1,1
+idea,T2,1,1
+implant słuchowy,T3,1,2
+impuls nerwowy,T3,1,2
+informacja genetyczna,T3,1,2
+infradźwięk,T3,1,1
+ingerencja,T2,1,1
+instynkt,T3,1,1
+interwencja,T2,1,1
+jadłospis,T3,1,1
+jama ciała,T3,1,2
+jama gębowa,T3,1,2
+jama nosowa,T3,1,2
+jama piersiowa,T3,1,2
+jednostka długości,T2,1,2
+jelito grube,T3,1,2
+języcznik zwyczajny,T3,1,2
+kamień moczowy,T3,1,2
+kamień nerkowy,T3,1,2
+kandydoza,T3,1,1
+katalizator,T2,1,1
+kategoria systematyczna,T3,1,2
+kawior,T3,1,1
+keratyna,T3,1,1
+kieł,T3,1,1
+kiełkować,T3,1,1
+kifoza,T3,1,1
+kilokaloria,T3,1,1
+kilowatogodzina,T2,1,1
+kit pszczeli,T3,1,2
+klasa energetyczna,T3,1,2
+klimat umiarkowany,T2,1,2
+kofeina,T3,1,1
+kolektor słoneczny,T3,1,2
+komórka bezjądrowa,T3,1,2
+komórka eukariotyczna,T3,1,2
+komórka jądrowa,T3,1,2
+komórka macierzysta,T3,1,2
+komórka plemnikowa,T3,1,2
+komórka potomna,T3,1,2
+komórka tłuszczowa,T3,1,2
+komórka światłoczuła,T3,1,2
+kondensor,T3,1,1
+konsystencja,T2,1,1
+kontrast,T2,1,1
+konwencjonalny,T2,1,1
+kopalnia odkrywkowa,T3,1,2
+kopytne,T3,1,1
+kora mózgowa,T3,1,2
+korona drzewa,T3,1,2
+korona zęba,T3,1,2
+kosmek jelitowy,T3,1,2
+kość biodrowa,T3,1,2
+kość ciemieniowa,T3,1,2
+kość czołowa,T3,1,2
+kość jarzmowa,T3,1,2
+kość krzyżowa,T3,1,2
+kość kulszowa,T3,1,2
+kość miedniczna,T3,1,2
+kość nosowa,T3,1,2
+kość piszczelowa,T3,1,2
+kość potyliczna,T3,1,2
+kość promieniowa,T3,1,2
+kość płaska,T3,1,2
+kość ramienna,T3,1,2
+kość różnokształtna,T3,1,2
+kość skroniowa,T3,1,2
+kość strzałkowa,T3,1,2
+kość udowa,T3,1,2
+kość łokciowa,T3,1,2
+kość łonowa,T3,1,2
+krwinka biała,T3,1,2
+krwinka czerwona,T3,1,2
+krwiobieg,T3,1,1
+krwiodawca,T3,1,1
+krwiomocz,T3,1,1
+krwioplucie,T3,1,1
+kryształ,T2,1,1
+krzywica,T3,1,1
+kręgowce bezszczękowe,T3,1,2
+kręgowce szczękowe,T3,1,2
+krętek blady,T3,1,2
+kwiatostan,T3,1,1
+kądziołki przędne,T3,1,2
+kłujka,T3,1,1
+laboratorium,T2,1,1
+laktaza,T3,1,1
+laktoza,T3,1,1
+latimeria,T3,1,1
+lek moczopędny,T3,1,2
+lek przeciwbakteryjny,T3,1,2
+leptoid,T3,1,1
+leśnictwo,T3,1,1
+limfocyt b,T3,1,2
+linia boczna,T3,1,2
+linia naboczna,T3,1,2
+lipaza jelitowa,T3,1,2
+lipaza trzustkowa,T3,1,2
+listownica,T3,1,1
+liścień,T3,1,1
+lokomocja,T3,1,1
+mammografia,T3,1,1
+marsylia czterolistna,T3,1,2
+materiał biologiczny,T3,1,2
+metal ciężki,T3,1,2
+miano coli,T3,1,2
+miesiączka,T3,1,1
+mieszek,T3,1,1
+mikrobiolog,T3,1,1
+mikrobiologia,T3,1,1
+mikroflora fizjologiczna,T3,1,2
+mikroskop stereoskopowy,T3,1,2
+mimetyzm,T3,1,1
+mimikra,T3,1,1
+mioglobina,T3,1,1
+mięczaki,T3,1,1
+mięśnie międzyżebrowe,T3,1,2
+mięśnie oddechowe,T3,1,2
+mięśniówka,T3,1,1
+mleczko pszczele,T3,1,2
+mocz pierwotny,T3,1,2
+mocznik,T3,1,1
+morszczyn,T3,1,1
+muchówka,T3,1,1
+mułożerca,T3,1,1
+mycie zębów,T3,1,2
+mózgoczaszka,T3,1,1
+nabłonek zmysłowy,T3,1,2
+nadciśnienie,T3,1,1
+nadgarstek,T3,1,1
+nadwaga,T3,1,1
+nagonasienne,T3,1,1
+nanometr,T2,1,1
+napar,T2,1,1
+narybek,T3,1,1
+narząd cortiego,T3,1,2
+narząd kopulacyjny,T3,1,2
+narząd szczątkowy,T3,1,2
+narządy gębowe,T3,1,2
+narządy gębowe typu gryzącego,T3,1,4
+nasienie,T3,1,1
+nawyk zdrowotny,T3,1,2
+nefron,T3,1,1
+nerw słuchowy,T3,1,2
+nerw wzrokowy,T3,1,2
+niedosłuch,T3,1,1
+niedotlenienie,T3,1,1
+nieodnawialne zasoby przyrody,T3,1,3
+niepełnosprawność intelektualna,T3,1,2
+niepłodność,T3,1,1
+niełupka,T3,1,1
+nora,T3,1,1
+nukleaza,T3,1,1
+obliczać,T2,1,1
+obornik,T3,1,1
+obraz odwrócony,T3,1,2
+obraz prosty,T3,1,2
+obrona chemiczna,T3,1,2
+obrona czynna,T3,1,2
+obrona mechaniczna,T3,1,2
+obrotnik,T3,1,1
+obręcz barkowa,T3,1,2
+obręcz kończyn,T3,1,2
+obręcz miedniczna,T3,1,2
+ochrona całkowita,T3,1,2
+oczko proste,T3,1,2
+oczodół,T3,1,1
+odbyt,T3,1,1
+odcinek tułowiowy,T3,1,2
+oddychanie brzuszne,T3,1,2
+oddziaływanie antagonistyczne,T3,1,2
+odkształcenie,T2,1,1
+odmiana hodowlana,T3,1,2
+odnóże bieżne,T3,1,2
+odnóże grzebne,T3,1,2
+odnóże gębowe,T3,1,2
+odnóże pływne,T3,1,2
+odpadki,T3,1,1
+odpady radioaktywne,T3,1,2
+odpowiedzialność,T2,1,1
+odpowiedź immunologiczna,T3,1,2
+odruch,T3,1,1
+odruch bezwarunkowy,T3,1,2
+odruch warunkowy,T3,1,2
+odrętwienie zimowe,T3,1,2
+odżywianie autotroficzne,T3,1,2
+odżywianie heterotroficzne,T3,1,2
+ogniwo fotowoltaiczne,T3,1,2
+ogonek liściowy,T3,1,2
+oko złożone,T3,1,2
+okres spoczynku,T3,1,2
+opieka lekarska,T3,1,2
+opony mózgowe,T3,1,2
+opływowy kształt ciała,T3,1,3
+organ płciowy,T3,1,2
+organ rozrodczy,T3,1,2
+organizm bezjądrowy,T3,1,2
+organizm jądrowy,T3,1,2
+organizm modelowy,T3,1,2
+organizm osiadły,T3,1,2
+organowiec,T3,1,1
+orlica pospolita,T3,1,2
+osiadły tryb życia,T3,1,3
+oskrzele,T3,1,1
+ostrakodermy,T3,1,1
+ostre zapalenie kłębuszkowe nerek,T3,1,4
+oszacować,T2,1,1
+otolit,T3,1,1
+otyłość,T3,1,1
+owad społeczny,T3,1,2
+owoc niepękający,T3,1,2
+owoc pękający,T3,1,2
+owocnik,T3,1,1
+owrzodzenie,T3,1,1
+ośrodek słuchowy,T3,1,2
+ośrodek słuchu,T3,1,2
+paciorkowiec,T3,1,1
+padlinożerca,T3,1,1
+paliczek,T3,1,1
+paliwo kopalne,T3,1,2
+panewka,T3,1,1
+paproć drzewiasta,T3,1,2
+parowanie,T2,1,1
+parować,T2,1,1
+pazur,T3,1,1
+pepsynogen,T3,1,1
+peptyd,T3,1,1
+pestkowiec,T3,1,1
+pełzak,T3,1,1
+pierwiastek chemiczny,T3,1,2
+piramida żywieniowa,T3,1,2
+pisklę,T3,1,1
+plamka oczna,T3,1,2
+planktonożerny,T3,1,1
+pochodzenie organiczne,T3,1,2
+podszyt,T3,1,1
+podudzie,T3,1,1
+pojemność cieplna,T3,1,2
+pokolenie bezpłciowe,T3,1,2
+pokolenie płciowe,T3,1,2
+pokrywa skrzelowa,T3,1,2
+pokrywa skrzydłowa,T3,1,2
+pokrój,T3,1,1
+pokładełko,T3,1,1
+poronienie,T3,1,1
+potwierdzić,T2,1,1
+powierzchnia asymilacyjna,T3,1,2
+pranóża,T3,1,1
+predyspozycja genetyczna,T3,1,2
+preparat trwały,T3,1,2
+proces metaboliczny,T3,1,2
+proces zapalny,T3,1,2
+protisty grzybopodobne,T3,1,2
+protisty zwierzęcopodobne,T3,1,2
+przeanalizować,T2,1,1
+przedsionek,T3,1,1
+przekrój poprzeczny,T2,1,2
+przekształcać się,T2,1,2
+przeliczać,T2,1,1
+przemiana pokoleń,T3,1,2
+przeszczep,T3,1,1
+przesłanie,T2,1,1
+przetoczenie krwi,T3,1,2
+przewód półkolisty,T3,1,2
+przeziębienie,T3,1,1
+przezmianka,T3,1,1
+przeżuwacz,T3,1,1
+przyciąganie ziemskie,T3,1,2
+przyczep,T3,1,1
+przyczyniać się,T2,1,2
+przypuszczenie,T2,1,1
+przyroda nieożywiona,T3,1,2
+przyswajalny,T2,1,1
+prątek gruźlicy,T3,1,2
+ptaki szponiaste,T3,1,2
+publikacja,T2,1,1
+puch kielichowy,T3,1,2
+pyłek kwiatowy,T3,1,2
+pąk,T3,1,1
+pęcherzyk płucny,T3,1,2
+pęcherzyk żółciowy,T3,1,2
+pędrak,T3,1,1
+pędzlak,T3,1,1
+płatek korony,T3,1,2
+płetwa brzuszna,T3,1,2
+płetwa grzbietowa,T3,1,2
+płetwa nieparzysta,T3,1,2
+płetwa odbytowa,T3,1,2
+płetwa parzysta,T3,1,2
+płonnik,T3,1,1
+płytka krwi,T3,1,2
+racjonalny,T2,1,1
+reakcja biochemiczna,T2,1,2
+reakcja obronna,T3,1,2
+reakcja odpornościowa,T3,1,2
+reakcja stresowa,T3,1,2
+redukcja,T2,1,1
+refleksja,T2,1,1
+regeneracja,T3,1,1
+regulacja nerwowo-hormonalna,T3,1,2
+rewolwer,T3,1,1
+rna,T3,1,1
+ropa naftowa,T3,1,2
+rostrum,T3,1,1
+rozdzielnopłciowy,T3,1,1
+rozkład beztlenowy,T3,1,2
+rozmaz krwi,T3,1,2
+rozprzestrzeniać się,T2,1,2
+rozpuszczalnik,T2,1,1
+rozpuszczać się,T2,1,2
+roślina chroniona,T3,1,2
+roślina strączkowa,T3,1,2
+roślina wskaźnikowa,T3,1,2
+roślina zarodnikowa,T3,1,2
+roślina zielna,T3,1,2
+rośliny jednoroczne,T3,1,2
+rośliny kwiatowe,T3,1,2
+rośliny nagonasienne,T3,1,2
+rośliny nasienne,T3,1,2
+rośliny okrytonasienne,T3,1,2
+ruch mięśniowy,T3,1,2
+ruch rzęskowy,T3,1,2
+ruch wygięciowy,T3,1,2
+ruchy perystaltyczne,T3,1,2
+ryby mięśniopłetwe,T3,1,2
+ryby promieniopłetwe,T3,1,2
+ryby trzonopłetwe,T3,1,2
+rzepka,T3,1,1
+rzeżączka,T3,1,1
+rzęsistek pochwowy,T3,1,2
+rzęsistkowica,T3,1,1
+równowaga przyrodnicza,T3,1,2
+sacharoza,T3,1,1
+samobadanie piersi,T3,1,2
+samoczynne rozsiewanie nasion,T3,1,3
+samożywność,T3,1,1
+segregować,T3,1,1
+sepsa,T3,1,1
+siła nacisku,T2,1,2
+skaningowy mikroskop elektronowy,T3,1,3
+skrawek,T3,1,1
+skrzyp olbrzymi,T3,1,2
+skrzyp polny,T3,1,2
+skrzywienie kręgosłupa,T3,1,2
+skutek uboczny,T2,1,2
+sok jelitowy,T3,1,2
+sok trzustkowy,T3,1,2
+spadź,T3,1,1
+spirometria,T3,1,1
+splątek,T3,1,1
+sporofit,T3,1,1
+ssawka,T3,1,1
+stadium larwalne,T3,1,2
+statyw,T3,1,1
+staw biodrowy,T3,1,2
+staw ramienny,T3,1,2
+struktura wiekowa,T3,1,2
+stęp,T3,1,1
+substancja nieorganiczna,T3,1,2
+suplement,T3,1,1
+surowiec energetyczny,T3,1,2
+sutek,T3,1,1
+symptom,T3,1,1
+synonim,T2,1,1
+syntetyzować,T2,1,1
+szew,T3,1,1
+szpik kostny,T3,1,2
+szpon,T3,1,1
+szyjka słupka,T3,1,2
+słupek,T3,1,1
+tarcie,T2,1,1
+tarczowce,T3,1,1
+tarło,T3,1,1
+technologia,T2,1,1
+temperatura optymalna,T2,1,2
+tendencja,T2,1,1
+termoregulacja,T3,1,1
+terytorium,T3,1,1
+tkanka kostna,T3,1,2
+tkanka mięśniowa,T3,1,2
+tkanka nabłonkowa,T3,1,2
+tkanka okrywająca,T3,1,2
+tkanka przewodząca,T3,1,2
+tkanka tłuszczowa,T3,1,2
+tkanka łączna płynna,T3,1,3
+toksoplazma,T3,1,1
+transmisyjny mikroskop elektronowy,T3,1,3
+trawienie mechaniczne,T3,1,2
+trawienie pozakomórkowe,T3,1,2
+treść pokarmowa,T3,1,2
+trucizna,T3,1,1
+truteń,T3,1,1
+tryb czuwania,T3,1,2
+trypsyna,T3,1,1
+trzewioczaszka,T3,1,1
+trójwymiarowy,T2,1,1
+tubus,T3,1,1
+turbina wiatrowa,T3,1,2
+udar,T3,1,1
+układ hormonalny,T3,1,2
+układ immunologiczny,T3,1,2
+układ krwionośny zamknięty,T3,1,3
+układ mięśniowo-szkieletowy,T3,1,2
+układ mięśniowy,T3,1,2
+układ si,T2,1,2
+uprawiać,T2,1,1
+uran,T3,1,1
+urolog,T3,1,1
+usg,T3,1,1
+uzależnienie,T3,1,1
+używka,T3,1,1
+warstwa lasu,T3,1,2
+wartość energetyczna,T3,1,2
+wartość graniczna,T2,1,2
+wartość kaloryczna,T3,1,2
+widłak jałowcowaty,T3,1,2
+wieloszczety,T3,1,1
+wiewiórka pospolita,T3,1,2
+wirczyk,T3,1,1
+wirus brodawczaka ludzkiego,T3,1,3
+więzadło,T3,1,1
+wodniczka pokarmowa,T3,1,2
+wody gruntowe,T3,1,2
+wody podziemne,T3,1,2
+wole,T3,1,1
+worek powietrzny,T3,1,2
+woskowina,T3,1,1
+wskaźnik bmi,T3,1,2
+współczynnik,T2,1,1
+wyciąg,T2,1,1
+wydobycie,T2,1,1
+wydolność organizmu,T3,1,2
+wyizolować,T2,1,1
+wykres liniowy,T2,1,2
+wysklepienie stopy,T3,1,2
+wysypisko,T3,1,1
+wytwory czepne,T3,1,2
+wzór,T2,1,1
+węgiel brunatny,T3,1,2
+węgiel kamienny,T3,1,2
+włoski parzące,T3,1,2
+zahamować,T2,1,1
+zaklasyfikować,T2,1,1
+zapalenie dróg moczowych,T3,1,3
+zapalenie gardła,T3,1,2
+zapalenie oskrzeli,T3,1,2
+zapalenie pęcherza moczowego,T3,1,3
+zapalenie spojówek,T3,1,2
+zapalenie ucha środkowego,T3,1,3
+zapora,T3,1,1
+zapotrzebowanie na energię,T3,1,3
+zaprezentować,T2,1,1
+zapylacz,T3,1,1
+zapylanie,T3,1,1
+zapylać,T3,1,1
+zarodziec malarii,T3,1,2
+zasadowy,T2,1,1
+zasięg występowania,T3,1,2
+zasoby energetyczne,T2,1,2
+zatrucie pokarmowe,T3,1,2
+zawał serca,T3,1,2
+zawiązek korzenia,T3,1,2
+zawiązek pędu,T3,1,2
+założenie,T2,1,1
+zbiornik retencyjny,T3,1,2
+zbiorowisko roślinne,T3,1,2
+zdefiniować,T2,1,1
+zdrowe odżywianie,T3,1,2
+zdrowy styl życia,T3,1,3
+zestaw preparacyjny,T3,1,2
+zewnętrzny przewód słuchowy,T3,1,3
+zgodność,T2,1,1
+ziarniak,T3,1,1
+zlepianie się krwinek,T3,1,3
+zlewka,T2,1,1
+zmiany klimatyczne,T3,1,2
+zmiennocieplność,T3,1,1
+zmienność,T2,1,1
+zmysł dotyku,T3,1,2
+zmysł węchu,T3,1,2
+zwieracz,T3,1,1
+związek mineralny,T3,1,2
+zwrotne wchłanianie,T3,1,2
+zwyrodnienie,T3,1,1
+łamacz,T3,1,1
+ławica,T3,1,1
+łopatka,T3,1,1
+łuk kręgowy,T3,1,2
+łuk odruchowy,T3,1,2
+łuszczyna,T3,1,1
+łyko,T3,1,1
+ślimak winniczek,T3,1,2
+śluzawica,T3,1,1
+śluzowiec,T3,1,1
+średnio,T2,1,1
+środek antykoncepcyjny,T3,1,2
+śruba makrometryczna,T3,1,2
+śruba mikrometryczna,T3,1,2
+śródręcze,T3,1,1
+śródstopie,T3,1,1
+światło odbite,T2,1,2
+światło rozproszone,T2,1,2
+świdrowiec,T3,1,1
+żaba trawna,T3,1,2
+żuchwa,T3,1,1
+żuwaczka,T3,1,1
+żądłówka,T3,1,1

@@ -1,19 +1,117 @@
 {
-  "_zapisano": "2026-11-19T14:51:02+01:00",
+  "_zapisano": "2026-11-19T17:50:30+01:00",
   "_przebieg": "probka50",
   "dane": {
-    "n_kandydaci_csv": 3513,
-    "n_pula_przedmiotowa": 1455,
-    "n_pula_ogolna": 1549,
-    "n_pojec": 1403,
-    "n_zloty": 200,
-    "rozklad_kategorii": {
-      "T3": 1455,
-      "T2": 1118,
-      "T1": 431,
-      "do_llm": 416,
-      "SZUM": 93
+    "n_kandydaci_csv": 7191,
+    "n_pula_przedmiotowa": 789,
+    "n_pula_przedmiotowa_wielowyrazowe": 306,
+    "n_pula_ogolna": 3188,
+    "n_pula_ogolna_T1": 1480,
+    "n_pula_ogolna_T2": 1708,
+    "n_pojec": 636,
+    "n_pojec_wieloterminowych": 122,
+    "n_zloty": 400,
+    "zloty_warstwy": {
+      "SZUM / rozstrzygany": 40,
+      "T2 / rozstrzygany": 40,
+      "T3 / zgodny": 40,
+      "SZUM / zgodny": 40,
+      "T3 / rozstrzygany": 40,
+      "T3_INNY / zgodny": 40,
+      "T3_INNY / rozstrzygany": 40,
+      "T1 / zgodny": 40,
+      "T1 / rozstrzygany": 40,
+      "T2 / zgodny": 40
     },
-    "czas_s": 6.4
+    "n_duplikatow_formy": 55,
+    "n_do_przegladu_w_pulach": 249,
+    "rozklad_kategorii": {
+      "nieklasyfikowany": 1847,
+      "T2": 1729,
+      "T1": 1495,
+      "SZUM": 1104,
+      "T3": 797,
+      "T3_INNY": 219
+    },
+    "pula_przedmiotowa_pos": {
+      "rzeczownik": 373,
+      "fraza": 306,
+      "przymiotnik": 96,
+      "czasownik": 12,
+      "przysłówek": 2
+    },
+    "pula_ogolna_pos": {
+      "rzeczownik": 1485,
+      "przymiotnik": 916,
+      "czasownik": 518,
+      "przysłówek": 179,
+      "fraza": 90
+    },
+    "obrazowalnosc_T3": {
+      "czesciowo": 382,
+      "tak": 365,
+      "nie": 42
+    },
+    "dopasowanie": {
+      "progi": {
+        "max_roznica_zipf": 1.0,
+        "max_roznica_liter": 3,
+        "max_roznica_liter_frazy": 6,
+        "waga_dlugosci": 0.25
+      },
+      "n_terminow": 789,
+      "n_dopasowanych": 514,
+      "udzial_dopasowanych": 0.6515,
+      "wg_warstwy": {
+        "czasownik": {
+          "terminy": 12,
+          "pula_ogolna": 518,
+          "dopasowane": 12,
+          "udzial": 1.0
+        },
+        "fraza 2": {
+          "terminy": 288,
+          "pula_ogolna": 90,
+          "dopasowane": 90,
+          "udzial": 0.3125
+        },
+        "fraza 3": {
+          "terminy": 18,
+          "pula_ogolna": 0,
+          "dopasowane": 0,
+          "udzial": 0.0
+        },
+        "przymiotnik": {
+          "terminy": 96,
+          "pula_ogolna": 916,
+          "dopasowane": 76,
+          "udzial": 0.7917
+        },
+        "przysłówek": {
+          "terminy": 2,
+          "pula_ogolna": 179,
+          "dopasowane": 1,
+          "udzial": 0.5
+        },
+        "rzeczownik": {
+          "terminy": 373,
+          "pula_ogolna": 1485,
+          "dopasowane": 335,
+          "udzial": 0.8981
+        }
+      },
+      "srednia_abs_delta_zipf": 0.238,
+      "srednia_abs_delta_liter": 0.089,
+      "smd_zipf_przed": -1.158,
+      "smd_zipf_po": -0.334,
+      "smd_liter_przed": 0.818,
+      "smd_liter_po": 0.003,
+      "zipf_srednia": {
+        "terminy": 3.522,
+        "pula_ogolna": 4.52
+      }
+    },
+    "zloty_ocena": null,
+    "czas_s": 1.4
   }
 }

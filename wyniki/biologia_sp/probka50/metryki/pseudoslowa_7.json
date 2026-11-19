@@ -1,44 +1,309 @@
 {
-  "_zapisano": "2026-11-13T17:22:06+01:00",
+  "_zapisano": "2026-11-19T18:15:53+01:00",
   "_przebieg": "probka50",
   "dane": {
-    "n_szablonow": 80,
-    "n_zaakceptowanych": 1093,
-    "n_odrzuconych": 183,
+    "n_szablonow": 240,
+    "szablony_wg_puli": {
+      "ogolna": 156,
+      "przedmiotowa": 84
+    },
+    "szablony_wg_pos": {
+      "rzeczownik": 191,
+      "czasownik": 49
+    },
+    "n_wygenerowanych": 11603,
+    "n_zaakceptowanych": 2911,
+    "n_odrzuconych": 8685,
+    "n_ocenianych": 1232,
+    "n_ocena_pozytywna": 550,
+    "n_wybranych": 370,
+    "n_szablonow_z_wybranym": 206,
+    "ocena_modelem": true,
+    "model_generujacy": "claude-opus-5-5",
+    "model_oceniajacy": "claude-fable-5-2",
     "odrzucenia_powody": {
-      "znane_morfeusz": 155,
-      "sufiks_na_istniejacym": 11,
-      "literowka_edit1": 10,
-      "prefiks_na_istniejacym": 7
+      "ksztalt_niezgodny_ze_wzorcem": 4526,
+      "ortotaktyka": 2388,
+      "istniejace_slowo": 766,
+      "literowka_czestego_slowa": 752,
+      "przejrzysta_budowa": 188,
+      "za_blisko_wzorca": 52,
+      "skojarzenie_wulgarne": 9,
+      "homofon": 2,
+      "znaki_spoza_alfabetu": 1,
+      "slowo_ukrainskie_lub_rosyjskie": 1
     },
-    "metody_akceptowane": {
-      "wuggy": 298,
-      "imbir": 292,
-      "llm": 263,
-      "unipseudo": 240
-    },
-    "rozklady": {
-      "prawdziwe": {
-        "dlugosc_mean": 7.6,
-        "dlugosc_std": 2.468,
-        "syl_mean": 2.712,
-        "syl_std": 1.182,
-        "zbitka_mean": 2.088,
-        "zbitka_std": 0.889,
-        "diakryty_mean": 0.675,
-        "diakryty_std": 0.776
+    "wg_metody": {
+      "wuggy_koncowka": {
+        "wygenerowane": 1856,
+        "odrzucone": 1188,
+        "przyjete": 668,
+        "udzial_przyjetych": 0.3599,
+        "oceniane": 298,
+        "ocena_pozytywna": 117,
+        "udzial_pozytywnych": 0.3926,
+        "srednia_wymawialnosc": 3.49,
+        "srednie_podobienstwo": 0.899,
+        "wybrane": 74,
+        "srednie_old20": 3.271,
+        "powody": {
+          "ortotaktyka": 878,
+          "literowka_czestego_slowa": 143,
+          "istniejace_slowo": 105,
+          "przejrzysta_budowa": 38,
+          "za_blisko_wzorca": 20,
+          "skojarzenie_wulgarne": 3,
+          "znaki_spoza_alfabetu": 1
+        }
       },
-      "pseudoslowa": {
-        "dlugosc_mean": 7.177,
-        "dlugosc_std": 2.045,
-        "syl_mean": 2.593,
-        "syl_std": 0.954,
-        "zbitka_mean": 2.179,
-        "zbitka_std": 0.837,
-        "diakryty_mean": 0.509,
-        "diakryty_std": 0.709
+      "wuggy": {
+        "wygenerowane": 2268,
+        "odrzucone": 1950,
+        "przyjete": 318,
+        "udzial_przyjetych": 0.1402,
+        "oceniane": 126,
+        "ocena_pozytywna": 32,
+        "udzial_pozytywnych": 0.254,
+        "srednia_wymawialnosc": 3.246,
+        "srednie_podobienstwo": 0.937,
+        "wybrane": 20,
+        "srednie_old20": 3.349,
+        "powody": {
+          "ksztalt_niezgodny_ze_wzorcem": 1222,
+          "ortotaktyka": 531,
+          "istniejace_slowo": 101,
+          "literowka_czestego_slowa": 63,
+          "za_blisko_wzorca": 15,
+          "przejrzysta_budowa": 14,
+          "skojarzenie_wulgarne": 4
+        }
+      },
+      "unipseudo": {
+        "wygenerowane": 2880,
+        "odrzucone": 2573,
+        "przyjete": 307,
+        "udzial_przyjetych": 0.1066,
+        "oceniane": 161,
+        "ocena_pozytywna": 58,
+        "udzial_pozytywnych": 0.3602,
+        "srednia_wymawialnosc": 3.882,
+        "srednie_podobienstwo": 1.329,
+        "wybrane": 30,
+        "srednie_old20": 3.108,
+        "powody": {
+          "ksztalt_niezgodny_ze_wzorcem": 1926,
+          "istniejace_slowo": 291,
+          "literowka_czestego_slowa": 220,
+          "ortotaktyka": 82,
+          "przejrzysta_budowa": 48,
+          "za_blisko_wzorca": 5,
+          "homofon": 1
+        }
+      },
+      "llm": {
+        "wygenerowane": 2870,
+        "odrzucone": 1339,
+        "przyjete": 1524,
+        "udzial_przyjetych": 0.5334,
+        "oceniane": 603,
+        "ocena_pozytywna": 329,
+        "udzial_pozytywnych": 0.5456,
+        "srednia_wymawialnosc": 4.0,
+        "srednie_podobienstwo": 1.015,
+        "wybrane": 239,
+        "srednie_old20": 3.238,
+        "powody": {
+          "ortotaktyka": 752,
+          "literowka_czestego_slowa": 233,
+          "ksztalt_niezgodny_ze_wzorcem": 136,
+          "istniejace_slowo": 117,
+          "przejrzysta_budowa": 87,
+          "za_blisko_wzorca": 10,
+          "skojarzenie_wulgarne": 2,
+          "slowo_ukrainskie_lub_rosyjskie": 1,
+          "homofon": 1
+        }
+      },
+      "imbir": {
+        "wygenerowane": 1729,
+        "odrzucone": 1635,
+        "przyjete": 94,
+        "udzial_przyjetych": 0.0544,
+        "oceniane": 44,
+        "ocena_pozytywna": 14,
+        "udzial_pozytywnych": 0.3182,
+        "srednia_wymawialnosc": 3.5,
+        "srednie_podobienstwo": 1.068,
+        "wybrane": 7,
+        "srednie_old20": 3.036,
+        "powody": {
+          "ksztalt_niezgodny_ze_wzorcem": 1242,
+          "istniejace_slowo": 152,
+          "ortotaktyka": 145,
+          "literowka_czestego_slowa": 93,
+          "za_blisko_wzorca": 2,
+          "przejrzysta_budowa": 1
+        }
       }
     },
-    "czas_s": 174.4
+    "leksykon": {
+      "lematy_kwjp": 64293,
+      "czeste_formy": 67872,
+      "prog_zipf": 3.0,
+      "worldlex": 518404,
+      "slowa_ua_ru": 54295,
+      "min_typow_ngramu": 5
+    },
+    "progi_oceny": {
+      "min_wymawialnosc": 4,
+      "max_podobienstwo": 1
+    },
+    "rozklady": [
+      {
+        "grupa": "szablony",
+        "cecha": "dlugosc",
+        "n": 240,
+        "srednia": 7.392,
+        "odch_std": 2.089,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "szablony",
+        "cecha": "syl",
+        "n": 240,
+        "srednia": 2.642,
+        "odch_std": 0.899,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "szablony",
+        "cecha": "zbitka",
+        "n": 240,
+        "srednia": 2.054,
+        "odch_std": 0.733,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "szablony",
+        "cecha": "diakryty",
+        "n": 240,
+        "srednia": 0.633,
+        "odch_std": 0.754,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "szablony",
+        "cecha": "old20",
+        "n": 240,
+        "srednia": 2.564,
+        "odch_std": 0.769,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "szablony",
+        "cecha": "bigram_lp",
+        "n": 240,
+        "srednia": -2.453,
+        "odch_std": 0.23,
+        "smd_wzgledem_szablonow": null
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "dlugosc",
+        "n": 2911,
+        "srednia": 8.004,
+        "odch_std": 1.698,
+        "smd_wzgledem_szablonow": 0.322
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "syl",
+        "n": 2911,
+        "srednia": 2.879,
+        "odch_std": 0.811,
+        "smd_wzgledem_szablonow": 0.278
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "zbitka",
+        "n": 2911,
+        "srednia": 2.104,
+        "odch_std": 0.693,
+        "smd_wzgledem_szablonow": 0.07
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "diakryty",
+        "n": 2911,
+        "srednia": 0.504,
+        "odch_std": 0.675,
+        "smd_wzgledem_szablonow": -0.181
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "old20",
+        "n": 2911,
+        "srednia": 3.237,
+        "odch_std": 0.793,
+        "smd_wzgledem_szablonow": 0.863
+      },
+      {
+        "grupa": "pseudoslowa_przyjete",
+        "cecha": "bigram_lp",
+        "n": 2911,
+        "srednia": -2.482,
+        "odch_std": 0.175,
+        "smd_wzgledem_szablonow": -0.139
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "dlugosc",
+        "n": 370,
+        "srednia": 7.668,
+        "odch_std": 1.695,
+        "smd_wzgledem_szablonow": 0.145
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "syl",
+        "n": 370,
+        "srednia": 2.773,
+        "odch_std": 0.815,
+        "smd_wzgledem_szablonow": 0.153
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "zbitka",
+        "n": 370,
+        "srednia": 2.062,
+        "odch_std": 0.674,
+        "smd_wzgledem_szablonow": 0.011
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "diakryty",
+        "n": 370,
+        "srednia": 0.516,
+        "odch_std": 0.651,
+        "smd_wzgledem_szablonow": -0.166
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "old20",
+        "n": 370,
+        "srednia": 2.913,
+        "odch_std": 0.62,
+        "smd_wzgledem_szablonow": 0.501
+      },
+      {
+        "grupa": "pseudoslowa_wybrane",
+        "cecha": "bigram_lp",
+        "n": 370,
+        "srednia": -2.444,
+        "odch_std": 0.183,
+        "smd_wzgledem_szablonow": 0.042
+      }
+    ],
+    "czas_s": 646.3
   }
 }

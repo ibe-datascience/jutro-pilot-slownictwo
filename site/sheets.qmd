@@ -23,15 +23,20 @@ inspected without opening Excel.
 
 ## Gold-set worksheet
 
-`{python} n(len(gold))` candidates drawn in strata (extraction method that ranked the candidate highest × frequency
-quartile × length). The sheet deliberately carries **no model labels**, so that two annotators can label
-independently. Filled in so far: annotator A `{python} n(filled(gold["kategoria_oceniajacy_A"]))`, annotator B
-`{python} n(filled(gold["kategoria_oceniajacy_B"]))` of `{python} n(len(gold))`.
+`{python} n(len(gold))` candidates, drawn in equal numbers from each final label and, within a label, half from
+the cases the models agreed on and half from the adjudicated ones, then shuffled. Each row shows the candidate, its
+counts and up to three sentences from the corpus. The sheet deliberately carries **no model labels**, so that two
+annotators can label independently; the key with the labels and the sampling weights stays outside the published
+files. The second tab of the file holds the instructions (in Polish) with the definitions of T3, T3_INNY, T2, T1 and
+SZUM. Filled in so far: annotator A `{python} n(filled(gold["kategoria_oceniajacy_A"]))`, annotator B
+`{python} n(filled(gold["kategoria_oceniajacy_B"]))` of `{python} n(len(gold))`. Once the file is saved as
+`zloty_zbior_oznaczony.xlsx` next to the original, step 6 reports agreement between the annotators and weighted
+precision, recall and F1 of the final labels.
 
 ```{python}
 L.source("zloty_zbior_do_oznaczenia.xlsx")
 L.glossary(gold.columns)
-L.dt(gold, page=50)
+L.dt(gold, page=25, wrap=["zdanie_1", "zdanie_2", "zdanie_3"])
 ```
 
 ## Lemmatisation sheet (300 forms)

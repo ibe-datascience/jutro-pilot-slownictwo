@@ -1,0 +1,32 @@
+{
+  "_zapisano": "2026-11-19T18:30:33+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "wg_zadania": {
+      "ekstrakcja_terminow / claude-sonnet-5-5": 0.1685,
+      "ekstrakcja_terminow_v2 / claude-opus-5-5": 1.1898,
+      "klasyfikacja / claude-haiku-5-5": 0.0508,
+      "klasyfikacja / claude-sonnet-5-5": 1.0036,
+      "klasyfikacja_rozstrzygniecie / claude-opus-5-5": 0.6306,
+      "klasyfikacja_v2 / claude-opus-5-5": 12.6298,
+      "klasyfikacja_v2 / claude-sonnet-5-5": 6.4891,
+      "klasyfikacja_v2_rozstrzygniecie / claude-fable-5-2": 6.7484,
+      "lematyzacja_proba / claude-haiku-5-5": 0.0097,
+      "lematyzacja_proba / claude-sonnet-5-5": 0.133,
+      "lematyzacja_referencja / claude-opus-5-5": 0.4251,
+      "pojecia_v2 / claude-fable-5-2": 0.1271,
+      "pseudoslowa / claude-haiku-5-5": 0.0021,
+      "pseudoslowa_ocena_v2 / claude-fable-5-2": 2.2994,
+      "pseudoslowa_v2 / claude-opus-5-5": 2.3903,
+      "test_smoke / claude-haiku-5-5": 0.0001,
+      "test_smoke2 / claude-haiku-5-5": 0.0002,
+      "test_smoke2 / claude-opus-5-5": 0.0105,
+      "test_smoke2 / claude-sonnet-5-5": 0.0032,
+      "test_v2 / claude-fable-5-2": 0.8364,
+      "test_v2 / claude-opus-5-5": 0.4265,
+      "test_v2 / claude-sonnet-5-5": 0.215
+    },
+    "przebieg": 35.7893,
+    "dotychczas": 35.7893
+  }
+}

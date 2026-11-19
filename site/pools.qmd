@@ -10,38 +10,33 @@ import _lib as L
 import itables
 itables.init_notebook_mode(all_interactive=False, connected=True)
 
-def prep(df, match_col):
-    df = df.copy()
-    df.insert(1, "label_source", df["kategoria_final"].notna().map({True: "LLM", False: "rule"}))
-    df.insert(2, "form_changed", (df["forma_podstawowa"] != df["forma_kandydata"]).map({True: "yes", False: ""}))
-    front = ["forma_podstawowa", "forma_kandydata", "form_changed", "kategoria", "label_source", "pojecie", "obrazowalnosc", match_col, "dlugosc", "cls",
-             "freq_cel", "freq_kontrast", "n_mat_cel", "n_przedmiotow", "freq_kwjp", "zipf_wordfreq"]
-    return df[front + [c for c in df.columns if c not in front]]
-
-HIDE = ["n_mat_kontrast", "n_klas_cel", "rozproszenie", "termopl_ok", "forma_podstawowa_llm", "kategoria_final", "forma_join",
-        "ll_vs_kwjp", "log_ratio_kwjp", "zipf_bin", "cls_bin"]
-pp = prep(L.csv("pula_przedmiotowa.csv"), "dopasowanie_ogolne")
-po = prep(L.csv("pula_ogolna.csv"), "dopasowanie_przedmiotowe")
-poj = L.csv("pojecia.csv")
-hide = lambda df: [c for c in df.columns if c.startswith("rank_") or c in HIDE]
+HIDE = ["lematy", "cls", "n_mat_kontrast", "n_klas_cel", "rozproszenie", "termopl_ok", "kategoria_final", "model_sedzia",
+        "udzial_nazw_wlasnych", "ll_vs_kwjp", "log_ratio_kwjp", "freq_kwjp", "zipf_wordfreq", "duplikat_formy", "typ_szumu",
+        "pelny_termin", "warstwa", "kand_przedmiotowy", "kand_ogolny", "etykieta_regulowa", "forma_kandydata", "warianty",
+        "freq_kontrast_laczna", "srebrny_pojecie_ref"]
+pp, po, poj = L.csv("pula_przedmiotowa.csv"), L.csv("pula_ogolna.csv"), L.csv("pojecia.csv")
+m6 = L.metrics("pule_6")
+dp = m6.get("dopasowanie", {})
+hide = lambda df: [c for c in df.columns if c.startswith("rank_") or c.endswith(("_pewnosc", "_uzasadnienie", "_kategoria")) or c in HIDE]
 n = lambda v: L.fmt(int(v))
 by_freq = lambda df: [[list(df.columns).index("freq_cel"), "desc"]]
-dup = lambda df: int(df["forma_podstawowa"].duplicated(keep=False).sum())
+extra_path = L.OUT / "terminy_llm_spoza_kandydatow.csv"
 ```
 
-The pools are the candidates split by label: **T3** (subject terms) and **T1/T2** (everyday and school vocabulary).
-For each subject term the pipeline picks one general-pool item of the same length in words and the closest Zipf
-frequency. `label_source` shows whether the label comes from the language models or only from the rule-based
-pre-label. Nothing here has been checked by a human.
+The pools are built from the final labels of step 5 only: **T3** (biology terms) form the subject pool, **T1** and
+**T2** (everyday and school vocabulary) the general pool. Terms of other subjects (`T3_INNY`) and noise (`SZUM`)
+are in neither. Nothing here has been checked by a human; rows with `do_przegladu` = `True` are the ones the models
+could not settle.
 
-::: {.callout-warning title="Two form columns"}
-`forma_kandydata` is the string the statistics were computed for; `forma_podstawowa` is the language model's base
-form where it returned a different one (`form_changed` = `yes`:
-`{python} n((pp["form_changed"] == "yes").sum())` rows in the subject pool,
-`{python} n((po["form_changed"] == "yes").sum())` in the general pool). As a result the same `forma_podstawowa`
-can appear in more than one row (`{python} n(dup(pp))` such rows in the subject pool, `{python} n(dup(po))` in the
-general pool), and matching between the pools is done on `forma_podstawowa`.
-:::
+Each subject term is paired with at most one general-pool item of the same part of speech and number of words, as
+close as possible in general frequency (Zipf scale) and length in letters. The assignment is optimal over the whole
+pool (Hungarian algorithm, no item used twice) and a pair is formed only within
+`{python} L.fmt(dp.get("progi", {}).get("max_roznica_zipf"))` Zipf units and
+`{python} L.fmt(dp.get("progi", {}).get("max_roznica_liter"))` letters
+(`{python} L.fmt(dp.get("progi", {}).get("max_roznica_liter_frazy"))` for phrases). Single words are matched on their
+KWJP100 frequency; phrases, for which no general-Polish frequency exists, on their frequency in the ZPE stage corpus.
+`{python} n(dp.get("n_dopasowanych", 0))` of `{python} n(dp.get("n_terminow", 0))` terms have a match; balance before
+and after matching is on the [Results](results.qmd#pools) page.
 
 Filter with the boxes under the table, sort by clicking a header, and use **Columns** to show the hidden columns.
 
@@ -49,8 +44,8 @@ Filter with the boxes under the table, sort by clicking a header, and use **Colu
 
 ## Subject pool (T3)
 
-`{python} n(len(pp))` terms; `{python} n((pp["label_source"] == "LLM").sum())` labelled by the language models,
-`{python} n((pp["label_source"] == "rule").sum())` by rules only.
+`{python} n(len(pp))` terms, `{python} n((pp["dlugosc"] > 1).sum())` of them multiword;
+`{python} n(pp["dopasowanie_ogolne"].notna().sum())` matched to a general-pool item.
 
 ```{python}
 L.source("pula_przedmiotowa.csv")
@@ -60,26 +55,41 @@ L.dt(pp, order=by_freq(pp), hide=hide(pp), wrap=["pojecie"])
 
 ## General pool (T1/T2)
 
-`{python} n(len(po))` items; `{python} n((po["label_source"] == "LLM").sum())` labelled by the language models,
-`{python} n((po["label_source"] == "rule").sum())` by rules only. `{python} n(po["dopasowanie_przedmiotowe"].notna().sum())`
-of them are matched to a subject term.
+`{python} n(len(po))` items: `{python} n((po["kategoria"] == "T1").sum())` T1 and
+`{python} n((po["kategoria"] == "T2").sum())` T2. `{python} n(po["dopasowanie_przedmiotowe"].notna().sum())` of them
+are matched to a subject term.
 
 ```{python}
 L.source("pula_ogolna.csv")
 L.glossary(po.columns)
-L.dt(po, order=by_freq(po), hide=hide(po), wrap=["pojecie"])
+L.dt(po, order=by_freq(po), hide=hide(po))
 ```
 
 ## Concepts
 
-`{python} n(len(poj))` groups of subject-pool terms that share a concept label;
-`{python} n((poj["n_terminow"] > 1).sum())` groups hold more than one term. For terms without a language-model
-label the concept is the term itself.
+`{python} n(len(poj))` concepts; `{python} n((poj["n_terminow"] > 1).sum())` of them group more than one term
+(spelling variants, synonyms, a noun and its adjective). The grouping is one request to the language model over the
+whole list of subject terms; a term the model left alone is its own concept.
 
 ```{python}
 L.source("pojecia.csv")
 L.glossary(poj.columns)
-L.dt(poj, order=[[2, "desc"]], wrap=["terminy", "pojecie"])
+L.dt(poj, order=[[list(poj.columns).index("n_terminow"), "desc"]], wrap=["terminy", "pojecie", "dopasowanie_ogolne"])
+```
+
+## Terms the extraction missed
+
+```{python}
+if extra_path.exists():
+    ex = L.csv("terminy_llm_spoza_kandydatow.csv")
+    L.md(f"As a check on step 4, a language model listed terms directly from a sample of materials. These "
+         f"{n(len(ex))} terms are **not** among the candidates: they occurred too rarely in the sample, or their form "
+         "does not fit the syntactic patterns used for multiword candidates. They are not in the pools.")
+    L.source("terminy_llm_spoza_kandydatow.csv")
+    L.glossary(ex.columns)
+    L.dt(ex, order=[[list(ex.columns).index("n_materialow"), "desc"]])
+else:
+    L.md("Direct extraction by a language model was not run.")
 ```
 
 :::

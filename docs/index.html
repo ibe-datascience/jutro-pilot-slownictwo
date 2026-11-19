@@ -206,6 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#method-in-brief" id="toc-method-in-brief" class="nav-link" data-scroll-target="#method-in-brief">Method in brief</a></li>
   <li><a href="#pipeline" id="toc-pipeline" class="nav-link" data-scroll-target="#pipeline">Pipeline</a>
   <ul class="collapse">
   <li><a href="#technical-diagram" id="toc-technical-diagram" class="nav-link" data-scroll-target="#technical-diagram">Technical diagram</a></li>
@@ -258,6 +259,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Pupils with a migration background may fail a subject test for two different reasons: weak general Polish, or missing <strong>subject concepts</strong> despite adequate language. JUTRO aims to separate those barriers with three modules: recognition of general words against pseudowords, word associations, and matching subject terms to images.</p>
 <p>This pilot builds the word material for biology (grades 5–8) from the teaching materials of the Integrated Educational Platform (ZPE): a pool of subject terms, a pool of general and school vocabulary, concept groups, and pseudowords for a LexTALE-style test.</p>
 </section>
+<section id="method-in-brief" class="level2">
+<h2 class="anchored" data-anchor-id="method-in-brief">Method in brief</h2>
+<ol type="1">
+<li><strong>Candidates</strong> come from statistics, not from a model: every content lemma and every noun phrase that fits a syntactic pattern is counted in biology and in the other subjects, and scored by several keyness and termhood measures. General candidates, the source of everyday and school vocabulary, are words spread across the other subjects.</li>
+<li><strong>Labels</strong> come from language models reading the candidate in real sentences. Two models label independently, a third settles disagreements, and the rule-based pre-label of step 4 is kept only as a point of comparison.</li>
+<li><strong>Pools</strong> contain only labelled items. Each subject term gets a partner from the general pool with the same part of speech and a similar general frequency and length.</li>
+<li><strong>Pseudowords</strong> are produced by five generators, pass a set of hard filters grounded in a reference lexicon of Polish, are rated by a model for pronounceability and associations, and are compared with real words on length, syllables, neighbourhood density and letter-sequence probability.</li>
+<li><strong>People decide.</strong> The pipeline writes the worksheets for human annotation and reports accuracy against them once they are filled in.</li>
+</ol>
+</section>
 <section id="pipeline" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="pipeline">Pipeline</h2>
 <p>One command runs eight steps. Each step reads the files written by the earlier ones, so a step can be re-run on its own, and every number on this site is read from a metrics file that a step saved.</p>
@@ -266,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="technical-diagram" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="technical-diagram">Technical diagram</h3>
 <div class="column-page-right">
-<div id="cf240e0f" class="cell" data-execution_count="2">
+<div id="5fb70b9a" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div class="pl">
 <ul class="pl-legend" aria-label="Legend">
@@ -309,41 +320,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="pl-io pl-reads" aria-label="Step 4 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 2">2</span><span class="pl-name">tagi.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 3">3</span><span class="pl-name">frekwencje_lemat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">texts for TermoPL, material metadata</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">srebrny_*.csv</span><span class="pl-note">for precision@K</span></li><li class="pl-chip pl-ext"><span class="pl-name">TermoPL 8.1.1 (Java)</span><span class="pl-note">its input is tagged by Stanza and checked against Morfeusz2</span></li></ul>
   <div class="pl-step">
     <div class="pl-step-head"><span class="pl-num">4</span><span class="pl-step-name">kandydaci</span>
-      <span class="pl-step-title">Extract and score term candidates</span></div>
-    <ul class="pl-does"><li>Single-word candidates: lemmas of content words known to Morfeusz2.</li><li>Multiword candidates: noun phrases of 2–4 words found by syntactic patterns (agreeing adjectives, genitive modifiers), rebuilt in the nominative.</li><li>Keep candidates with at least 3 occurrences in at least 2 target materials.</li><li>Score every candidate with every method: log-likelihood and log ratio against the contrast corpus; log-likelihood, log ratio and Simple Maths against KWJP100; TF-IDF across subjects; PMI and logDice for multiword candidates; TermoPL C-value.</li><li>Add a rule-based pre-label (T3?, T2?, T1? or undecided) from dispersion and frequency thresholds.</li><li>Compare each ranking with the silver standards (precision and recall at K).</li></ul>
+      <span class="pl-step-title">Extract and score candidates</span></div>
+    <ul class="pl-does"><li>Single-word candidates: lemmas of content words known to Morfeusz2; lemmas tagged mostly as proper names are dropped.</li><li>Multiword candidates: noun phrases of 2–4 words found within a sentence by syntactic patterns (agreeing adjectives, genitive modifiers), rebuilt in the nominative; phrases built on pronouns, determiners and instruction words are skipped.</li><li>Subject candidates: at least 3 occurrences in at least 2 target materials, or at least 5 in a single one. General candidates: words spread over at least 3 other subjects.</li><li>Score every candidate with every method, using the true corpus sizes: log-likelihood and log ratio against the contrast corpus; log-likelihood, log ratio and Simple Maths against KWJP100; TF-IDF across subjects; PMI and logDice of the weakest adjacent pair for phrases; TermoPL C-value; reciprocal-rank fusion of the rankings.</li><li>Compare each ranking with the silver standards (precision and recall at K, against a random baseline) and count how many silver entries are reachable at all.</li><li>Keep up to three real sentences per candidate, from different materials, for the models and the annotators.</li></ul>
     <div class="pl-mod">jutro/ s04_kandydaci.py · frazy.py · morf.py</div>
   </div>
-  <ul class="pl-io pl-writes" aria-label="Step 4 writes"><li class="pl-chip pl-mid"><span class="pl-name">kandydaci_stat.parquet</span><span class="pl-note">one candidate per row; scores and ranks of all methods</span></li><li class="pl-chip pl-mid"><span class="pl-name">termopl_terms.tsv</span></li><li class="pl-chip pl-met"><a href="results.html#extraction"><span class="pl-name">metryki/ekstrakcja_42.json</span></a></li></ul>
+  <ul class="pl-io pl-writes" aria-label="Step 4 writes"><li class="pl-chip pl-mid"><span class="pl-name">kandydaci_stat.parquet</span><span class="pl-note">one candidate per row; scores and ranks of all methods</span></li><li class="pl-chip pl-mid"><span class="pl-name">kandydaci_konteksty.parquet</span><span class="pl-note">sentences</span></li><li class="pl-chip pl-mid"><span class="pl-name">termopl_terms.tsv</span></li><li class="pl-chip pl-met"><a href="results.html#extraction"><span class="pl-name">metryki/ekstrakcja_42.json</span></a></li></ul>
 </div>
 <div class="pl-row">
-  <ul class="pl-io pl-reads" aria-label="Step 5 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">context sentences; texts for extraction</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Batch API, prompt caching, JSON-schema output</span></li></ul>
+  <ul class="pl-io pl-reads" aria-label="Step 5 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_konteksty.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">texts for direct extraction</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Batch API, prompt caching, JSON-schema output</span></li></ul>
   <div class="pl-step">
     <div class="pl-step-head"><span class="pl-num">5</span><span class="pl-step-name">llm</span>
       <span class="pl-step-title">Classify candidates with language models</span></div>
-    <ul class="pl-does"><li>Select the top 1500 candidates of each of six rankings plus the most frequent widely dispersed words (250 each on a sample run).</li><li>Prompt per candidate: the form, its statistics and up to two sentences from the corpus.</li><li>Haiku 5.5 and Sonnet 5.5 each return a category (T3 subject term, T2 school vocabulary, T1 everyday word, SZUM noise), a corrected base form, a concept label, imageability, confidence and a one-sentence reason.</li><li>Where the two labels differ or either confidence is low, Opus 5.5 decides.</li><li>Separately, Sonnet 5.5 lists terms directly from a sample of materials (saved; not used by later steps).</li><li>The cost of each batch of requests is estimated before it is sent; the run stops rather than pass the limit of 100 USD.</li></ul>
+    <ul class="pl-does"><li>Send all subject candidates (up to 4000) and a sample of 1500 general candidates stratified by general frequency and number of words.</li><li>Prompt per candidate: the form, its counts in biology and in the other subjects, and up to three sentences. The rule-based pre-label is not shown.</li><li>Sonnet 5.5 and Opus 5.5 independently return a category (T3 biology term, T3_INNY term of another subject, T2 school vocabulary, T1 everyday word, SZUM not usable), the kind of noise, a corrected base form, imageability, confidence and a one-sentence reason.</li><li>Where the two labels differ or either confidence is low, Fable 5.2 labels the candidate too; the majority of the three decides, and cases without a majority are marked for review.</li><li>Fable 5.2 groups all T3 terms into concepts in a single request.</li><li>Separately, Opus 5.5 lists terms directly from 30 materials, as a check on what step 4 missed.</li><li>The cost of each batch is estimated before it is sent; the run stops rather than pass the limit of 100 USD. An interrupted batch is collected on the next run, not sent again.</li></ul>
     <div class="pl-mod">jutro/ s05_llm.py · llm.py</div>
   </div>
-  <ul class="pl-io pl-writes" aria-label="Step 5 writes"><li class="pl-chip pl-mid"><span class="pl-name">llm_klasyfikacja.parquet</span><span class="pl-note">labels of each model and the final label</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm_ekstrakcja.jsonl</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm/</span><span class="pl-note">cached answers, cost ledger</span></li><li class="pl-chip pl-met"><a href="results.html#llm"><span class="pl-name">metryki/llm_5.json</span></a></li></ul>
+  <ul class="pl-io pl-writes" aria-label="Step 5 writes"><li class="pl-chip pl-mid"><span class="pl-name">llm_klasyfikacja.parquet</span><span class="pl-note">labels of each model and the final label</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm_pojecia.json</span><span class="pl-note">concept groups</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm_ekstrakcja.jsonl</span></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">terminy_llm_spoza_kandydatow.csv</span></a></li><li class="pl-chip pl-mid"><span class="pl-name">llm/</span><span class="pl-note">cached answers, cost ledger</span></li><li class="pl-chip pl-met"><a href="results.html#llm"><span class="pl-name">metryki/llm_5.json</span></a></li></ul>
 </div>
 <div class="pl-row">
-  <ul class="pl-io pl-reads" aria-label="Step 6 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 5">5</span><span class="pl-name">llm_klasyfikacja.parquet</span></li></ul>
+  <ul class="pl-io pl-reads" aria-label="Step 6 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 5">5</span><span class="pl-name">llm_klasyfikacja.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 5">5</span><span class="pl-name">llm_pojecia.json</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_konteksty.parquet</span></li></ul>
   <div class="pl-step">
     <div class="pl-step-head"><span class="pl-num">6</span><span class="pl-step-name">pule</span>
       <span class="pl-step-title">Build the pools and the annotation worksheet</span></div>
-    <ul class="pl-does"><li>Join statistics with labels. The label used is the language-model label; candidates the models did not see keep the rule-based pre-label.</li><li>Where a model returned a different base form, it replaces the extracted one in <code>forma_podstawowa</code>; the extracted string stays in <code>forma_kandydata</code>.</li><li>T3 goes to the subject pool, T1 and T2 to the general pool.</li><li>For each subject term pick one unused general item with the same number of words and the closest Zipf frequency.</li><li>Group subject terms that share a concept label.</li><li>Draw 400 candidates (200 on a sample run) stratified by method, frequency and length into a worksheet for two human annotators; model labels are left out on purpose.</li></ul>
+    <ul class="pl-does"><li>Join statistics with the final labels. Only labelled candidates enter the pools: T3 the subject pool, T1 and T2 the general pool.</li><li>A corrected base form replaces the extracted one in <code>forma_podstawowa</code> if it keeps the number of words; if two rows then name the same item, the more frequent one is kept.</li><li>Match each subject term to one general item of the same part of speech and number of words, closest in Zipf frequency and length in letters: optimal assignment without reuse, within calipers.</li><li>Report balance of frequency and length before and after matching.</li><li>Attach the concept of each subject term.</li><li>Draw 400 candidates stratified by final label and by whether the case was adjudicated into a worksheet for two human annotators, with sentences and without model labels; keep the key and the sampling weights aside. If a filled-in worksheet is present, score the labels against it.</li></ul>
     <div class="pl-mod">jutro/ s06_pule.py</div>
   </div>
-  <ul class="pl-io pl-writes" aria-label="Step 6 writes"><li class="pl-chip pl-out"><a href="candidates.html"><span class="pl-name">kandydaci.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_przedmiotowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pojecia.csv</span></a></li><li class="pl-chip pl-out"><a href="sheets.html"><span class="pl-name">zloty_zbior_do_oznaczenia.xlsx</span></a></li><li class="pl-chip pl-met"><a href="results.html#pools"><span class="pl-name">metryki/pule_6.json</span></a></li></ul>
+  <ul class="pl-io pl-writes" aria-label="Step 6 writes"><li class="pl-chip pl-out"><a href="candidates.html"><span class="pl-name">kandydaci.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_przedmiotowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pojecia.csv</span></a></li><li class="pl-chip pl-out"><a href="sheets.html"><span class="pl-name">zloty_zbior_do_oznaczenia.xlsx</span></a></li><li class="pl-chip pl-mid"><span class="pl-name">zloty_zbior_klucz.csv</span><span class="pl-note">labels and weights</span></li><li class="pl-chip pl-met"><a href="results.html#pools"><span class="pl-name">metryki/pule_6.json</span></a></li></ul>
 </div>
 <div class="pl-row">
-  <ul class="pl-io pl-reads" aria-label="Step 7 reads"><li class="pl-chip pl-out"><span class="pl-src" title="written by step 6">6</span><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a><span class="pl-note">templates</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 3">3</span><span class="pl-name">frekwencje_forma.parquet</span><span class="pl-note">corpus lexicon</span></li><li class="pl-chip pl-ext"><span class="pl-name">Wuggy + Polish plugin</span></li><li class="pl-chip pl-ext"><span class="pl-name">UniPseudo + WorldLex-Polish</span></li><li class="pl-chip pl-ext"><span class="pl-name">Imbir (2015) list</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Haiku 5.5 as a generator</span></li><li class="pl-chip pl-ext"><span class="pl-name">Morfeusz2, wordfreq</span><span class="pl-note">for the filters</span></li></ul>
+  <ul class="pl-io pl-reads" aria-label="Step 7 reads"><li class="pl-chip pl-out"><span class="pl-src" title="written by step 6">6</span><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a><span class="pl-note">templates</span></li><li class="pl-chip pl-out"><span class="pl-src" title="written by step 6">6</span><a href="pools.html"><span class="pl-name">pula_przedmiotowa.csv</span></a><span class="pl-note">templates</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 3">3</span><span class="pl-name">frekwencje_forma.parquet</span><span class="pl-note">forms of the corpus</span></li><li class="pl-chip pl-ext"><span class="pl-name">KWJP100 lemma and form lists</span><span class="pl-note">reference lexicon</span></li><li class="pl-chip pl-ext"><span class="pl-name">Wuggy + Polish plugin</span></li><li class="pl-chip pl-ext"><span class="pl-name">UniPseudo + WorldLex-Polish</span></li><li class="pl-chip pl-ext"><span class="pl-name">Imbir et al. (2015) list</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Opus 5.5 generates, Fable 5.2 rates</span></li><li class="pl-chip pl-ext"><span class="pl-name">Morfeusz2, wordfreq</span><span class="pl-note">existing words; Ukrainian and Russian word lists</span></li></ul>
   <div class="pl-step">
     <div class="pl-step-head"><span class="pl-num">7</span><span class="pl-step-name">pseudoslowa</span>
-      <span class="pl-step-title">Generate and filter pseudowords</span></div>
-    <ul class="pl-does"><li>Templates: 240 single words from the general pool (80 on a sample run), spread over lengths and syllable counts.</li><li>Up to 6 pseudowords per template from each generator (4 on a sample run): Wuggy, UniPseudo, the language model (keeps the template's ending) and a random draw from the Imbir list.</li><li>Reject a pseudoword if it is known to Morfeusz2, occurs in the corpus or in wordfreq, sounds like a real word, is a productive prefix or suffix on an existing stem, or is one edit away from a real word.</li><li>Describe what is kept: length, syllables, consonant runs, diacritics, approximate OLD20, a coarse Ukrainian/Russian similarity flag.</li><li>Compare the distributions of templates and pseudowords.</li></ul>
-    <div class="pl-mod">jutro/ s07_pseudoslowa.py · morf.py</div>
+      <span class="pl-step-title">Generate, filter and rate pseudowords</span></div>
+    <ul class="pl-does"><li>Templates: 240 real nouns and verbs in base form, 35% from the subject pool and the rest from the general pool.</li><li>Up to 12 candidates per template from each generator: Wuggy keeping the template's ending, Wuggy with a free ending, UniPseudo, a language model, and the Imbir list.</li><li>Reference lexicon: KWJP100 lemmas known to Morfeusz2, with counts of letter trigrams, onsets, codas and clusters.</li><li>Hard filters, each rejection with its reason: existing word; length, syllables or ending unlike the template; rare letter pattern; one edit from a frequent word; homophone of a word; existing stem with an affix or a compound; vulgar association; Ukrainian or Russian word in Polish spelling.</li><li>Measure what passes: OLD20 and neighbours over the whole lexicon, bigram probability, the same for the templates.</li><li>The model rates up to 6 per template for pronounceability, associations and foreign or inappropriate readings; the best 2 rated positively are recommended.</li><li>Compare the distributions of templates and pseudowords (standardised differences).</li></ul>
+    <div class="pl-mod">jutro/ s07_pseudoslowa.py · pseudo.py · morf.py</div>
   </div>
-  <ul class="pl-io pl-writes" aria-label="Step 7 writes"><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_odrzucone.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_rozklady.csv</span></a></li><li class="pl-chip pl-met"><a href="results.html#pseudowords"><span class="pl-name">metryki/pseudoslowa_7.json</span></a></li></ul>
+  <ul class="pl-io pl-writes" aria-label="Step 7 writes"><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_odrzucone.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_szablony.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_rozklady.csv</span></a></li><li class="pl-chip pl-met"><a href="results.html#pseudowords"><span class="pl-name">metryki/pseudoslowa_7.json</span></a></li></ul>
 </div>
 <div class="pl-row">
   <ul class="pl-io pl-reads" aria-label="Step 8 reads"><li class="pl-chip pl-met"><a href="reproduce.html#raw-metrics-files"><span class="pl-name">metryki/*.json</span></a><span class="pl-note">of steps 1–7</span></li><li class="pl-chip pl-out"><span class="pl-name">all files in wyniki/</span></li><li class="pl-chip pl-ext"><span class="pl-name">Quarto</span></li></ul>
@@ -362,7 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="steps-in-this-run" class="level3">
 <h3 class="anchored" data-anchor-id="steps-in-this-run">Steps in this run</h3>
-<div id="7e9c0d67" class="cell" data-execution_count="3">
+<div id="01ca6a4e" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -396,31 +407,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">3 · frekwencje</td>
 <td style="text-align: left;">26 756 lemmas with corpus and general frequencies</td>
 <td style="text-align: left;"><code>frekwencje_43</code></td>
-<td style="text-align: left;">12 s</td>
+<td style="text-align: left;">11 s</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4 · kandydaci</td>
-<td style="text-align: left;">3513 candidates (817 multiword); TermoPL ran: yes</td>
+<td style="text-align: left;">3844 subject candidates (952 multiword) and 5327 general candidates; TermoPL ran: yes</td>
 <td style="text-align: left;"><code>ekstrakcja_42</code></td>
-<td style="text-align: left;">202 s</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5 · llm</td>
-<td style="text-align: left;">925 candidates labelled by haiku-5-5, sonnet-5-5; 246 adjudicated by opus-5-5</td>
-<td style="text-align: left;"><code>llm_5</code></td>
-<td style="text-align: left;">1577 s</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">6 · pule</td>
-<td style="text-align: left;">1455 subject terms, 1549 general items, 1403 concepts, 200 worksheet rows</td>
-<td style="text-align: left;"><code>pule_6</code></td>
 <td style="text-align: left;">6 s</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">5 · llm</td>
+<td style="text-align: left;">5344 candidates labelled by sonnet-5-5 and opus-5-5; 1544 adjudicated by fable-5-2</td>
+<td style="text-align: left;"><code>llm_5</code></td>
+<td style="text-align: left;">539 s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6 · pule</td>
+<td style="text-align: left;">789 subject terms, 3188 general items, 636 concepts, 400 worksheet rows</td>
+<td style="text-align: left;"><code>pule_6</code></td>
+<td style="text-align: left;">1 s</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">7 · pseudoslowa</td>
-<td style="text-align: left;">80 templates; 1093 rows kept (855 distinct strings), 183 rejected</td>
+<td style="text-align: left;">240 templates; 11 603 candidates generated, 2911 passed the filters, 370 recommended</td>
 <td style="text-align: left;"><code>pseudoslowa_7</code></td>
-<td style="text-align: left;">174 s</td>
+<td style="text-align: left;">646 s</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">8 · raport</td>
@@ -437,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="headline-numbers" class="level2">
 <h2 class="anchored" data-anchor-id="headline-numbers">Headline numbers</h2>
-<div id="1b73296c" class="cell" data-execution_count="4">
+<div id="d43d077f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -460,32 +471,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">0.783 (<code>llm_sonnet_5_5</code>)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Candidates after frequency filters</td>
-<td style="text-align: left;">3513, of which 817 multiword</td>
+<td style="text-align: left;">Subject candidates after frequency thresholds</td>
+<td style="text-align: left;">3844, of which 952 multiword</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Candidates labelled by the LLMs</td>
-<td style="text-align: left;">925; agreement between the two models 0.776, Cohen’s κ 0.656</td>
+<td style="text-align: left;">Candidates labelled by the models</td>
+<td style="text-align: left;">5344; agreement between the two models 0.809, Cohen’s κ 0.748</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Final labels</td>
+<td style="text-align: left;">T2 1729, T1 1495, SZUM 1104, T3 797, T3_INNY 219</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Subject pool (T3)</td>
-<td style="text-align: left;">1455 terms, of which 415 labelled by the LLMs and the rest by rules only</td>
+<td style="text-align: left;">789 terms in 636 concepts</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">General pool (T1/T2)</td>
-<td style="text-align: left;">1549</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Concept groups</td>
-<td style="text-align: left;">1403</td>
+<td style="text-align: left;">3188 items; 514 subject terms (65%) have a matched partner</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Pseudowords kept</td>
-<td style="text-align: left;">1093 rows, 855 distinct strings</td>
+<td style="text-align: left;">Terms a model lists directly from the materials that step 4 also found</td>
+<td style="text-align: left;">51%</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">API spend for this configuration</td>
-<td style="text-align: left;">$2.44</td>
+<td style="text-align: left;">Pseudowords</td>
+<td style="text-align: left;">370 recommended for 206 of 240 templates; 2911 passed the filters</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">API spend for this configuration, all runs and steps</td>
+<td style="text-align: left;">$35.79</td>
 </tr>
 </tbody>
 </table>
@@ -513,11 +528,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="./pools.html">Pools and concepts</a></td>
-<td style="text-align: left;">subject pool, general pool, concept groups</td>
+<td style="text-align: left;">subject pool, general pool with matching, concept groups, terms the extraction missed</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="./pseudowords.html">Pseudowords</a></td>
-<td style="text-align: left;">kept and rejected pseudowords, with reasons and distributions</td>
+<td style="text-align: left;">recommended, accepted and rejected pseudowords, with ratings, reasons and distributions</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="./sheets.html">Annotation worksheets</a></td>
@@ -540,17 +555,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="limits" class="level2">
 <h2 class="anchored" data-anchor-id="limits">Limits</h2>
-<div id="9fd2d362" class="cell" data-execution_count="5">
+<div id="b15bdc5d" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <ul>
-<li>This is a sample run. Counts and rankings will change on the full corpus.</li>
+<li>This is a sample run. Counts and rankings will change on the full corpus, and frequency thresholds cut more on a small sample: only 68% of the glossary entries of the sampled materials are among the candidates.</li>
+<li>All labels come from language models. Agreement between models is reported, accuracy is not: the gold-set worksheet has not been filled in.</li>
 <li>The grade of a material is <strong>estimated</strong> from topic keywords; the ZPE catalogue only records the stage (grades 4–8).</li>
-<li>Only 925 of 3513 candidates were labelled by the LLMs. The pools also contain candidates that carry only the rule-based pre-label; the <code>label_source</code> column on the data pages tells them apart.</li>
-<li>For 122 candidates the language model returned a base form different from the extracted one, and for 60 of them with a different number of words. The statistics in those rows belong to the extracted string (<code>forma_kandydata</code>), and the same <code>forma_podstawowa</code> can appear in several rows of a pool. See the <a href="./candidates.html">Candidates</a> page.</li>
+<li>A multiword candidate must fit a syntactic pattern (adjective + noun, noun + genitive). Terms built differently are visible only in the direct extraction by a model, listed on the <a href="./pools.html">Pools</a> page.</li>
+<li>KWJP100 has no frequencies for phrases, so phrases are matched on their frequency in the ZPE corpus, not in general Polish.</li>
 <li>The silver standard (ZPE glossaries) is incomplete, so precision@K against it is only useful for comparing methods.</li>
 <li>SUBTLEX-PL is licensed CC BY-NC-SA 4.0 and is used for comparison metrics only; it does not enter the published lists.</li>
-<li>The UA/RU similarity flag on pseudowords compares against a built-in list of ten transliterated words. It is a placeholder for review by bilingual staff.</li>
-<li><strong>The <code>unipseudo</code> pseudowords of this run are not usable</strong>: the 240 rows are copies of 3 strings. See the note on the <a href="./pseudowords.html">Pseudowords</a> page.</li>
+<li>Pseudowords were rated by a model, not by people. The Ukrainian/Russian filter transliterates the most frequent words of both languages and cannot replace review by bilingual staff; the recommended list still needs a pilot with pupils.</li>
 </ul>
 </div>
 </div>

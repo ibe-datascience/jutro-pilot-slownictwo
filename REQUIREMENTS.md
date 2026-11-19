@@ -11,7 +11,7 @@ Silicon, 18 GB RAM) with Python 3.12.2; nothing has been tested on Linux or Wind
 | Java runtime | OpenJDK 11.0.22 | TermoPL (step 4) | step 4 runs without the C-value method |
 | bash, awk | system | `resources/tools/termopl/run_termopl.sh` | as above |
 | Quarto | 1.9.36 | the report site (step 8) | step 8 still writes `raport.md`; the site is not rebuilt |
-| R | 4.4.1 | only to export UniPseudo word lists from `WorldLex-Polish.rds` | no UniPseudo candidates |
+| R | 4.4.1 | only to export the WorldLex-Polish word list from `WorldLex-Polish.rds` (`Rscript export_worldlex.R`, once) | no UniPseudo candidates; step 7 checks candidates against one word list fewer |
 
 ## 2. Python environment
 
@@ -36,8 +36,8 @@ notes on each (how it was obtained, format, licence evidence, SHA-256) are in `r
 
 | Path | What | Source | Licence | Size | Used by |
 |:---|:---|:---|:---|---:|:---|
-| `resources/freq/kwjp100-slowa-lemma-all.csv.gz` | KWJP100 lemma frequencies (general Polish; the list used in published results) | [ipipan/kwjp100-varia @ 26d82bd](https://raw.githubusercontent.com/ipipan/kwjp100-varia/26d82bd8b906dfed1cfcf8f903b1650b56daeabf/freqlists/kwjp100-slowa-lemma-all.csv.gz) | CC BY 4.0 | 3.1 MB | step 3 (required) |
-| `resources/freq/kwjp100-slowa-orth_lc-all.csv.gz` | KWJP100 form frequencies | [ipipan/kwjp100-varia @ 26d82bd](https://raw.githubusercontent.com/ipipan/kwjp100-varia/26d82bd8b906dfed1cfcf8f903b1650b56daeabf/freqlists/kwjp100-slowa-orth_lc-all.csv.gz) | CC BY 4.0 | 5.9 MB | step 3 (required) |
+| `resources/freq/kwjp100-slowa-lemma-all.csv.gz` | KWJP100 lemma frequencies (general Polish; the list used in published results) | [ipipan/kwjp100-varia @ 26d82bd](https://raw.githubusercontent.com/ipipan/kwjp100-varia/26d82bd8b906dfed1cfcf8f903b1650b56daeabf/freqlists/kwjp100-slowa-lemma-all.csv.gz) | CC BY 4.0 | 3.1 MB | steps 3 and 7 (required) |
+| `resources/freq/kwjp100-slowa-orth_lc-all.csv.gz` | KWJP100 form frequencies | [ipipan/kwjp100-varia @ 26d82bd](https://raw.githubusercontent.com/ipipan/kwjp100-varia/26d82bd8b906dfed1cfcf8f903b1650b56daeabf/freqlists/kwjp100-slowa-orth_lc-all.csv.gz) | CC BY 4.0 | 5.9 MB | steps 3 and 7 (required) |
 | `resources/freq/nkjp_1grams.gz` | NKJP 1-grams | [zil.ipipan.waw.pl/NKJPNGrams](https://zil.ipipan.waw.pl/NKJPNGrams?action=AttachFile&do=get&target=1grams.gz) | CC BY, version not stated | 22.7 MB | step 3 (required) |
 | `resources/freq/nkjp1m-1.2_lemma_freq.tsv` | lemma frequencies of the NKJP 1M subcorpus; derive with `python resources/freq/derive_nkjp1m_freq.py` from `NKJP-PodkorpusMilionowy-1.2.tar.gz` placed in the same folder | [clip.ipipan.waw.pl/NationalCorpusOfPolish](https://clip.ipipan.waw.pl/NationalCorpusOfPolish?action=AttachFile&do=get&target=NKJP-PodkorpusMilionowy-1.2.tar.gz) | CC BY, version stated inconsistently | 171 MB archive | step 3 (required) |
 | `resources/freq/subtlex-pl-lemmas-master.csv` | SUBTLEX-PL lemma frequencies, comparison metrics only | [osf.io/download/ab9ym](https://osf.io/download/ab9ym/) | **CC BY-NC-SA 4.0** | 59 MB | step 3 (required by the code as written) |
@@ -45,7 +45,8 @@ notes on each (how it was obtained, format, licence evidence, SHA-256) are in `r
 | `resources/tools/termopl/TermoPL_Mac_OS_X/` | TermoPL 8.1.1, unpacked macOS arm64 package | [zil.ipipan.waw.pl/TermoPL](https://zil.ipipan.waw.pl/TermoPL?action=AttachFile&do=get&target=TermoPL_Mac_OS_X.zip) | BSD 2-clause | 21 MB | step 4 (optional) |
 | `resources/pseudo/wuggy_plugins/orthographic_polish/orthographic_polish.py` and `.txt` | official Wuggy Polish plugin and its lexicon | [WuggyCode/wuggy_language_plugin_data @ 2968223](https://github.com/WuggyCode/wuggy_language_plugin_data/tree/2968223983626c4a178cda7ea071c082dcaba3fb/orthographic_polish) | none stated | 40 MB | step 7 (optional) |
 | `resources/pseudo/imbir2015/Polish_pseudo-words_List_dataset.csv` | Imbir (2015) pseudoword list; download the xlsx, then `python convert_to_csv.py` in that folder | [figshare file 2099389](https://ndownloader.figshare.com/files/2099389?private_link=1089daa40de311e589a806ec4b8d1f61) | CC BY 4.0 | 0.1 MB | step 7 (optional) |
-| `resources/pseudo/unipseudo/openlexicon_django_dev_5d6f5188/unipseudo/generator.py`, `filters.py` and `resources/pseudo/unipseudo/data/` | UniPseudo generator (Python port) and WorldLex-Polish word lists | [chrplr/openlexicon @ 5d6f518](https://github.com/chrplr/openlexicon/tree/5d6f5188db995a0c8052b7438137c61e49b99538/openlexicon.org/unipseudo), [WorldLex-Polish.rds](http://www.lexique.org/databases/WorldLex/WorldLex-Polish.rds) | code CC BY-SA 4.0; data: none stated | 6.6 MB | step 7 (optional, see section 7) |
+| `resources/pseudo/unipseudo/openlexicon_django_dev_5d6f5188/unipseudo/generator.py`, `filters.py` | UniPseudo generator (Python port) | [chrplr/openlexicon @ 5d6f518](https://github.com/chrplr/openlexicon/tree/5d6f5188db995a0c8052b7438137c61e49b99538/openlexicon.org/unipseudo) | CC BY-SA 4.0 | under 0.1 MB | step 7 (optional) |
+| `resources/pseudo/unipseudo/data/worldlex_polish_words.tsv` | WorldLex-Polish word list (word, length, blog frequency); download `WorldLex-Polish.rds` into `data/`, then run `Rscript export_worldlex.R` in `resources/pseudo/unipseudo/` | [WorldLex-Polish.rds](http://www.lexique.org/databases/WorldLex/WorldLex-Polish.rds) | none stated | 6.5 MB download, 10.3 MB exported | step 7 (optional): source words of the UniPseudo chains and one of the lists used to reject existing words |
 
 "Optional" means the step logs the failure and continues without that method. "Required" means the step stops if the
 file is missing. On another operating system TermoPL needs the matching package from the same page and the `APP`
@@ -63,8 +64,11 @@ made the published run.
 | `zrodlo.podstawa_pdf` | Present in the configuration, but no step reads it at the moment. |
 
 API use is bounded by `llm.limit_kosztu_usd` in the configuration: a request batch is refused when the spend so far
-plus its estimated cost would pass the limit. The sample run cost about 2.4 USD. With `--bez-llm` no API call is
-made: step 5 is skipped and the other steps use only answers already in the local cache.
+plus its estimated cost would pass the limit. The requests of the published sample run cost about 32 USD: 26 USD for
+labelling 5,344 candidates with two models and adjudicating their disagreements, 5 USD for generating and rating
+pseudowords, and the rest for the lemmatisation benchmark, direct term extraction and concept grouping. Which model
+does which task is set in the `llm` section of the configuration. With `--bez-llm` no API call is made: step 5 is
+skipped and the other steps use only answers already in the local cache.
 
 ## 5. Running
 
@@ -76,8 +80,13 @@ python -m jutro run --config config/biologia_sp.yaml --probka 50 --kroki raport 
 ```
 
 Steps whose result already exists in `data/<name>/<run>/` are skipped; `--od-nowa` forces them to run again.
-The sample run needed about 40 minutes of processing, most of it waiting for batch jobs in step 5, and about 40 MB
-in `data/`.
+In the sample run the local computation took about 6 minutes for steps 1–4 and 2 minutes for step 7. The rest of the
+time is waiting for the API: about 10 minutes for the direct requests of the lemmatisation benchmark in step 2, and
+between 1 and 10 minutes for each batch job (five in step 5, two in step 7). The run left about 50 MB in `data/`.
+
+Batch identifiers are written to `data/<name>/<run>/llm/*.oczekujace.json` as soon as a batch is sent. If the run is
+interrupted while a batch is being processed, the next run collects the results of that batch instead of sending
+(and paying for) the requests again.
 
 To rebuild only the site from the committed results in `wyniki/` (no ZPE dump, models or API key needed):
 
@@ -96,11 +105,6 @@ rendering.
   the configuration.
 - Language-model answers are not deterministic. They are cached under `data/<name>/<run>/llm/`, which is not
   published, so a fresh run asks the models again and labels can differ.
+- Wuggy stops searching after `pseudoslowa.wuggy_czas_s` seconds per template, so on a slower or busier machine it
+  can return fewer candidates.
 - The versions of all libraries used by a run are saved in `wyniki/<name>/<run>/przebieg.json`.
-
-## 7. Known problem that affects reproduction
-
-Step 7 does not read the output of the UniPseudo generator. It takes the first rows of whichever CSV file is in
-`resources/pseudo/unipseudo/`. In the published run that was a six-letter smoke-test file, so the `unipseudo` rows in
-`pseudoslowa.csv` repeat three strings. On a clean checkout there is no such file and the method returns nothing. The
-other three generators are not affected.

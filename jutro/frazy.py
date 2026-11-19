@@ -25,9 +25,22 @@ def _agree(a: Tok, n: Tok) -> bool:
     return True
 
 
+# Zaimki przymiotne, liczebniki porządkowe „tekstowe” i zaimki rzeczowne: gramatycznie pasują do wzorca NP,
+# ale nie tworzą terminów („ten sposób”, „jaka rola”, „coś trudności”).
+STOP_ADJ = {
+    "ten", "tamten", "ów", "taki", "jaki", "jakiś", "jakikolwiek", "który", "któryś", "każdy", "żaden", "wszystek",
+    "wszelki", "inny", "pewien", "niektóry", "niejeden", "sam", "mój", "twój", "swój", "nasz", "wasz", "czyj",
+    "następujący", "poniższy", "powyższy", "kolejny", "dany", "dowolny", "niniejszy", "wspomniany", "wyżej",
+}
+STOP_NOUN = {"coś", "ktoś", "nic", "nikt", "co", "kto", "to", "cokolwiek", "ktokolwiek", "wszystko", "wszyscy"}
+
+
 def _content(t: Tok) -> bool:
     f = t.form
-    return len(f) >= 2 and f.replace("-", "").isalpha()
+    if len(f) < 2 or not f.replace("-", "").isalpha():
+        return False
+    low = t.lemma.lower()
+    return low not in (STOP_ADJ if t.cls in ADJISH else STOP_NOUN)
 
 
 def np_spans(toks: Sequence[Tok], max_len: int) -> list[tuple[int, int, int]]:

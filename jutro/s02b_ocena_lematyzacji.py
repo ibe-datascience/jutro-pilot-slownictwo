@@ -231,14 +231,15 @@ def run(ctx: Ctx) -> None:
     df = build_sample(ctx)
     df = evaluate_tools(ctx, df)
     items = [(r["id"], f"Forma: {r['forma']}\nZdanie: {r['kontekst']}") for _, r in df.iterrows()]
-    llm_models = list(ctx.cfg["llm"]["modele_porownywane"])
+    # modele porównania lematyzacji są ustawiane osobno od modeli klasyfikacji (krok 5)
+    llm_models = list(ctx.cfg["llm"].get("lematyzacja_modele") or ctx.cfg["llm"]["modele_porownywane"])
     for model in llm_models:
         res = llm.run_requests(ctx, "lematyzacja_proba", model, LEMMA_SYSTEM, items, LEMMA_SCHEMA, max_tokens=120, batch=False)
         short = model.replace("claude-", "").replace("-", "_")
         df[f"llm_{short}_lemat"] = [res.get(i, {}).get("lemat", "") for i in df["id"]]
         df[f"llm_{short}_pos"] = [res.get(i, {}).get("czesc_mowy", "") if " " not in f else "" for i, f in zip(df["id"], df["forma"])]
     # referencja tymczasowa (Opus) – dla wszystkich pozycji; używana tam, gdzie brak referencji redakcji ZPE
-    opus = ctx.cfg["llm"]["model_rozstrzygajacy"]
+    opus = ctx.cfg["llm"].get("lematyzacja_referencja") or ctx.cfg["llm"]["model_rozstrzygajacy"]
     ref = llm.run_requests(ctx, "lematyzacja_referencja", opus, LEMMA_SYSTEM, items, LEMMA_SCHEMA, max_tokens=120, batch=False)
     df["lemat_ref_tymczasowy_opus"] = [ref.get(i, {}).get("lemat", "") for i in df["id"]]
     df["pos_ref_tymczasowy_opus"] = [ref.get(i, {}).get("czesc_mowy", "") for i in df["id"]]

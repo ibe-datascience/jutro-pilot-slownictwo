@@ -22,6 +22,7 @@ resources/**
 !resources/pseudo/unipseudo/
 !resources/pseudo/unipseudo/run_unipseudo_python_port.py
 !resources/pseudo/unipseudo/run_unipseudo_local.R
+!resources/pseudo/unipseudo/export_worldlex.R
 !resources/pseudo/dolzycka2022/
 !resources/pseudo/dolzycka2022/approach_demo_NOT_AUTHORS_CODE.py
 !resources/pseudo/wuggy_plugins/

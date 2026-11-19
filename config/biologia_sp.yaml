@@ -74,28 +74,57 @@ narzedzia:
 
 kandydaci:
   max_dlugosc: 4
-  min_frekw_cel: 3               # minimalna frekwencja w korpusie docelowym
-  min_materialow: 2              # ... i liczba materiałów
-  top_do_llm: 1500               # ilu najlepszych kandydatów każdej metody idzie do klasyfikacji LLM
-  ogolne_do_llm: 1500            # kandydaci do puli ogólnej (szerokie rozproszenie po przedmiotach)
+  # kandydat przedmiotowy: częsty w korpusie docelowym i obecny w >= min_materialow materiałach
+  # ALBO skupiony w jednym materiale, ale z frekwencją >= min_frekw_jeden_material (terminy są „skupione”)
+  min_frekw_cel: 3
+  min_materialow: 2
+  min_frekw_jeden_material: 5
+  max_udzial_nazw_wlasnych: 0.5  # lemat częściej tagowany jako nazwa własna niż pospolita odpada
+  # kandydat ogólny (do puli T1/T2): z całego korpusu etapu, szeroko rozproszony po przedmiotach kontrastu
+  ogolne_min_przedmiotow: 3
+  ogolne_min_materialow: 3
+  ogolne_min_frekw: 5
+  # ilu kandydatów trafia do klasyfikacji LLM
+  top_do_llm: 4000               # kandydaci przedmiotowi: wszyscy, jeśli jest ich <= tyle; inaczej suma top N każdej metody
+  ogolne_do_llm: 1500            # kandydaci ogólni: próba warstwowa po frekwencji ogólnej (Zipf) i liczbie słów
 
 llm:
-  wersja_promptu: v1
-  modele_porownywane: [claude-haiku-5-5, claude-sonnet-5-5]
-  model_rozstrzygajacy: claude-opus-5-5
-  model_ekstrakcji: claude-sonnet-5-5
+  wersja_promptu: v2
+  # Dwa modele klasyfikują niezależnie; rozbieżności i przypadki niepewne rozstrzyga model najmocniejszy.
+  modele_porownywane: [claude-sonnet-5-5, claude-opus-5-5]
+  model_rozstrzygajacy: claude-fable-5-2
+  # Krok 2 (porównanie lematyzacji): modele-lematyzatory i model tymczasowej referencji
+  lematyzacja_modele: [claude-haiku-5-5, claude-sonnet-5-5]
+  lematyzacja_referencja: claude-opus-5-5
+  model_ekstrakcji: claude-opus-5-5      # wypisywanie terminów wprost z materiałów (metoda porównawcza)
+  model_pojec: claude-fable-5-2          # grupowanie terminów w pojęcia (jedno żądanie na całą pulę)
+  model_pseudoslow: claude-opus-5-5      # generowanie pseudosłów
+  model_oceny_pseudoslow: claude-fable-5-2   # ocena „słowopodobności” i skojarzeń pseudosłów
+  n_materialow_ekstrakcja: 30
   limit_kosztu_usd: 100
   batch: true
   cache_ttl: 1h
-  parametry:                     # ustawienia myślenia wg dokumentacji „Effort” (2026-11-13)
+  parametry:                     # `effort` steruje myśleniem adaptacyjnym (sprawdzone wywołaniem 2026-11-19)
     claude-haiku-5-5: {thinking: {type: disabled}}
-    claude-sonnet-5-5: {thinking: {type: between_tools}}
-    claude-opus-5-5: {effort: medium, min_max_tokens: 4000}   # myślenia adaptacyjnego nie da się wyłączyć
+    claude-sonnet-5-5: {effort: low}
+    claude-opus-5-5: {effort: low}
+    claude-fable-5-2: {effort: medium, min_max_tokens: 4000}
 
 zloty_zbior:
   n: 400
 
 pseudoslowa:
-  n_szablonow: 240
-  kandydatow_na_szablon: 6
-  czeste_slowo_zipf: 3.0         # próg "częstego słowa" dla filtra literówek
+  n_szablonow: 240               # słowa prawdziwe (rzeczowniki i czasowniki), do których dopasowujemy pseudosłowa
+  szablony_z_pul: [ogolna, przedmiotowa]   # z których pul losować szablony
+  udzial_przedmiotowych: 0.35    # jaka część szablonów ma pochodzić z puli przedmiotowej
+  dlugosc_szablonu: [4, 12]      # litery
+  kandydatow_na_szablon: 12      # ile kandydatów generuje każda metoda na jeden szablon (przed filtrami)
+  ocenianych_na_szablon: 6       # ilu kandydatów na szablon (po filtrach) ocenia model; najwyżej połowa z jednej metody
+  wybrane_na_szablon: 2          # ile najlepszych pseudosłów na szablon trafia do listy rekomendowanej
+  min_wymawialnosc: 4            # ocena modelu: wymawialność 1–5, próg przyjęcia
+  max_podobienstwo: 1            # ocena modelu: podobieństwo do konkretnego słowa 0–3, próg przyjęcia
+  wuggy_czas_s: 3.0              # limit czasu wyszukiwania Wuggy na jeden szablon
+  wuggy_procesy: 4
+  czeste_slowo_zipf: 3.0         # próg „częstego słowa” dla filtra literówek (odległość edycyjna 1)
+  min_typow_ngramu: 5            # trigram literowy / zbitka spółgłosek musi wystąpić w >= tylu słowach leksykonu
+  imbir_min_sedziow: 4           # lista Imbir (2015): pseudosłowo uznane za dobre przez >= tylu z 5 sędziów

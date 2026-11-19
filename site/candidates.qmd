@@ -11,33 +11,37 @@ import itables
 itables.init_notebook_mode(all_interactive=False, connected=True)
 
 k = L.csv("kandydaci.csv")
-k.insert(1, "label_source", k["kategoria_final"].notna().map({True: "LLM", False: "rule"}))
+m5 = L.metrics("llm_5")
 k.insert(2, "form_changed", (k["forma_podstawowa"] != k["forma_kandydata"]).map({True: "yes", False: ""}))
-front = ["forma_podstawowa", "forma_kandydata", "form_changed", "kategoria", "label_source", "pojecie", "obrazowalnosc", "dlugosc", "cls",
-         "freq_cel", "freq_kontrast", "n_mat_cel", "n_przedmiotow", "freq_kwjp", "zipf_wordfreq"]
+front = ["forma_podstawowa", "forma_kandydata", "form_changed", "kategoria", "typ_szumu", "pelny_termin", "pojecie", "obrazowalnosc",
+         "do_przegladu", "zgodnosc_glosow", "kand_przedmiotowy", "kand_ogolny", "dlugosc", "pos",
+         "freq_cel", "freq_kontrast", "n_mat_cel", "n_przedmiotow", "zipf_kwjp", "zipf_zpe"]
+front = [c for c in front if c in k.columns]
 k = k[front + [c for c in k.columns if c not in front]]
-n_llm = int((k["label_source"] == "LLM").sum())
-chg = k[k["form_changed"] == "yes"]
-n_chg = len(chg)
-n_chg_words = int((chg["forma_podstawowa"].str.split().str.len() != chg["dlugosc"]).sum())
-n_dup = int(k["forma_podstawowa"].duplicated(keep=False).sum())
+n = lambda v: L.fmt(int(v))
+labelled = k["kategoria"] != "nieklasyfikowany"
+models = (m5.get("modele") or {})
+names = ", ".join(x.replace("claude-", "") for x in models.get("porownywane", []))
 ```
 
-`{python} f"{len(k):,}".replace(",", " ")` candidates passed the frequency filters. `{python} n_llm` of them were
-labelled by the language models; the rest carry only the rule-based pre-label (`label_source` = `rule`), and
-`do_llm` in `kategoria` means the rules could not decide either. None of the labels has been checked by a human.
+`{python} n(len(k))` rows: `{python} n(k["kand_przedmiotowy"].sum())` candidates from the biology materials and
+`{python} n((~k["kand_przedmiotowy"]).sum())` general candidates that occur across the other subjects only.
+`{python} n(labelled.sum())` rows were labelled by the language models (`{python} names`, with
+`{python} str(models.get("rozstrzygajacy", "")).replace("claude-", "")` adjudicating); the remaining general
+candidates were not sent to the models (`nieklasyfikowany`) and are in neither pool. No label has been checked by a human.
 
-::: {.callout-warning title="Two form columns"}
+::: {.callout-note title="Two form columns"}
 `forma_kandydata` is the string the statistics were computed for. `forma_podstawowa` is the same string unless the
-language model returned a different base form: this happened for `{python} n_chg` candidates, and for
-`{python} n_chg_words` of them the model's form has a different number of words (for example a single adjective
-replaced by a whole two-word term), so the counts in the row do not describe the string in `forma_podstawowa`.
-Because of these replacements `{python} n_dup` rows share their `forma_podstawowa` with another row. Filter
-`form_changed` = `yes` to see them.
+models corrected a wrong base form (`{python} n((k["form_changed"] == "yes").sum())` rows); a correction is accepted
+only if it keeps the number of words. Where a correction makes two rows name the same item (for example *odwłoka*
+and *odwłok*, one lemma split by a tagging error), the row whose form needed no correction is the main one; the
+others point to it in `duplikat_formy` (`{python} n(k["duplikat_formy"].notna().sum())` rows) and are left out of the
+pools. `warianty` lists the strings merged into an item and `freq_cel_laczna` gives their summed frequency.
 :::
 
 Type in the boxes under the column names to filter a single column (for example `T3` under `kategoria`), click a
-header to sort, and use **Columns** to show the hidden rank and per-model columns.
+header to sort, and use **Columns** to show the hidden score, rank and per-model columns, including each model's
+one-sentence reason.
 
 ```{python}
 L.source("kandydaci.csv")
@@ -45,8 +49,9 @@ L.glossary(k.columns)
 ```
 
 ```{python}
-hidden = [c for c in k.columns if c.startswith("rank_")] + [
-    "n_mat_kontrast", "n_klas_cel", "rozproszenie", "termopl_ok", "forma_podstawowa_llm", "kategoria_final",
-    "ll_vs_kwjp", "log_ratio_kwjp"]
-L.dt(k, order=[[list(k.columns).index("freq_cel"), "desc"]], hide=hidden, wrap=["pojecie"])
+hidden = [c for c in k.columns if c.startswith("rank_") or c.endswith(("_pewnosc", "_uzasadnienie"))] + [
+    "lematy", "cls", "n_mat_kontrast", "n_klas_cel", "rozproszenie", "termopl_ok", "kategoria_final", "model_sedzia",
+    "udzial_nazw_wlasnych", "ll_vs_kwjp", "log_ratio_kwjp", "freq_kwjp", "zipf_wordfreq", "duplikat_formy", "warianty",
+    "freq_cel_laczna", "freq_kontrast_laczna", "srebrny_pojecie_ref"]
+L.dt(k, order=[[list(k.columns).index("freq_cel"), "desc"]], hide=hidden, wrap=["pojecie", "pelny_termin", "warianty"])
 ```
