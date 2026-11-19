@@ -1,17 +1,113 @@
-/* Interactive tables */
-.dt-container { font-size: 0.85rem; }
-table.dataTable td.dt-wrap { white-space: normal; min-width: 16rem; max-width: 34rem; }
-table.dataTable tfoot input { width: 100%; min-width: 3.5rem; font-weight: normal; }
-/* per-column filter row (table footer) shown directly under the header */
+/* Interactive tables (DataTables through itables): a card with a toolbar, a quiet header and a filter row */
+main div.dt-container { --dt-ink: #2c3e50; --dt-muted: #66727f; --dt-line: #e6eaee; --dt-soft: #f6f8fa; --dt-accent: #18bc9c;
+                font-size: 0.86rem; color: var(--dt-ink); background: #fff; border: 1px solid var(--dt-line); border-radius: 12px;
+                box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 20px rgba(16, 24, 40, 0.05); overflow: hidden;
+                margin: 1rem 0 1.75rem; }
+main div.dt-container div.dt-layout-row:not(.dt-layout-table) { display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: center; gap: 0.6rem; margin: 0; padding: 0.7rem 0.9rem; }
+main div.dt-container div.dt-layout-row.dt-layout-table { margin: 0; padding: 0; border-top: 1px solid var(--dt-line); border-bottom: 1px solid var(--dt-line); }
+/* selectors as specific as the narrow-screen rules of DataTables, which would otherwise stack and centre the cells */
+main div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell { display: flex; align-items: center; gap: 0.9rem;
+  margin: 0; padding: 0; text-align: left; }
+main div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell > * { margin: 0; }
+main div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell.dt-layout-end { margin-left: auto; }
+
+/* search */
+main div.dt-container div.dt-search input { width: min(22rem, 70vw); margin: 0; padding: 0.42rem 0.7rem 0.42rem 2.1rem; font-size: 0.86rem;
+  color: var(--dt-ink); border: 1px solid var(--dt-line); border-radius: 9px;
+  background: var(--dt-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2366727f' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 0.7rem center / 0.95rem; }
+main div.dt-container div.dt-search input:focus, main div.dt-container tfoot input:focus, main div.dt-container .dt-length select:focus {
+  outline: none; background-color: #fff; border-color: var(--dt-accent); box-shadow: 0 0 0 3px rgba(24, 188, 156, 0.18); }
+
+/* buttons */
+main div.dt-container div.dt-buttons { display: flex; gap: 0.4rem; }
+main div.dt-container div.dt-buttons > .dt-button { margin: 0; padding: 0.38rem 0.75rem; font-size: 0.8rem; font-weight: 600; color: var(--dt-ink);
+  background: #fff; border: 1px solid var(--dt-line); border-radius: 9px; box-shadow: 0 1px 1px rgba(16, 24, 40, 0.04); }
+main div.dt-container div.dt-buttons > .dt-button:hover:not(.disabled) { background: var(--dt-soft); border-color: #d3d9e0; }
+main div.dt-container div.dt-buttons > .dt-button:focus-visible { outline: 2px solid var(--dt-accent); outline-offset: 2px; }
+main div.dt-container div.dt-buttons > .dt-button.buttons-colvis { color: #fff; background: var(--dt-ink); border-color: var(--dt-ink); }
+main div.dt-container div.dt-buttons > .dt-button .dt-button-down-arrow { font-size: 0.6em; opacity: 0.8; padding-left: 0.5em; }
+main div.dt-container div.dt-buttons > .dt-button.buttons-colvis:hover:not(.disabled) { background: #1f2d3a; border-color: #1f2d3a; }
+body div.dt-button-collection { width: 15rem; padding: 0.35rem; font-size: 0.8rem; background: #fff; border: 1px solid #e6eaee;
+  border-radius: 10px; box-shadow: 0 10px 30px rgba(16, 24, 40, 0.14); }
+body div.dt-button-collection > div[role="menu"] { max-height: min(24rem, 55vh); overflow-y: auto; }
+body div.dt-button-collection .dt-button { margin: 0; padding: 0.3rem 0.6rem; color: #8a94a0; background: none; border: 0; border-radius: 6px; }
+body div.dt-button-collection .dt-button:hover:not(.disabled) { background: #f1f3f6; }
+body div.dt-button-collection .dt-button.dt-button-active { color: #2c3e50; font-weight: 600; background: none; }
+body div.dt-button-collection .dt-button.dt-button-active::after { color: #18bc9c; }
+body div.dt-button-background { background: transparent !important; }
+
+/* header */
+main div.dt-container table.dataTable { margin: 0; border-collapse: separate; border-spacing: 0; }
+main div.dt-container table.dataTable > thead > tr > th { padding: 0.6rem 0.8rem; font-size: 0.76rem; font-weight: 600; color: var(--dt-muted);
+  background: var(--dt-soft); border: 0; border-bottom: 1px solid var(--dt-line); white-space: nowrap; }
+main div.dt-container table.dataTable > thead > tr > th:hover { color: var(--dt-ink); }
+main div.dt-container table.dataTable > thead > tr > th[aria-sort] { color: var(--dt-ink); }
+main div.dt-container table.dataTable thead th span.dt-column-order::before, main div.dt-container table.dataTable thead th span.dt-column-order::after { font-size: 0.6em; }
+
+/* per-column filter row (the table footer), shown directly under the header */
 .dt-scroll { display: flex; flex-direction: column; }
 .dt-scroll-head { order: 0; }
 .dt-scroll-foot { order: 1; }
 .dt-scroll-body { order: 2; }
-.dt-buttons .dt-button { font-size: 0.8rem; }
+main div.dt-container .dt-scroll-body { border-bottom: 0 !important; }
+main div.dt-container table.dataTable > tfoot > tr > th { padding: 0.35rem 0.45rem; background: #fff; border: 0; border-bottom: 1px solid var(--dt-line); }
+main div.dt-container table.dataTable tfoot input { width: 100%; min-width: 3.5rem; padding: 0.22rem 0.45rem 0.22rem 1.5rem; font-size: 0.78rem;
+  font-weight: normal; color: var(--dt-ink); border: 1px solid transparent; border-radius: 6px;
+  background: #f1f3f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2395a0ab' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5h16l-6 7.5V19l-4-2v-4.500z'/%3E%3C/svg%3E") no-repeat 0.45rem center / 0.8rem; }
+main div.dt-container table.dataTable tfoot input::placeholder { color: transparent; }   /* the header already names the column */
 
-/* Static tables */
-main table.table { font-size: 0.9rem; width: auto; }
+/* rows */
+main div.dt-container table.dataTable > tbody > tr > td { padding: 0.5rem 0.8rem; border: 0; border-top: 1px solid #f0f2f5; vertical-align: top;
+  font-variant-numeric: tabular-nums; }
+main div.dt-container table.dataTable > tbody > tr:first-child > td { border-top: 0; }
+main div.dt-container table.dataTable > tbody > tr:hover > td { background: #f3faf8; }
+main div.dt-container table.dataTable > tbody > tr > td:first-child { font-weight: 600; }
+main div.dt-container table.dataTable td.dt-wrap { white-space: normal; min-width: 16rem; max-width: 34rem; }
+main div.dt-container table.dataTable td.dt-empty { padding: 1.6rem; color: var(--dt-muted); font-weight: normal; }
+
+/* value chips (columns listed in _lib.CHIP_COLUMNS) */
+.chip { display: inline-block; padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.74rem; font-weight: 600; line-height: 1.5;
+        color: #44505c; background: #eef1f4; white-space: nowrap; }
+.chip-t3, .chip-tak { color: #0b6b58; background: #dff5ef; }
+.chip-t2 { color: #1d5b96; background: #e2effb; }
+.chip-t1 { color: #44505c; background: #e9edf1; }
+.chip-t3-inny { color: #6a3d9a; background: #f0e8fa; }
+.chip-szum, .chip-nie { color: #7a5b5b; background: #f5ecec; }
+.chip-czesciowo { color: #8a5a00; background: #fdf1d8; }
+.chip-nieklasyfikowany { color: #7b8794; background: #f4f6f8; font-weight: 500; }
+.chip-llm { color: #6a3d9a; background: #f0e8fa; }
+.chip-wuggy, .chip-wuggy-koncowka { color: #1d5b96; background: #e2effb; }
+.chip-unipseudo { color: #0b6b58; background: #dff5ef; }
+.chip-imbir { color: #8a5a00; background: #fdf1d8; }
+
+/* footer: info, page size, paging */
+main div.dt-container .dt-info { padding: 0; color: var(--dt-muted); font-size: 0.8rem; }
+main div.dt-container .dt-length { color: var(--dt-muted); font-size: 0.8rem; }
+main div.dt-container .dt-length select { margin: 0 0.3rem 0 0; padding: 0.2rem 0.4rem; font-size: 0.8rem; color: var(--dt-ink); background: #fff;
+  border: 1px solid var(--dt-line); border-radius: 7px; }
+main div.dt-container .dt-paging .dt-paging-button { min-width: 2rem; margin: 0 0.1rem; padding: 0.28rem 0.5rem; font-size: 0.8rem;
+  color: var(--dt-ink) !important; background: none !important; border: 0 !important; border-radius: 8px; box-shadow: none !important; }
+main div.dt-container .dt-paging .dt-paging-button:hover:not(.disabled):not(.current) { background: #eef1f4 !important; }
+main div.dt-container .dt-paging .dt-paging-button.current { color: #fff !important; background: var(--dt-ink) !important; font-weight: 600; }
+main div.dt-container .dt-paging .dt-paging-button.disabled { color: #b8c0c8 !important; }
+
+/* Static tables: same card look as the interactive ones */
+main table.table { width: auto; max-width: 100%; margin: 1rem 0 1.5rem; font-size: 0.86rem; color: #2c3e50; background: #fff;
+  border: 1px solid #e6eaee; border-radius: 12px; border-collapse: separate; border-spacing: 0; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 20px rgba(16, 24, 40, 0.05); --bs-table-bg: transparent; }
 main table.table th, main table.table td, main table.table a { overflow-wrap: normal; word-break: normal; }
+main table.table col { width: auto !important; }   /* column widths from the content, not from Pandoc's percentages */
+main table.table > thead > tr > th { padding: 0.6rem 0.9rem; font-size: 0.76rem; font-weight: 600; color: #66727f; background: #f6f8fa;
+  border: 0; border-bottom: 1px solid #e6eaee; vertical-align: bottom; white-space: nowrap; }
+main table.table > tbody > tr > td, main table.table > tbody > tr > th { padding: 0.55rem 0.9rem; border: 0; border-top: 1px solid #f0f2f5;
+  vertical-align: top; font-variant-numeric: tabular-nums; box-shadow: none; }
+main table.table > tbody > tr:first-child > td, main table.table > tbody > tr:first-child > th { border-top: 0; }
+main table.table > tbody > tr:hover > td { background: #f3faf8; }
+main table.table > tbody > tr > td:first-child { font-weight: 600; }
+main table.table code { padding: 0.08rem 0.4rem; font-size: 0.82em; color: #2c3e50; background: #eef1f4; border-radius: 5px; }
+main table.table > caption { padding: 0.5rem 0.2rem; font-size: 0.8rem; color: #66727f; }
+.callout table.table { box-shadow: none; margin: 0.4rem 0 0.6rem; }
 
 /* Pipeline at a glance (index) */
 ol.flow { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; list-style: none; margin: 1rem 0 1.25rem; padding: 0; font-size: 0.85rem; }
