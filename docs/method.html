@@ -210,10 +210,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Thresholds and model names on this page are read from <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/config/biologia_sp.yaml"><code>config/biologia_sp.yaml</code></a>. One command runs all steps: <code>python -m jutro run --config config/biologia_sp.yaml --probka 50</code>.</p>
+<p>Thresholds and model names on this page are read from the configuration of the run, shown in full on the <a href="./reproduce.html">Reproduce</a> page.</p>
 <section id="models" class="level2">
 <h2 class="anchored" data-anchor-id="models">Models</h2>
-<div id="d8558814" class="cell" data-execution_count="2">
+<div id="cb4b8c7f" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -273,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="corpus" class="level2">
 <h2 class="anchored" data-anchor-id="corpus">1 · Corpus</h2>
 <p><strong>Why:</strong> subject words stand out only against the text of other subjects.</p>
-<div id="84b8f234" class="cell" data-execution_count="3">
+<div id="93d7339a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -317,7 +317,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="tagging" class="level2">
 <h2 class="anchored" data-anchor-id="tagging">2 · Tagging and lemmatisation</h2>
 <p><strong>Why:</strong> Polish inflects, so counting words needs their base forms.</p>
-<div id="424ac4b3" class="cell" data-execution_count="4">
+<div id="51b67b93" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -351,7 +351,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="frequency" class="level2">
 <h2 class="anchored" data-anchor-id="frequency">3 · Frequencies</h2>
 <p><strong>Why:</strong> general frequency tells a rare term from an everyday word, and it is what matching uses later.</p>
-<div id="b040df06" class="cell" data-execution_count="5">
+<div id="695f0821" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -385,7 +385,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="candidates" class="level2">
 <h2 class="anchored" data-anchor-id="candidates">4 · Candidates</h2>
 <p><strong>Why:</strong> a complete and repeatable list of everything that could be a term, made before any model is involved.</p>
-<div id="fe466326" class="cell" data-execution_count="6">
+<div id="d596cd68" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -435,7 +435,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="labels" class="level2">
 <h2 class="anchored" data-anchor-id="labels">5 · Labels</h2>
 <p><strong>Why:</strong> statistics cannot tell a biology term from a school word that happens to be frequent in biology.</p>
-<div id="b25894a9" class="cell" data-execution_count="7">
+<div id="f906c755" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -477,7 +477,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="pools" class="level2">
 <h2 class="anchored" data-anchor-id="pools">6 · Pools</h2>
 <p><strong>Why:</strong> the test compares terms with general words, so the two sets must not differ in frequency or length.</p>
-<div id="c6ad71ae" class="cell" data-execution_count="8">
+<div id="bdfff757" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -522,7 +522,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="pseudowords">7 · Pseudowords</h2>
 <p><strong>Why:</strong> the word-recognition test needs non-words that look and sound Polish and cannot be spotted by their shape.</p>
 <p>Each pseudoword is tied to a <strong>template</strong>: one of 240 real nouns and verbs drawn from the two pools. Each generator gives up to 12 candidates per template.</p>
-<div id="7f9b1fab" class="cell" data-execution_count="9">
+<div id="dfe023c0" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -568,7 +568,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Hard filters; a candidate is rejected by the first one it fails:</p>
-<div id="69d3e4bb" class="cell" data-execution_count="10">
+<div id="667d0089" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -611,7 +611,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Edit distances: rapidfuzz 3.14.6.</p>
-<div id="1d7d3c8a" class="cell" data-execution_count="11">
+<div id="ce3d3ab3" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -648,7 +648,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="software" class="level2">
 <h2 class="anchored" data-anchor-id="software">Software</h2>
-<div id="e229a479" class="cell" data-execution_count="12">
+<div id="569c5041" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>

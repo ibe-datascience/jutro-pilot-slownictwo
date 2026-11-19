@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Reproduce</h1>
-<p class="subtitle lead">What you need, how to run it, and the raw record of this run</p>
+<p class="subtitle lead">How the run was made, what it needs, and its raw record</p>
 </div>
 
 
@@ -241,6 +241,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="callout callout-style-default callout-note callout-titled" title="What is published">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What is published
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo">repository</a> holds this site and the result files (<code>wyniki/</code>). The pipeline code, the ZPE materials and the external resources are not published; this page documents the environment and the settings of the run.</p>
+</div>
+</div>
 <section id="run" class="level2">
 <h2 class="anchored" data-anchor-id="run">Run</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3.12</span> <span class="at">-m</span> venv .venv <span class="kw">&amp;&amp;</span> <span class="bu">.</span> .venv/bin/activate</span>
@@ -252,9 +265,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-you-need" class="level2">
 <h2 class="anchored" data-anchor-id="what-you-need">What you need</h2>
-<div id="2abbe137" class="cell" data-execution_count="2">
+<div id="cb201e8f" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 25%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">What</th>
@@ -272,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;">Python packages</td>
-<td style="text-align: left;"><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/requirements.txt"><code>requirements.txt</code></a></td>
+<td style="text-align: left;"><code>requirements.txt</code>, shown below</td>
 <td style="text-align: left;">everything</td>
 <td style="text-align: left;">yes</td>
 </tr>
@@ -322,9 +341,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>A step that lacks an optional resource logs it and continues without that method. The site alone can be rebuilt from the committed <code>wyniki/</code> with only Python and Quarto.</p>
+<p>A step that lacks an optional resource logs it and continues without that method.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Full requirements: download links, licences, sizes, run times">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -333,11 +352,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="70479b3c" class="cell" data-execution_count="3">
+<div id="dd248190" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>What you need besides the code in this repository. The published run (<code>probka50</code>) was made on macOS 26.5 (Apple Silicon, 18 GB RAM) with Python 3.12.2; nothing has been tested on Linux or Windows.</p>
+<p>What you need besides the pipeline code. The published run (<code>probka50</code>) was made on macOS 26.5 (Apple Silicon, 18 GB RAM) with Python 3.12.2; nothing has been tested on Linux or Windows.</p>
 <section id="system-software" class="level4">
 <h4 class="anchored" data-anchor-id="system-software">1. System software</h4>
 <table class="caption-top table table-sm table-striped small">
@@ -565,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="requirements.txt">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -574,9 +593,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="c0030c0c" class="cell" data-execution_count="4">
+<div id="d2a5e405" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># JUTRO pilot – Python dependencies imported by the pipeline (jutro/, resources/*/ helper scripts) and the report site.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Versions are the ones the published run used (Python 3.12.2, macOS arm64).</span></span>
@@ -611,15 +630,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="va">itables</span><span class="op">=</span>=2.9.1            <span class="co"># interactive tables</span></span>
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="va">matplotlib</span><span class="op">=</span>=3.11.2        <span class="co"># charts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>The complete <code>pip freeze</code> of the environment is in <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/requirements-lock.txt"><code>requirements-lock.txt</code></a>.</p>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Configuration: config/biologia_sp.yaml">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -628,9 +644,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="9f45e6b1" class="cell" data-execution_count="5">
+<div id="a5d156db" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pilotaż JUTRO – konfiguracja przebiegu.</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Przedmiot i klasy są parametrami: żeby powtórzyć proces dla innego przedmiotu,</span></span>
@@ -782,7 +798,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Versions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Steps</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div id="bbd99bbe" class="cell" data-execution_count="6">
+<div id="99191a8f" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -870,7 +886,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div id="a4afd1fe" class="cell" data-execution_count="7">
+<div id="4910c135" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -935,10 +951,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="raw-metrics-files" class="level2">
 <h2 class="anchored" data-anchor-id="raw-metrics-files">Raw metrics files</h2>
 <p>Every number on the <a href="./results.html">Results</a> page comes from one of these files.</p>
-<div id="c51ead7f" class="cell" data-execution_count="8">
+<div id="93049030" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="dobor_materialow.json · saved 2026-11-13T12:29:25+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -947,7 +963,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/dobor_materialow.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -967,7 +983,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="ekstrakcja_42.json · saved 2026-11-19T17:18:44+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -976,7 +992,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/ekstrakcja_42.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -1922,7 +1938,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="frekwencje_43.json · saved 2026-11-19T17:12:52+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1931,7 +1947,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/frekwencje_43.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -1995,7 +2011,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="koszty_8.json · saved 2026-11-19T18:30:33+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2004,7 +2020,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/koszty_8.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -2045,7 +2061,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="llm_5.json · saved 2026-11-19T17:47:39+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2054,7 +2070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/llm_5.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -2550,7 +2566,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="ocena_41.json · saved 2026-11-13T16:38:06+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2559,7 +2575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/ocena_41.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -2709,7 +2725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="opis_danych.json · saved 2026-11-13T12:31:23+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2718,7 +2734,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/opis_danych.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -2867,7 +2883,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="pseudoslowa_7.json · saved 2026-11-19T18:15:53+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2876,7 +2892,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/pseudoslowa_7.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -3194,7 +3210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="pule_6.json · saved 2026-11-19T17:50:30+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3203,7 +3219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/pule_6.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -3329,7 +3345,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="raport_8.json · saved 2026-11-19T18:31:08+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3338,7 +3354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/raport_8.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -3356,7 +3372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="tagowanie_czasy.json · saved 2026-11-13T12:55:23+01:00">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3365,7 +3381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/metryki/tagowanie_czasy.json">view on GitHub</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
