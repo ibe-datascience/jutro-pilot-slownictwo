@@ -1,0 +1,25 @@
+{
+  "_zapisano": "2026-11-13T17:13:46+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "n_klasyfikowanych": 925,
+    "n_rozstrzyganych_opus": 246,
+    "rozklad_final": {
+      "T3": 415,
+      "T2": 248,
+      "T1": 169,
+      "SZUM": 93
+    },
+    "zgodnosc_miedzy_modelami": {
+      "prosta": 0.7762,
+      "kappa": {
+        "haiku_5_5_vs_sonnet_5_5": 0.6562
+      }
+    },
+    "uwaga": "Zgodność między modelami NIE jest miarą trafności – brak etykiet ludzkich ze złotego zbioru.",
+    "n_materialow_ekstrakcja": 30,
+    "koszt_usd_dotychczas": 2.4354,
+    "czas_s": 1576.6,
+    "wersja_promptu": "v1"
+  }
+}

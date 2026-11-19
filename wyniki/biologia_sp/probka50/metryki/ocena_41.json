@@ -1,0 +1,141 @@
+{
+  "_zapisano": "2026-11-13T16:38:06+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "n": 300,
+    "referencja_ludzka_z_arkusza": false,
+    "narzedzia": {
+      "llm_haiku_5_5": {
+        "lemat_dokladny_wszystkie": 0.7733,
+        "lemat_skladniki_wszystkie": 0.9367,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.6703,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.9066,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.9322,
+        "lemat_dokladny__rzadki termin": 0.6867,
+        "lemat_skladniki__rzadki termin": 0.9333,
+        "lemat_dokladny__wielowyrazowe": 0.81,
+        "lemat_skladniki__wielowyrazowe": 0.93,
+        "lemat_dokladny__pozostale": 0.96,
+        "lemat_skladniki__pozostale": 0.96
+      },
+      "llm_sonnet_5_5": {
+        "lemat_dokladny_wszystkie": 0.7833,
+        "lemat_skladniki_wszystkie": 0.9467,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.6648,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.9121,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.9661,
+        "lemat_dokladny__rzadki termin": 0.7133,
+        "lemat_skladniki__rzadki termin": 0.9533,
+        "lemat_dokladny__wielowyrazowe": 0.81,
+        "lemat_skladniki__wielowyrazowe": 0.93,
+        "lemat_dokladny__pozostale": 0.94,
+        "lemat_skladniki__pozostale": 0.96
+      },
+      "spacy": {
+        "lemat_dokladny_wszystkie": 0.4567,
+        "lemat_skladniki_wszystkie": 0.8633,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.3901,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.8352,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.5593,
+        "lemat_dokladny__rzadki termin": 0.5333,
+        "lemat_skladniki__rzadki termin": 0.86,
+        "lemat_dokladny__wielowyrazowe": 0.21,
+        "lemat_skladniki__wielowyrazowe": 0.85,
+        "lemat_dokladny__pozostale": 0.72,
+        "lemat_skladniki__pozostale": 0.9
+      },
+      "spacy_morfeusz": {
+        "lemat_dokladny_wszystkie": 0.7667,
+        "lemat_skladniki_wszystkie": 0.9333,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.6484,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.8956,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.9492,
+        "lemat_dokladny__rzadki termin": 0.6867,
+        "lemat_skladniki__rzadki termin": 0.9333,
+        "lemat_dokladny__wielowyrazowe": 0.79,
+        "lemat_skladniki__wielowyrazowe": 0.92,
+        "lemat_dokladny__pozostale": 0.96,
+        "lemat_skladniki__pozostale": 0.96
+      },
+      "stanza": {
+        "lemat_dokladny_wszystkie": 0.4733,
+        "lemat_skladniki_wszystkie": 0.8933,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.3846,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.8462,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.6102,
+        "lemat_dokladny__rzadki termin": 0.5467,
+        "lemat_skladniki__rzadki termin": 0.8867,
+        "lemat_dokladny__wielowyrazowe": 0.23,
+        "lemat_skladniki__wielowyrazowe": 0.9,
+        "lemat_dokladny__pozostale": 0.74,
+        "lemat_skladniki__pozostale": 0.9
+      },
+      "stanza_morfeusz": {
+        "lemat_dokladny_wszystkie": 0.7767,
+        "lemat_skladniki_wszystkie": 0.9367,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.6593,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.9011,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.9576,
+        "lemat_dokladny__rzadki termin": 0.7,
+        "lemat_skladniki__rzadki termin": 0.94,
+        "lemat_dokladny__wielowyrazowe": 0.8,
+        "lemat_skladniki__wielowyrazowe": 0.92,
+        "lemat_dokladny__pozostale": 0.96,
+        "lemat_skladniki__pozostale": 0.96
+      },
+      "morfeusz_pierwsza": {
+        "lemat_dokladny_wszystkie": 0.65,
+        "lemat_skladniki_wszystkie": 0.93,
+        "lemat_dokladny_ref_redakcja_ZPE": 0.5275,
+        "lemat_skladniki_ref_redakcja_ZPE": 0.9011,
+        "n_ref_redakcja_ZPE": 182,
+        "lemat_dokladny_ref_tymczasowa": 0.839,
+        "lemat_dokladny__rzadki termin": 0.72,
+        "lemat_skladniki__rzadki termin": 0.9467,
+        "lemat_dokladny__wielowyrazowe": 0.41,
+        "lemat_skladniki__wielowyrazowe": 0.91,
+        "lemat_dokladny__pozostale": 0.92,
+        "lemat_skladniki__pozostale": 0.92
+      }
+    },
+    "sklad": [
+      {
+        "warstwa": "pozostale",
+        "zrodlo_referencji": "redakcja ZPE",
+        "n": 25
+      },
+      {
+        "warstwa": "pozostale",
+        "zrodlo_referencji": "tymczasowa",
+        "n": 25
+      },
+      {
+        "warstwa": "rzadki termin",
+        "zrodlo_referencji": "redakcja ZPE",
+        "n": 87
+      },
+      {
+        "warstwa": "rzadki termin",
+        "zrodlo_referencji": "tymczasowa",
+        "n": 63
+      },
+      {
+        "warstwa": "wielowyrazowe",
+        "zrodlo_referencji": "redakcja ZPE",
+        "n": 70
+      },
+      {
+        "warstwa": "wielowyrazowe",
+        "zrodlo_referencji": "tymczasowa",
+        "n": 30
+      }
+    ],
+    "uwaga": "przeliczone po poprawce generate_form(prefer=) dla imiesłowów; ta sama próbka i referencje LLM"
+  }
+}

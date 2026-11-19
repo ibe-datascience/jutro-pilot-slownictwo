@@ -1,0 +1,198 @@
+{
+  "_zapisano": "2026-11-13T12:55:23+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "spacy_morfeusz": {
+      "narzedzie": "spaCy 3.8.18 / pl_core_news_lg 3.8.0 + Morfeusz2 pl.sgjp.sgjp-2026.06.01",
+      "tokeny": 628959,
+      "tokeny_alfabetyczne": 478009,
+      "czas_s": 81.2,
+      "procesy": 8,
+      "nierozpoznane_morfeusz_udzial_caly_korpus": 0.01699,
+      "cel_tokeny_alfabetyczne": 80831,
+      "cel_nierozpoznane_morfeusz_udzial": 0.00933,
+      "cel_nierozpoznane_morfeusz_rozne_formy": 323,
+      "cel_spacy_oov_udzial": 0.03358,
+      "cel_najczestsze_nierozpoznane": [
+        [
+          "np",
+          186
+        ],
+        [
+          "µg",
+          21
+        ],
+        [
+          "y",
+          18
+        ],
+        [
+          "tzw",
+          17
+        ],
+        [
+          "r",
+          14
+        ],
+        [
+          "xhxh",
+          13
+        ],
+        [
+          "wikimedia",
+          8
+        ],
+        [
+          "commons",
+          8
+        ],
+        [
+          "xhy",
+          8
+        ],
+        [
+          "tzn",
+          7
+        ],
+        [
+          "rebis",
+          6
+        ],
+        [
+          "lugola",
+          6
+        ],
+        [
+          "xdy",
+          6
+        ],
+        [
+          "the",
+          5
+        ],
+        [
+          "of",
+          5
+        ],
+        [
+          "drapieżnictwo",
+          5
+        ],
+        [
+          "grzebne",
+          5
+        ],
+        [
+          "wodno",
+          5
+        ],
+        [
+          "cortiego",
+          5
+        ],
+        [
+          "gimnajzum",
+          5
+        ],
+        [
+          "protokooperacja",
+          5
+        ],
+        [
+          "bmi",
+          5
+        ],
+        [
+          "jackfruit",
+          4
+        ],
+        [
+          "mułożercy",
+          4
+        ],
+        [
+          "pranóży",
+          4
+        ],
+        [
+          "skaningowy",
+          4
+        ],
+        [
+          "flickr",
+          4
+        ],
+        [
+          "recesywnie",
+          4
+        ],
+        [
+          "krzekiszkach",
+          4
+        ],
+        [
+          "tyflomapami",
+          4
+        ],
+        [
+          "pdf",
+          4
+        ],
+        [
+          "kłująco",
+          4
+        ],
+        [
+          "yellowstone",
+          3
+        ],
+        [
+          "nukleazy",
+          3
+        ],
+        [
+          "pepsynogen",
+          3
+        ],
+        [
+          "wym",
+          3
+        ],
+        [
+          "ostrakodermy",
+          3
+        ],
+        [
+          "f",
+          3
+        ],
+        [
+          "trawożerców",
+          3
+        ],
+        [
+          "pixabay",
+          3
+        ]
+      ]
+    },
+    "stanza": {
+      "narzedzie": "Stanza 1.15.0 (pl, pakiet domyślny)",
+      "tokeny": 100531,
+      "czas_s": 128.0,
+      "procesy": 1,
+      "urzadzenie": "cpu"
+    },
+    "benchmark": {
+      "slowa_w_probie": 60066,
+      "segmenty": 3552,
+      "spacy_s": 5.13,
+      "morfeusz_analiza_s": 2.47,
+      "stanza_s": 91.47,
+      "spacy_slow_na_s": 11709,
+      "morfeusz_analiza_slow_na_s": 24318,
+      "stanza_slow_na_s": 657
+    },
+    "morfeusz_slownik": "pl.sgjp.sgjp-2026.06.01"
+  }
+}

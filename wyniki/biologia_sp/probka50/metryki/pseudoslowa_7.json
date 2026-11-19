@@ -1,0 +1,44 @@
+{
+  "_zapisano": "2026-11-13T17:22:06+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "n_szablonow": 80,
+    "n_zaakceptowanych": 1093,
+    "n_odrzuconych": 183,
+    "odrzucenia_powody": {
+      "znane_morfeusz": 155,
+      "sufiks_na_istniejacym": 11,
+      "literowka_edit1": 10,
+      "prefiks_na_istniejacym": 7
+    },
+    "metody_akceptowane": {
+      "wuggy": 298,
+      "imbir": 292,
+      "llm": 263,
+      "unipseudo": 240
+    },
+    "rozklady": {
+      "prawdziwe": {
+        "dlugosc_mean": 7.6,
+        "dlugosc_std": 2.468,
+        "syl_mean": 2.712,
+        "syl_std": 1.182,
+        "zbitka_mean": 2.088,
+        "zbitka_std": 0.889,
+        "diakryty_mean": 0.675,
+        "diakryty_std": 0.776
+      },
+      "pseudoslowa": {
+        "dlugosc_mean": 7.177,
+        "dlugosc_std": 2.045,
+        "syl_mean": 2.593,
+        "syl_std": 0.954,
+        "zbitka_mean": 2.179,
+        "zbitka_std": 0.837,
+        "diakryty_mean": 0.509,
+        "diakryty_std": 0.709
+      }
+    },
+    "czas_s": 174.4
+  }
+}

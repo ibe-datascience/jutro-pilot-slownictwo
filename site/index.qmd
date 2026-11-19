@@ -1,0 +1,85 @@
+---
+title: "JUTRO pilot: subject vocabulary & pseudowords"
+subtitle: "Biology · Polish primary school · ZPE materials"
+author: "IBE PIB pilot pipeline"
+date: today
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    embed-resources: true
+---
+
+## Problem
+
+Pupils with a migration background may fail a subject test for two different reasons: weak general Polish,
+or missing **subject concepts** despite adequate language. JUTRO aims to separate those barriers with three
+modules (general word recognition vs pseudowords, word associations, subject-term ↔ image matching).
+
+This pilot builds **candidate lists** for biology (grades 5–8) from ZPE teaching materials. Nothing here is
+expert-validated; subject and language specialists make the final call.
+
+## Pipeline
+
+1. Build target (biology) and contrast (other E2 subjects) corpora; strip platform chrome; extract glossary silver standards.
+2. Compare taggers/lemmatisers (spaCy, Stanza, Morfeusz, LLM) on a 300-item sample.
+3. Attach general-Polish frequencies (KWJP primary; SUBTLEX comparison-only due to NC-SA).
+4. Extract term candidates (log-likelihood, TF–IDF, TermoPL C-value, NP patterns + PMI/logDice).
+5. LLM classification into T3/T2/T1/SZUM (Haiku vs Sonnet; Opus on disagreements).
+6. Build subject & general pools, concept groups, gold set worksheet (no model labels).
+7. Generate & filter pseudowords (Wuggy, UniPseudo, Imbir list, LLM) with Morfeusz/homophone/affix filters.
+8. This report.
+
+Run: `python -m jutro run --config config/biologia_sp.yaml --probka 50`
+
+## Measured results (probka50)
+
+### Lemmatisation (exact match, n=300)
+
+| Tool | Exact | Components |
+|------|------:|----------:|
+| llm_haiku_5_5 | 0.7733 | 0.9367 |
+| llm_sonnet_5_5 | 0.7833 | 0.9467 |
+| spacy | 0.4567 | 0.8633 |
+| spacy_morfeusz | 0.7667 | 0.9333 |
+| stanza | 0.4733 | 0.8933 |
+| stanza_morfeusz | 0.7767 | 0.9367 |
+| morfeusz_pierwsza | 0.65 | 0.93 |
+
+Production tagger in config: **`spacy_morfeusz`**.
+Best exact in this run: **llm_sonnet_5_5** (0.7833).
+
+### Candidate extraction
+
+- Candidates after frequency filters: **3513** (multiword: 817)
+- TermoPL available: **True**
+- Precision@100 vs ZPE silver union (best methods around 0.12–0.17 in this sample — silver is incomplete; treat as relative).
+
+### LLM classification
+
+- Labelled: **925**; Opus adjudications: **246**
+- Inter-model agreement: `{'prosta': 0.7762, 'kappa': {'haiku_5_5_vs_sonnet_5_5': 0.6562}}`
+- Final label mix: `{'T3': 415, 'T2': 248, 'T1': 169, 'SZUM': 93}`
+- API spend so far (this config): **$2.4354**
+
+> Inter-model agreement is **not** accuracy. The gold worksheet awaits human double annotation.
+
+### Pools & pseudowords
+
+- Subject pool (T3): **1455** · General (T1/T2): **1549** · Concepts: **1403**
+- Pseudowords kept / rejected: **1093** / **183**
+- Rejection reasons: `{'znane_morfeusz': 155, 'sufiks_na_istniejacym': 11, 'literowka_edit1': 10, 'prefiks_na_istniejacym': 7}`
+
+## Outputs
+
+Polish detailed report: `wyniki/biologia_sp/probka50/raport.md`
+
+CSV/XLSX deliverables live in the same folder (`kandydaci.csv`, `pula_*.csv`, `pseudoslowa*.csv`, `zloty_zbior_do_oznaczenia.xlsx`).
+
+## Limits
+
+- Grade is **estimated** from thematic keywords (ZPE catalogue only stores stage 4–8).
+- SUBTLEX-PL is NC-SA — comparison metrics only.
+- Pseudoword UA/RU similarity is a coarse transliteration heuristic for bilingual reviewers.

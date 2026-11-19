@@ -1,0 +1,140 @@
+{
+  "_zapisano": "2026-11-13T12:31:23+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "zrodlo": "/Users/michalpalinski/Desktop/ibe/dashboards/podstawy_programowe/data/zpe",
+    "pola_katalogu": [
+      "source",
+      "id",
+      "title",
+      "typ_materialu",
+      "przedmiot",
+      "etap",
+      "etap_kod",
+      "klasa",
+      "url",
+      "authors",
+      "extra{subject_ids, stage_ids, student_content, teacher_content, cover, has_validable_exercises, searcher}"
+    ],
+    "materialy_lacznie": 350,
+    "materialy_cel": 50,
+    "materialy_cel_tylko_ten_przedmiot": 43,
+    "materialy_kontrast": 300,
+    "jednostki_html_cel": 63,
+    "slowa_cel": 81151,
+    "slowa_kontrast": 405499,
+    "slowa_cel_wg_typu_segmentu": {
+      "tresc": 51017,
+      "definicja": 4501,
+      "cwiczenie": 22330,
+      "podpis": 3173,
+      "alt": 32042,
+      "tytul": 130
+    },
+    "slowa_wszystkie_wg_typu_segmentu": {
+      "tresc": 306260,
+      "definicja": 17700,
+      "cwiczenie": 146748,
+      "podpis": 15541,
+      "alt": 234538,
+      "tytul": 401
+    },
+    "segmenty_w_statystykach": [
+      "cwiczenie",
+      "definicja",
+      "podpis",
+      "tresc",
+      "tytul"
+    ],
+    "materialy_wg_przedmiotu": {
+      "Informatyka": 81,
+      "Język polski": 57,
+      "Biologia": 50,
+      "Matematyka": 44,
+      "Historia": 28,
+      "Wiedza o społeczeństwie": 23,
+      "Geografia": 18,
+      "Przyroda": 14,
+      "Fizyka": 13,
+      "Plastyka": 13,
+      "Muzyka": 8,
+      "Chemia": 8,
+      "Edukacja zdrowotna": 7,
+      "Edukacja dla bezpieczeństwa": 4,
+      "Wychowanie fizyczne": 2,
+      "Technika": 1,
+      "Wychowanie do życia w rodzinie": 1,
+      "Etyka": 1
+    },
+    "slowa_wg_przedmiotu": {
+      "Język polski": 87318,
+      "Biologia": 81151,
+      "Historia": 74583,
+      "Informatyka": 44833,
+      "Matematyka": 43597,
+      "Geografia": 36522,
+      "Wiedza o społeczeństwie": 35610,
+      "Muzyka": 23121,
+      "Plastyka": 21195,
+      "Przyroda": 19313,
+      "Fizyka": 18055,
+      "Edukacja zdrowotna": 15762,
+      "Chemia": 9604,
+      "Edukacja dla bezpieczeństwa": 7064,
+      "Technika": 1763,
+      "Wychowanie fizyczne": 363,
+      "Wychowanie do życia w rodzinie": 273,
+      "Etyka": 44
+    },
+    "materialy_cel_wg_typu": {
+      "edukacja dostępna": 39,
+      "zasób dodatkowy (KZD)": 4,
+      "e-materiał": 4,
+      "edukacja włączająca": 3
+    },
+    "klasa_katalog_cel": {
+      "4-8": 50
+    },
+    "klasa_szac_reguly_cel": {
+      "None": 4,
+      "5": 16,
+      "6": 7,
+      "8": 7,
+      "7": 16
+    },
+    "klasa_szac_pewnosc_cel": {
+      "wysoka": 36,
+      "niska": 3,
+      "brak": 4,
+      "srednia": 7
+    },
+    "klasa_jawnie_w_tresci_cel": 0,
+    "zrodlo_tresci": {
+      "html": 344,
+      "txt": 6
+    },
+    "pliki_pobrane_z_icloud": 220,
+    "bledy_parsowania": [],
+    "liczba_bledow": 0,
+    "szablony": {
+      "prog_materialow": 4,
+      "rozne_zdania_usuniete": 1055,
+      "usuniecia_lacznie": 18795,
+      "slowa_usuniete": 35947,
+      "wg_powodu": {
+        "szablon powtarzalny": 266,
+        "polecenie techniczne": 624,
+        "metadane/licencja": 165
+      }
+    },
+    "srebrny_standard": {
+      "hasla_slowniczka_cel": 262,
+      "rozne_hasla_cel": 241,
+      "materialy_cel_ze_slowniczkiem": 36,
+      "hasla_slowniczka_kontrast": 684,
+      "pary_forma_lemat_cel": 223,
+      "rozne_pary_forma_lemat_cel": 215
+    },
+    "czas_s": 117.8
+  }
+}

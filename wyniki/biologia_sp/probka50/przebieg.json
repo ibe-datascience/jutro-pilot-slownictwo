@@ -1,0 +1,56 @@
+{
+  "kroki": {
+    "korpus": {
+      "start": "2026-11-13T12:29:25+01:00",
+      "koniec": "2026-11-13T12:31:23+01:00"
+    },
+    "frekwencje": {
+      "start": "2026-11-13T16:40:41+01:00",
+      "koniec": "2026-11-13T16:40:54+01:00"
+    },
+    "kandydaci": {
+      "start": "2026-11-13T16:40:54+01:00",
+      "koniec": "2026-11-13T16:44:16+01:00"
+    },
+    "llm": {
+      "start": "2026-11-13T16:47:30+01:00",
+      "koniec": "2026-11-13T17:13:46+01:00"
+    },
+    "pule": {
+      "start": "2026-11-13T17:14:04+01:00",
+      "koniec": "2026-11-13T17:14:12+01:00"
+    },
+    "pseudoslowa": {
+      "start": "2026-11-13T17:19:12+01:00",
+      "koniec": "2026-11-13T17:22:06+01:00"
+    },
+    "raport": {
+      "start": "2026-11-13T17:22:06+01:00",
+      "koniec": "2026-11-13T17:22:11+01:00"
+    }
+  },
+  "konfiguracja": "/Users/michalpalinski/kompetencje_jezykowe/config/biologia_sp.yaml",
+  "przebieg": "probka50",
+  "ziarno": 20261113,
+  "wersje": {
+    "python": "3.12.2",
+    "platforma": "macOS-26.5.2-arm64-arm-64bit",
+    "morfeusz2": "1.99.15",
+    "spacy": "3.8.18",
+    "pl_core_news_lg": "3.8.0",
+    "stanza": "1.15.0",
+    "torch": "2.15.0",
+    "wordfreq": "3.1.1",
+    "Wuggy": "1.1.2",
+    "anthropic": "2.8.0",
+    "pandas": "3.1.1",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "rapidfuzz": "3.14.6",
+    "lxml": "6.1.3",
+    "openpyxl": "3.1.5",
+    "PyYAML": "6.0.3"
+  },
+  "polecenie": "/Users/michalpalinski/kompetencje_jezykowe/jutro/__main__.py run --config config/biologia_sp.yaml --probka 50 --kroki pseudoslowa,raport --od-nowa"
+}

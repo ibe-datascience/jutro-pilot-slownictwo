@@ -1,0 +1,19 @@
+{
+  "_zapisano": "2026-11-13T17:14:12+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "n_kandydaci_csv": 3513,
+    "n_pula_przedmiotowa": 1455,
+    "n_pula_ogolna": 1549,
+    "n_pojec": 1403,
+    "n_zloty": 200,
+    "rozklad_kategorii": {
+      "T3": 1455,
+      "T2": 1118,
+      "T1": 431,
+      "do_llm": 416,
+      "SZUM": 93
+    },
+    "czas_s": 7.8
+  }
+}

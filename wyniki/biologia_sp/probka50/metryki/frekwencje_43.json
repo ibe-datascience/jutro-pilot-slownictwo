@@ -1,0 +1,54 @@
+{
+  "_zapisano": "2026-11-13T16:40:54+01:00",
+  "_przebieg": "probka50",
+  "dane": {
+    "korpus": {
+      "n_tokenow_alpha": 478009,
+      "n_tokenow_cel": 80831,
+      "n_tokenow_kontrast": 397178,
+      "n_lematow": 26756,
+      "n_form": 60433,
+      "n_materialow_cel": 50,
+      "n_materialow_kontrast": 300
+    },
+    "jednostki": {
+      "kwjp": "lemma × class (sumowane do lematu); plik kwjp100-slowa-lemma-all.csv.gz",
+      "nkjp_1grams": "forma ortograficzna (po strip interpunkcji)",
+      "nkjp1m": "lemat ręczny z podkorpusu 1M",
+      "subtlex": "lemat (subtlex-pl-lemmas-master.csv); CC BY-NC-SA 4.0 – tylko metryki",
+      "wordfreq": "forma case-folded → zipf; dane CC BY-SA 4.0"
+    },
+    "pokrycie_lematow_cel": {
+      "n": 7726,
+      "kwjp": 0.8113,
+      "nkjp1m": 0.698,
+      "subtlex": 0.8355,
+      "wordfreq": 0.9091
+    },
+    "pokrycie_form_cel": {
+      "n": 15075,
+      "kwjp_orth": 0.8947,
+      "nkjp": 0.9729
+    },
+    "korelacje_rang_lematy_biol_freq_cel_ge_3": {
+      "spearman_freq_kwjp_vs_freq_nkjp1m": 0.8214172162618454,
+      "n_freq_kwjp_vs_freq_nkjp1m": 2847,
+      "spearman_freq_kwjp_vs_freq_subtlex_lemma": 0.9012446151728851,
+      "n_freq_kwjp_vs_freq_subtlex_lemma": 3047,
+      "spearman_freq_kwjp_vs_zipf_wordfreq": 0.8451795709474647,
+      "n_freq_kwjp_vs_zipf_wordfreq": 3105,
+      "spearman_freq_nkjp1m_vs_freq_subtlex_lemma": 0.716157346563374,
+      "n_freq_nkjp1m_vs_freq_subtlex_lemma": 2814
+    },
+    "wplyw_zasobu_na_top300_score_freq_cel_nad_1_plus_ogolna": {
+      "kwjp_vs_nkjp1m": 0.38,
+      "kwjp_vs_wordfreq_inv": 0.1167,
+      "kwjp_vs_subtlex": 0.6967,
+      "nkjp1m_vs_wordfreq_inv": 0.42,
+      "nkjp1m_vs_subtlex": 0.38,
+      "subtlex_vs_wordfreq_inv": 0.1167
+    },
+    "rekomendacja_produkcyjna": "KWJP100 lemma (CC BY 4.0); SUBTLEX tylko do porównań wewnętrznych",
+    "czas_s": 12.2
+  }
+}

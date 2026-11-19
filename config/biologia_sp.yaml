@@ -1,0 +1,101 @@
+# Pilotaż JUTRO – konfiguracja przebiegu.
+# Przedmiot i klasy są parametrami: żeby powtórzyć proces dla innego przedmiotu,
+# skopiuj ten plik i zmień sekcję `cel` (oraz `klasa_szacowana`, jeśli ma być użyta).
+#
+# Uruchomienie:  python -m jutro run --config config/biologia_sp.yaml [--probka 50]
+
+nazwa: biologia_sp
+ziarno: 20261113
+
+zrodlo:
+  # Zrzut ZPE (catalog.jsonl + materials/*.html + texts/*.txt). Tylko do odczytu.
+  zpe_dir: ~/Desktop/ibe/dashboards/podstawy_programowe/data/zpe
+  # Plik .env z kluczem API (zmienna anthropic_api_key lub ANTHROPIC_API_KEY). Klucz nie jest kopiowany.
+  env_file: ~/Desktop/ibe/dashboards/podstawy_programowe/.env
+  # Podstawa programowa przedmiotu (PDF) – dodatkowy srebrny standard; null = pomiń.
+  podstawa_pdf: ~/Desktop/ibe/dashboards/podstawy_programowe/in/Biologia_IBE_PIB.pdf
+
+cel:
+  przedmiot: Biologia            # etykieta przedmiotu w katalogu ZPE
+  etap_kod: E2                   # E2 = szkoła podstawowa IV–VIII
+  klasy: [5, 6, 7, 8]            # klasy docelowe (atrybut; filtr tylko jeśli filtruj_klasy: true)
+  filtruj_klasy: false           # katalog ZPE nie ma klasy materiału – patrz klasa_szacowana
+  typy_wyklucz:                  # typy materiałów adresowane do nauczyciela, nie do ucznia
+    - "scenariusz Lekcja:Enter"
+    - "laboratoria przyszłości"
+
+kontrast:
+  # wszystkie pozostałe przedmioty tego samego etapu, poza wymienionymi niżej
+  przedmioty_wyklucz:            # treść w języku obcym – nie nadaje się na kontrast polszczyzny
+    - "Język obcy: angielski"
+    - "Język obcy: niemiecki"
+    - "Język obcy: francuski"
+    - "Język obcy: hiszpański"
+    - "Język obcy: włoski"
+    - "Język obcy: rosyjski"
+    - "Język obcy nowożytny"
+    - "Język mniejszości narodowej lub etnicznej"
+    - "Język mniejszości narodowej – język niemiecki"
+    - "Język regionalny – język kaszubski"
+  przedmioty_poza_celem: ["Matematyka"]   # zostają w kontraście, nie będą celem analizy
+
+czyszczenie:
+  segmenty_do_statystyk: [tytul, tresc, definicja, cwiczenie, podpis]   # 'alt' (opisy WCAG) poza statystykami
+  szablon_min_materialow: 25     # zdanie powtórzone w >= tylu materiałach etapu = szablon platformy
+  szablon_max_slow: 14
+
+klasa_szacowana:
+  # Katalog ZPE zna tylko etap ("4-8"). Klasa jest SZACOWANA z działu tematycznego.
+  # Podstawa programowa biologii nie dzieli treści na klasy; poniższy podział to konwencja
+  # typowych programów nauczania (kl. 5: komórka, bakterie, protisty, grzyby, rośliny;
+  # kl. 6: zwierzęta; kl. 7: człowiek; kl. 8: genetyka, ewolucja, ekologia).
+  bloki:
+    5: ["komórk", "fotosyntez", "bakteri", "protist", "grzyb", "porost", "mch[yuaóe]", "mszak", "paproc", "paprotnik",
+        "skrzyp", "widłak", "nagonasienn", "okrytonasienn", "tkank\\w+ roślinn", "korze[nń]", "łodyg", "liś[cć]", "liści",
+        "kwiat", "nasion", "owoc", "wirus", "mikroskop", "roślin", "kiełkowani", "zapyleni", "glon"]
+    6: ["zwierz", "płazi[ńn]c", "nicien", "pierścienic", "stawonog", "owad", "skorupiak", "pajęczak", "mięczak",
+        "ślimak", "małż", "głowonog", "ryb[ayom]?\\b", "płaz[yaóie]", "gad[yaóie]\\w*\\b", "ptak", "ptas", "ssak",
+        "parzydełkow", "tkank\\w+ zwierzęc", "kręgowc", "bezkręgowc", "zmiennociepln", "stałociepln", "tasiem", "dżdżownic"]
+    7: ["układ\\w* (krwionośn|oddechow|pokarmow|nerwow|hormonaln|dokrewn|wydalnicz|moczow|rozrodcz|odpornościow|kostn|mięśniow|ruchu|krążeni|limfatyczn)",
+        "człowiek", "ludzk", "skór", "szkielet", "mięśni", "krew\\b", "krwi\\b", "serc", "odżywiani", "witamin", "hormon",
+        "neuron", "mózg", "zmysł", "\\boko\\b", "\\bucho\\b", "chorob", "zdrowi", "ciąż", "dojrzewani", "homeostaz",
+        "odpornoś", "szczepi", "uzależni", "trawieni", "płuc", "nerk", "kręgosłup", "zęb", "pierwsz\\w+ pomoc"]
+    8: ["\\bgen[yuaóe]?\\w{0,3}\\b", "genetyk", "genotyp", "fenotyp", "\\bDNA\\b", "chromosom", "dziedzicz", "allel", "mutacj",
+        "ewolucj", "dob[oó]r\\w* naturaln", "ekosystem", "populacj", "łańcuch\\w* pokarmow", "sie[cć]\\w* pokarmow",
+        "biocenoz", "ochron\\w+ przyrod", "ochron\\w+ środowisk", "różnorodnoś\\w+ biologiczn", "konkurencj", "pasożytnictw",
+        "drapieżnictw", "symbioz", "zasob\\w+ przyrod", "park\\w* narodow", "gatunk\\w+ chronion", "rezerwat", "ekologi",
+        "tolerancj\\w+ ekologiczn", "nisz\\w+ ekologiczn", "antropogen", "krzyżówk\\w+ genetyczn", "grup\\w+ krwi"]
+
+narzedzia:
+  tager_produkcyjny: spacy_morfeusz   # wybierany po ocenie 4.1; używany dla całego korpusu
+  spacy_model: pl_core_news_lg
+  stanza_dir: resources/tools/stanza_resources
+  procesy: 8
+
+kandydaci:
+  max_dlugosc: 4
+  min_frekw_cel: 3               # minimalna frekwencja w korpusie docelowym
+  min_materialow: 2              # ... i liczba materiałów
+  top_do_llm: 1500               # ilu najlepszych kandydatów każdej metody idzie do klasyfikacji LLM
+  ogolne_do_llm: 1500            # kandydaci do puli ogólnej (szerokie rozproszenie po przedmiotach)
+
+llm:
+  wersja_promptu: v1
+  modele_porownywane: [claude-haiku-5-5, claude-sonnet-5-5]
+  model_rozstrzygajacy: claude-opus-5-5
+  model_ekstrakcji: claude-sonnet-5-5
+  limit_kosztu_usd: 100
+  batch: true
+  cache_ttl: 1h
+  parametry:                     # ustawienia myślenia wg dokumentacji „Effort” (2026-11-13)
+    claude-haiku-5-5: {thinking: {type: disabled}}
+    claude-sonnet-5-5: {thinking: {type: between_tools}}
+    claude-opus-5-5: {effort: medium, min_max_tokens: 4000}   # myślenia adaptacyjnego nie da się wyłączyć
+
+zloty_zbior:
+  n: 400
+
+pseudoslowa:
+  n_szablonow: 240
+  kandydatow_na_szablon: 6
+  czeste_slowo_zipf: 3.0         # próg "częstego słowa" dla filtra literówek

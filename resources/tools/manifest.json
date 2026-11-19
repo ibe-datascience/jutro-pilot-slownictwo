@@ -1,0 +1,156 @@
+[
+  {
+    "tool": "TermoPL",
+    "version": "8.1.1",
+    "url": "https://zil.ipipan.waw.pl/TermoPL",
+    "licence": "BSD 2-clause (Copyright (c) 2016, Institute of Computer Science, Polish Academy of Sciences)",
+    "licence_url": "https://zil.ipipan.waw.pl/TermoPL?action=AttachFile&do=get&target=LICENSE.txt",
+    "status": "ready",
+    "how_to_run": "cd resources/tools/termopl && ./run_termopl.sh TXT_DIR WORK_DIR OUT_TSV 4   |   direct: cd resources/tools/termopl/TermoPL_Mac_OS_X && java -Djava.awt.headless=true -Xmx1500M -jar TermoPL.jar -SW -CP -CT -method gt -srch npmi3 -cntx 1 -save \"# rank sf bf cvalue length freq_s freq_in context\" -exp /abs/path/terms_all.tsv /abs/path/dir_with_conllu_files",
+    "blocker": null,
+    "notes": "Installed from TermoPL_Mac_OS_X.zip (9,429,888 bytes, arm64 JNI libs) to resources/tools/termopl/TermoPL_Mac_OS_X (21 MB). Input must be tagged and lemmatised: .conllu (FORM, LEMMA, XPOS as NKJP-style tag; UPOS/HEAD/DEPREL only for -method ud) or flat 'form<TAB>lemma<TAB>tag' with empty line between sentences. Stanza CoNLL-U output is read as is (txt2conllu.py). No batch option for maximum term length: filter the exported 'length' column (run_termopl.sh does it). Must be started from its own directory, otherwise UnsatisfiedLinkError with exit status 0 and wrong output. Plain-text input does not work in batch mode (-python is ignored in 8.1.1). Directory arguments are read recursively and must contain only input files. Test: 402 tokens, 0.32 s, 127 terms."
+  },
+  {
+    "tool": "Morfeusz2 (Python module in main venv; also bundled in TermoPL)",
+    "version": "1.99.15, dictionary pl.sgjp.sgjp-2026.06.01",
+    "url": "https://morfeusz.sgjp.pl/",
+    "licence": "BSD 2-clause (program and SGJP data)",
+    "licence_url": "https://morfeusz.sgjp.pl/doc/license/",
+    "status": "ready",
+    "how_to_run": ". .venv/bin/activate && python -c \"import morfeusz2; print(morfeusz2.Morfeusz().analyse('błonę'))\"",
+    "blocker": null,
+    "notes": "Was already installed; not changed. Gives all readings without disambiguation, so it cannot feed TermoPL alone. Used here to correct Stanza lemmas (txt2conllu.py --morfeusz-lemmas) and as the analyser in front of Concraft-pl (concraft/concraft_tag.py)."
+  },
+  {
+    "tool": "spaCy pl_core_news_lg",
+    "version": "3.8.0",
+    "url": "https://github.com/explosion/spacy-models/releases/download/pl_core_news_lg-3.8.0/pl_core_news_lg-3.8.0-py3-none-any.whl",
+    "licence": "GNU GPL 3.0 (meta.json of the package)",
+    "licence_url": "https://raw.githubusercontent.com/explosion/spacy-models/master/meta/pl_core_news_lg-3.8.0.json",
+    "status": "licence_unclear",
+    "how_to_run": ". .venv/bin/activate && python -c \"import spacy; nlp = spacy.load('pl_core_news_lg'); print([(t.text, t.lemma_, t.tag_, str(t.morph)) for t in nlp('Błona komórkowa oddziela wnętrze komórki.')])\"",
+    "blocker": null,
+    "notes": "Installed and working in the main venv with 'python -m spacy download pl_core_news_lg' (wheel 573.7 MB, 611 MB on disk, 81 s); spacy validate reports it compatible with spaCy 3.8.18. LICENCE FLAG: the package declares GNU GPL 3.0 and lists its source 'UD Polish PDB v2.8' as GNU GPL 3.0, but UD_Polish-PDB states CC BY-NC-SA 4.0 since release v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt). GPL 3.0 is copyleft. token.tag_ holds only the NKJP class (SUBST, ADJ); termopl/spacy2flat.py rebuilds a full tag from token.morph for TermoPL. pip left a copy of the wheel in ~/Library/Caches/pip (573,718,074 bytes)."
+  },
+  {
+    "tool": "IPI PAN spaCy model pl_spacy_model",
+    "version": "0.1.0",
+    "url": "https://zil.ipipan.waw.pl/SpacyPL",
+    "licence": "GNU GPL 3.0 (meta.json; README of https://github.com/ipipan/spacy-pl)",
+    "licence_url": "https://raw.githubusercontent.com/ipipan/spacy-pl/master/README.md",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "spaCy 2.x model: meta.json spacy_version '>=2.2.2', README requires spaCy == 2.2.4. spaCy 2.2.4 has wheels only for cp36-cp38 and none for macOS arm64; incompatible with spaCy 3.8.18 / Python 3.12.",
+    "notes": "Not installed. Metadata read by streaming the archive; nothing stored."
+  },
+  {
+    "tool": "IPI PAN spaCy model pl_spacy_model_morfeusz",
+    "version": "0.1.3",
+    "url": "https://zil.ipipan.waw.pl/SpacyPL",
+    "licence": "GNU GPL 3.0 (setup.py classifier; README of https://github.com/ipipan/spacy-pl)",
+    "licence_url": "https://raw.githubusercontent.com/ipipan/spacy-pl/master/README.md",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "setup.py: install_requires=['spacy==2.3.2', 'distance', 'keras==2.4.3', 'numpy', 'tensorflow==2.3.1']. spaCy 2.3.2 has wheels only for cp36-cp38 and none for macOS arm64.",
+    "notes": "Not installed. Archive is 229,068,993 bytes; only its metadata was read."
+  },
+  {
+    "tool": "pl_nask (spaCy transformer pipeline, Ryszard Tuora, ICS PAS)",
+    "version": "0.0.7",
+    "url": "https://mozart.ipipan.waw.pl/~rtuora/spacy/",
+    "licence": "not stated in package metadata (meta.json license field is empty); a GPL v3 text LICENSE.txt is in the same download directory",
+    "licence_url": "https://mozart.ipipan.waw.pl/~rtuora/spacy/LICENSE.txt",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "meta.json: spacy_version '>=3.5.0,<3.6.0', requirements ['spacy-transformers>=1.1.5,<1.2.0']. Conflicts with spaCy 3.8.18 in the main venv; spaCy 3.5.4 has no cp312 wheel (cp36-cp311 only).",
+    "notes": "Not installed (453 MB archive). LICENCE FLAG: no explicit licence for the model. Not attempted: spaCy 3.5.4 has macOS arm64 wheels for Python 3.10/3.11, so a separate conda environment might work."
+  },
+  {
+    "tool": "Stanza Polish models (default package: UD_Polish-PDB + NKJP NER)",
+    "version": "resources 1.15.0 for Stanza 1.15.0: tokenize pdb_nocharlm, mwt pdb, pos pdb_charlm, lemma pdb_nocharlm, depparse pdb_charlm, ner nkjp",
+    "url": "https://huggingface.co/stanfordnlp/stanza-pl",
+    "licence": "Apache-2.0 (model card); Stanza code Apache-2.0",
+    "licence_url": "https://huggingface.co/stanfordnlp/stanza-pl/raw/main/README.md",
+    "status": "licence_unclear",
+    "how_to_run": ". .venv/bin/activate && python -c \"import stanza; nlp = stanza.Pipeline('pl', dir='resources/tools/stanza_resources', processors='tokenize,mwt,pos,lemma', download_method=None, use_gpu=False); print([(w.text, w.lemma, w.xpos) for s in nlp('Fotosynteza zachodzi w chloroplastach.').sentences for w in s.words])\"",
+    "blocker": null,
+    "notes": "Installed and working: stanza.download('pl', model_dir='resources/tools/stanza_resources') (416 MB zip, deleted after unpacking; 436 MB on disk; 25 s). Load 1.8 s, one sentence 0.08 s on CPU. XPOS is the NKJP-style tag TermoPL expects. LICENCE FLAG: model card says Apache-2.0, but the training treebank UD_Polish-PDB is CC BY-NC-SA 4.0 since v2.4 (https://raw.githubusercontent.com/UniversalDependencies/UD_Polish-PDB/master/LICENSE.txt); Stanza docs say UD models use UD v2.12. Lemmatiser errors on domain words (dwutlenek -> dwutlenka, błonę -> błońa, fotosyntezy -> fotosyntez); use txt2conllu.py --morfeusz-lemmas. The download also left a copy of default.zip in ~/.cache/huggingface/hub/blobs/16/162b914981fee565eeda4a379678d7e24fd1a01e3ed48cf956349363eb9105c4 (416,036,108 bytes)."
+  },
+  {
+    "tool": "Concraft-pl (prebuilt macOS binary + model trained on NKJP1M-SGJP)",
+    "version": "binary 2.5.0 (x86_64, 2020-05-14); model concraft-pl-model-SGJP-20220221",
+    "url": "https://zil.ipipan.waw.pl/Concraft",
+    "licence": "code: BSD 2-clause (Copyright (c) 2013 Jakub Waszczuk); model: no licence stated on the download page",
+    "licence_url": "https://raw.githubusercontent.com/kawu/concraft-pl/master/LICENSE",
+    "status": "licence_unclear",
+    "how_to_run": "cd resources/tools/concraft && . ../../../.venv/bin/activate && python concraft_tag.py TXT_DIR WORK_DIR OUT_FLAT_DIR   (runs: ./concraft-pl tag concraft-pl-model-SGJP-20220221.gz -i X.dag -o X.tagged.dag)",
+    "blocker": null,
+    "notes": "Installed and working without Docker or Haskell: Concraft-MacOSX.zip (4.0 MB) runs under Rosetta 2, which is already present on this machine. Model 84,150,136 bytes. About 5 s per file, mostly model loading. Input DAG is produced from Morfeusz2 (expand_tags=True); output is converted to TermoPL flat format. Concraft does not lemmatise: 2 of 402 test segments had several lemmas marked disamb. LICENCE FLAG: no licence given for the model file. No pip package (PyPI concraft-pl and concraft-pl2 return 404); building from source needs the Haskell Tool Stack (not attempted)."
+  },
+  {
+    "tool": "IPI PAN Multiservice (web service with Concraft among other tools)",
+    "version": null,
+    "url": "https://zil.ipipan.waw.pl/Multiservice",
+    "licence": "CC BY 3.0 (software release, per the page)",
+    "licence_url": "http://creativecommons.org/licenses/by/3.0/deed.en_US",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "Public instance not reachable on 2026-11-13: http://multiservice.nlp.ipipan.waw.pl/ returns 404, the SOAP WSDL URL returns 404, Thrift port 20000 refuses connections.",
+    "notes": "Page last edited 2015-08-31. Self-hosting was not examined."
+  },
+  {
+    "tool": "CLARIN-PL web services (Postagger via LPMN)",
+    "version": null,
+    "url": "https://wiki.clarin-pl.eu/pl/nlpservices/list/postagger",
+    "licence": "terms of use not found on the pages read",
+    "licence_url": null,
+    "status": "needs_decision",
+    "how_to_run": null,
+    "blocker": "Requires a CLARIN-PL user account (username/password or API token); texts are sent to an external server.",
+    "notes": "Not tried. Access via the lpmn_client_biz Python library or LPMN CLI tool (https://wiki.clarin-pl.eu/pl/nlpservices/lpmn-client). Returns NKJP tags and lemmas; the documentation does not say which tagger is behind it, so it is not known to be Concraft."
+  },
+  {
+    "tool": "Morfeusz 2 web demo, tab 'Tagowanie (Concraft-pl)'",
+    "version": null,
+    "url": "https://morfeusz.sgjp.pl/demo/",
+    "licence": null,
+    "licence_url": null,
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "Interactive form limited to 3000 characters; no API documented on the page.",
+    "notes": "Not usable for a corpus."
+  },
+  {
+    "tool": "COMBO (combo-nlp)",
+    "version": "4.0.14 (with combo-seg 0.1.6); model clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17",
+    "url": "https://pypi.org/project/combo-nlp/",
+    "licence": "code: GPL-3.0; Polish parsing and segmentation models: CC BY-NC-SA 4.0; base encoder FacebookAI/xlm-roberta-base: MIT",
+    "licence_url": "https://huggingface.co/clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17",
+    "status": "needs_decision",
+    "how_to_run": "cd resources/tools/combo && . venv/bin/activate && export HF_HOME=$PWD/hf_cache WANDB_MODE=disabled TOKENIZERS_PARALLELISM=false && python -c \"from combo import COMBO; nlp = COMBO.from_pretrained('clarin-pl/combo-nlp-xlm-roberta-base-polish-pdb-ud2.17'); print([(t.form, t.lemma, t.xpos) for s in nlp('Dwutlenek węgla przenika przez błonę komórkową.') for t in s])\"",
+    "blocker": "Models are not on disk: the first run downloads 3.36 GB into resources/tools/combo/hf_cache.",
+    "notes": "Installed in its own venv (pip install --no-cache-dir combo-nlp==4.0.14, 47 s, 1.0 GB) and verified on Python 3.12 arm64: first load 80.9 s including downloads, two sentences 6.1 s on CPU; XPOS is NKJP-style. The model cache (three files of about 1.1 GB each) was deleted afterwards because it took total downloads to about 5 GB, over the 4 GB budget. LICENCE FLAG: Polish models are CC BY-NC-SA 4.0 (non-commercial, share-alike). Decision needed: accept that licence and 3.4 GB of disk, or remove resources/tools/combo."
+  },
+  {
+    "tool": "COMBO legacy (combo)",
+    "version": "1.0.7",
+    "url": "https://gitlab.clarin-pl.eu/syntactic-tools/combo",
+    "licence": "GPL-3.0",
+    "licence_url": "https://github.com/ipipan/combo",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "setup.py pins allennlp==1.3.0, torch==1.7.1, spacy==2.3.2, transformers==4.0.1, numpy==1.22.0, scipy==1.6.0, scikit-learn==0.23.2.",
+    "notes": "Not attempted. Superseded by combo-nlp on PyPI."
+  },
+  {
+    "tool": "KRNNT",
+    "version": "1.0.0",
+    "url": "https://github.com/kwrobel-nlp/krnnt",
+    "licence": "LGPL-3.0",
+    "licence_url": "https://raw.githubusercontent.com/kwrobel-nlp/krnnt/master/LICENSE",
+    "status": "not_installable",
+    "how_to_run": null,
+    "blocker": "setup.py pins Keras==2.2.5 with tensorflow==1.14.0 (wheels only for cp27 and cp33-cp37 on x86_64; none for Python 3.12 or arm64); also needs Maca and Toki. The supported route is the Docker image djstrong/krnnt:1.0.0, and there is no Docker daemon here.",
+    "notes": "Not on PyPI (404). Not attempted. Trained models are attached to the GitHub releases (reana.zip 20 MB, preana.zip 21 MB, reana10.zip 146 MB); no separate model licence in the README."
+  }
+]

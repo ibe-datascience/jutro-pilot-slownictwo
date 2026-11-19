@@ -1,0 +1,38 @@
+# środowisko
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+
+# dane: zrzut ZPE i wyniki pośrednie (duże, pochodne treści ZPE)
+data/
+logs/
+
+# zasoby zewnętrzne: tylko dokumentacja, manifesty i skrypty własne
+resources/**
+!resources/
+!resources/*/
+!resources/*/README*.md
+!resources/*/manifest.json
+!resources/freq/derive_nkjp1m_freq.py
+!resources/pseudo/build_manifest.py
+!resources/pseudo/imbir2015/
+!resources/pseudo/imbir2015/convert_to_csv.py
+!resources/pseudo/unipseudo/
+!resources/pseudo/unipseudo/run_unipseudo_python_port.py
+!resources/pseudo/unipseudo/run_unipseudo_local.R
+!resources/pseudo/dolzycka2022/
+!resources/pseudo/dolzycka2022/approach_demo_NOT_AUTHORS_CODE.py
+!resources/pseudo/wuggy_plugins/
+!resources/pseudo/wuggy_plugins/load_local_plugin.py
+!resources/pseudo/wuggy_plugins/smoke_test_polish.py
+!resources/tools/termopl/
+!resources/tools/termopl/*.py
+!resources/tools/termopl/run_termopl.sh
+!resources/tools/concraft/
+!resources/tools/concraft/concraft_tag.py
+
+# artefakty renderowania Quarto
+site/*_files/
+site/.quarto/
