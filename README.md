@@ -2,7 +2,8 @@
 
 Pilotaż IBE PIB. Listy kandydatów do testu JUTRO zbudowane na materiałach Zintegrowanej Platformy Edukacyjnej
 (biologia, szkoła podstawowa, kl. 5–8): pula terminów przedmiotowych, pula słownictwa ogólnego i szkolnego, grupy
-pojęć oraz pseudosłowa do testu rozpoznawania słów. Żadna lista nie była jeszcze sprawdzana przez ludzi.
+pojęć oraz pseudosłowa do testu rozpoznawania słów. Są to propozycje do rozstrzygnięcia przez ekspertów
+przedmiotowych i językowych.
 
 **Prezentacja wyników:** https://ibe-datascience.github.io/jutro-pilot-slownictwo/
 
