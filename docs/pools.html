@@ -100,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./results.html"> 
 <span class="menu-text">Results</span></a>
   </li>  
@@ -140,6 +144,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
         <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./resources-tools.html">
  <span class="dropdown-text">NLP tools</span></a>
   </li>  
@@ -172,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Pools and concepts</h1>
-<p class="subtitle lead">Subject terms, general vocabulary matched to them, and concept groups</p>
+<p class="subtitle lead">Biology terms, general words matched to them, and concept groups</p>
 </div>
 
 
@@ -189,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="406374b9" class="cell" data-execution_count="1">
+<div id="ab2a464e" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
@@ -197,15 +205,52 @@ ul.task-list li input[type="checkbox"] {
 </script>
 </div>
 </div>
-<p>The pools are built from the final labels of step 5 only: <strong>T3</strong> (biology terms) form the subject pool, <strong>T1</strong> and <strong>T2</strong> (everyday and school vocabulary) the general pool. Terms of other subjects (<code>T3_INNY</code>) and noise (<code>SZUM</code>) are in neither. Nothing here has been checked by a human; rows with <code>do_przegladu</code> = <code>True</code> are the ones the models could not settle.</p>
-<p>Each subject term is paired with at most one general-pool item of the same part of speech and number of words, as close as possible in general frequency (Zipf scale) and length in letters. The assignment is optimal over the whole pool (Hungarian algorithm, no item used twice) and a pair is formed only within 1 Zipf units and 3 letters (6 for phrases). Single words are matched on their KWJP100 frequency; phrases, for which no general-Polish frequency exists, on their frequency in the ZPE stage corpus. 514 of 789 terms have a match; balance before and after matching is on the <a href="./results.html#pools">Results</a> page.</p>
-<p>Filter with the boxes under the table, sort by clicking a header, and use <strong>Columns</strong> to show the hidden columns.</p>
+<div id="1034af2e" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 54%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">What</th>
+<th style="text-align: left;">In this run</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Subject pool</td>
+<td style="text-align: left;">candidates labelled T3 (biology term)</td>
+<td style="text-align: left;">789, of which 306 multiword</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">General pool</td>
+<td style="text-align: left;">candidates labelled T1 (everyday) or T2 (school vocabulary)</td>
+<td style="text-align: left;">3188: 1480 T1, 1708 T2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Matching</td>
+<td style="text-align: left;">one general word per term: same part of speech, closest in general frequency and length</td>
+<td style="text-align: left;">514 terms have a partner</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Concepts</td>
+<td style="text-align: left;">terms that name the same thing (variants, synonyms, a noun and its adjective)</td>
+<td style="text-align: left;">636, of which 122 group several terms</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How the pools are built: <a href="./method.html#pools">Method</a>. Labels come from language models; rows with <code>do_przegladu</code> = <code>True</code> had no majority. Filter with the boxes under the header, click a header to sort, <strong>Columns</strong> shows hidden columns.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Subject pool (T3)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">General pool (T1/T2)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Concepts</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Terms the extraction missed</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>789 terms, 306 of them multiword; 514 matched to a general-pool item.</p>
-<div id="a0755ae8" class="cell" data-execution_count="2">
+<div id="d3353f49" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pula_przedmiotowa.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pula_przedmiotowa.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pula_przedmiotowa.csv">download</a>).</p>
 </div>
@@ -526,7 +571,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_3a76233b_d4ad_4b28_80df_7606bb5784f1" hidden="hidden">
+<table id="itables_7dae517d_22ab_4083_a674_7a83d8a1624f" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -592,7 +637,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_3a76233b_d4ad_4b28_80df_7606bb5784f1_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_7dae517d_22ab_4083_a674_7a83d8a1624f_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>forma_podstawowa</th>
       <th style="border:1px solid #ddd;padding:8px">pojecie</th>
       <th style="border:1px solid #ddd;padding:8px">obrazowalnosc</th>
@@ -690,12 +735,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">śluz</td><td style="border:1px solid #ddd;padding:8px">wydzielina</td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">wesz</td><td style="border:1px solid #ddd;padding:8px">-0.005</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">3.273</td><td style="border:1px solid #ddd;padding:8px">śluz</td><td style="border:1px solid #ddd;padding:8px">śluz</td><td style="border:1px solid #ddd;padding:8px">subst</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">20</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">0.042</td><td style="border:1px solid #ddd;padding:8px">152</td><td style="border:1px solid #ddd;padding:8px">3.273</td><td style="border:1px solid #ddd;padding:8px">3.02</td><td style="border:1px solid #ddd;padding:8px">4.719</td><td style="border:1px solid #ddd;padding:8px">50.946</td><td style="border:1px solid #ddd;padding:8px">4.484</td><td style="border:1px solid #ddd;padding:8px">153.412</td><td style="border:1px solid #ddd;padding:8px">7.085</td><td style="border:1px solid #ddd;padding:8px">86.825</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1.867</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">323</td><td style="border:1px solid #ddd;padding:8px">1271</td><td style="border:1px solid #ddd;padding:8px">170</td><td style="border:1px solid #ddd;padding:8px">249</td><td style="border:1px solid #ddd;padding:8px">479</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">986</td><td style="border:1px solid #ddd;padding:8px">0.002</td><td style="border:1px solid #ddd;padding:8px">489</td><td style="border:1px solid #ddd;padding:8px">T3?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">2 z 3</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">claude-fable-5-2</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Wydzielina organizmów (okrzemki, pierścienice, ryby) poznawana na biologii; nie jest słowem z domu.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Słowo znane potocznie (śluz ślimaka, katar), choć częste na biologii.</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Wydzielina komórek i gruczołów, znaczenie poznawane na biologii; niska frekwencja ogólna.</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">20</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">mikroskopowy</td><td style="border:1px solid #ddd;padding:8px">obserwacja mikroskopowa</td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">schematyczny</td><td style="border:1px solid #ddd;padding:8px">-0.301</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">12</td><td style="border:1px solid #ddd;padding:8px">3.052</td><td style="border:1px solid #ddd;padding:8px">mikroskopowy</td><td style="border:1px solid #ddd;padding:8px">mikroskopowy</td><td style="border:1px solid #ddd;padding:8px">adj</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">31</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">5</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">91</td><td style="border:1px solid #ddd;padding:8px">3.052</td><td style="border:1px solid #ddd;padding:8px">1.65</td><td style="border:1px solid #ddd;padding:8px">4.839</td><td style="border:1px solid #ddd;padding:8px">101.661</td><td style="border:1px solid #ddd;padding:8px">6.689</td><td style="border:1px solid #ddd;padding:8px">290.861</td><td style="border:1px solid #ddd;padding:8px">8.442</td><td style="border:1px solid #ddd;padding:8px">181.864</td><td style="border:1px solid #ddd;padding:8px">0.001</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">126</td><td style="border:1px solid #ddd;padding:8px">244</td><td style="border:1px solid #ddd;padding:8px">58</td><td style="border:1px solid #ddd;padding:8px">114</td><td style="border:1px solid #ddd;padding:8px">137</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">0.006</td><td style="border:1px solid #ddd;padding:8px">91</td><td style="border:1px solid #ddd;padding:8px">T3?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">2 z 3</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">claude-fable-5-2</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Przymiotnik od mikroskop, samodzielny; używany w opisie obserwacji w biologii, pojęcie poznawane w szkole.</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Przymiotnik w połączeniach zdjęcie/obraz mikroskopowy; związany z metodą badań biologii.</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Przymiotnik od „mikroskop”, samodzielnie znaczący, związany z metodą badawczą biologii.</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">31</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">pantofelek</td><td style="border:1px solid #ddd;padding:8px">pantofelek</td><td style="border:1px solid #ddd;padding:8px">tak</td><td style="border:1px solid #ddd;padding:8px">kalkulator</td><td style="border:1px solid #ddd;padding:8px">-0.018</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">3.305</td><td style="border:1px solid #ddd;padding:8px">pantofelek</td><td style="border:1px solid #ddd;padding:8px">pantofelek</td><td style="border:1px solid #ddd;padding:8px">subst</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">30</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0.129</td><td style="border:1px solid #ddd;padding:8px">164</td><td style="border:1px solid #ddd;padding:8px">3.305</td><td style="border:1px solid #ddd;padding:8px">2.27</td><td style="border:1px solid #ddd;padding:8px">4.826</td><td style="border:1px solid #ddd;padding:8px">98.171</td><td style="border:1px solid #ddd;padding:8px">6.643</td><td style="border:1px solid #ddd;padding:8px">248.364</td><td style="border:1px solid #ddd;padding:8px">7.549</td><td style="border:1px solid #ddd;padding:8px">123.71</td><td style="border:1px solid #ddd;padding:8px">0.001</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">2.767</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">134</td><td style="border:1px solid #ddd;padding:8px">245</td><td style="border:1px solid #ddd;padding:8px">100</td><td style="border:1px solid #ddd;padding:8px">148</td><td style="border:1px solid #ddd;padding:8px">142</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">795</td><td style="border:1px solid #ddd;padding:8px">0.004</td><td style="border:1px solid #ddd;padding:8px">193</td><td style="border:1px solid #ddd;padding:8px">T3?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">2 z 2</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">wysoka</td><td style="border:1px solid #ddd;padding:8px">Pierwotniak poznawany w szkole na biologii, nieznany z domu.</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">wysoka</td><td style="border:1px solid #ddd;padding:8px">Nazwa protista poznawanego na lekcjach biologii, w znaczeniu organizmu.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">30</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td></tr>
-</tbody><tfoot><tr><td colspan="71" style="border:none;padding:8px;text-align:center">(764 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_3a76233b_d4ad_4b28_80df_7606bb5784f1")?.removeAttribute("hidden");document.getElementById("itables_3a76233b_d4ad_4b28_80df_7606bb5784f1_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="71" style="border:none;padding:8px;text-align:center">(764 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_7dae517d_22ab_4083_a674_7a83d8a1624f")?.removeAttribute("hidden");document.getElementById("itables_7dae517d_22ab_4083_a674_7a83d8a1624f_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_3a76233b_d4ad_4b28_80df_7606bb5784f1:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_7dae517d_22ab_4083_a674_7a83d8a1624f:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -721,8 +766,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>3188 items: 1480 T1 and 1708 T2. 514 of them are matched to a subject term.</p>
-<div id="23fa439f" class="cell" data-execution_count="3">
+<div id="7e5dbf81" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pula_ogolna.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pula_ogolna.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pula_ogolna.csv">download</a>).</p>
 </div>
@@ -1031,7 +1075,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_be0b5d81_7f42_43cf_a58d_9657ff20bb07" hidden="hidden">
+<table id="itables_68eab04b_e3f9_43e4_927e_8030fed1d25e" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -1097,7 +1141,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_be0b5d81_7f42_43cf_a58d_9657ff20bb07_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_68eab04b_e3f9_43e4_927e_8030fed1d25e_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>forma_podstawowa</th>
       <th style="border:1px solid #ddd;padding:8px">kategoria</th>
       <th style="border:1px solid #ddd;padding:8px">dopasowanie_przedmiotowe</th>
@@ -1192,12 +1236,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">tworzyć</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">czasownik</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">5.437</td><td style="border:1px solid #ddd;padding:8px">tworzyć</td><td style="border:1px solid #ddd;padding:8px">tworzyć</td><td style="border:1px solid #ddd;padding:8px">fin</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">60</td><td style="border:1px solid #ddd;padding:8px">168</td><td style="border:1px solid #ddd;padding:8px">21</td><td style="border:1px solid #ddd;padding:8px">74</td><td style="border:1px solid #ddd;padding:8px">13</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">22326</td><td style="border:1px solid #ddd;padding:8px">5.437</td><td style="border:1px solid #ddd;padding:8px">4.41</td><td style="border:1px solid #ddd;padding:8px">5.680</td><td style="border:1px solid #ddd;padding:8px">12.706</td><td style="border:1px solid #ddd;padding:8px">0.819</td><td style="border:1px solid #ddd;padding:8px">43.995</td><td style="border:1px solid #ddd;padding:8px">1.453</td><td style="border:1px solid #ddd;padding:8px">2.709</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">13</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1.371</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">1642</td><td style="border:1px solid #ddd;padding:8px">2741</td><td style="border:1px solid #ddd;padding:8px">1770</td><td style="border:1px solid #ddd;padding:8px">764</td><td style="border:1px solid #ddd;padding:8px">1612</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1091</td><td style="border:1px solid #ddd;padding:8px">0.001</td><td style="border:1px solid #ddd;padding:8px">2214</td><td style="border:1px solid #ddd;padding:8px">T1?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">nie</td><td style="border:1px solid #ddd;padding:8px">2 z 3</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">claude-fable-5-2</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Ogólny czasownik używany we wszystkich przedmiotach i w mowie codziennej, bez znaczenia biologicznego.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Powszechny czasownik ogólny, wysoka frekwencja, używany w wielu przedmiotach.</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Czasownik języka podręczników, używany w wielu przedmiotach, nieprzypisany do biologii.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">60</td><td style="border:1px solid #ddd;padding:8px">168</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">czasownik</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">ruch</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">5.586</td><td style="border:1px solid #ddd;padding:8px">ruch</td><td style="border:1px solid #ddd;padding:8px">ruch</td><td style="border:1px solid #ddd;padding:8px">subst</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">131</td><td style="border:1px solid #ddd;padding:8px">350</td><td style="border:1px solid #ddd;padding:8px">19</td><td style="border:1px solid #ddd;padding:8px">54</td><td style="border:1px solid #ddd;padding:8px">12</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">0.004</td><td style="border:1px solid #ddd;padding:8px">31467</td><td style="border:1px solid #ddd;padding:8px">5.586</td><td style="border:1px solid #ddd;padding:8px">4.98</td><td style="border:1px solid #ddd;padding:8px">6.004</td><td style="border:1px solid #ddd;padding:8px">31.987</td><td style="border:1px solid #ddd;padding:8px">0.882</td><td style="border:1px solid #ddd;padding:8px">176.344</td><td style="border:1px solid #ddd;padding:8px">2.078</td><td style="border:1px solid #ddd;padding:8px">4.198</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">12</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">12.909</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">632</td><td style="border:1px solid #ddd;padding:8px">2706</td><td style="border:1px solid #ddd;padding:8px">1513</td><td style="border:1px solid #ddd;padding:8px">210</td><td style="border:1px solid #ddd;padding:8px">356</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">97</td><td style="border:1px solid #ddd;padding:8px">0.003</td><td style="border:1px solid #ddd;padding:8px">416</td><td style="border:1px solid #ddd;padding:8px">T1?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">3 z 3</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">claude-fable-5-2</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Słowo codzienne, znane z domu; w zdaniach użyte w ogólnym znaczeniu, bez terminologicznego.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Powszechne słowo codzienne, znane dzieciom bez lekcji; bardzo wysoka frekwencja.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Słowo codzienne o wysokiej frekwencji, znane dzieciom bez nauki szkolnej.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">131</td><td style="border:1px solid #ddd;padding:8px">350</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">wykonywany</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">4.451</td><td style="border:1px solid #ddd;padding:8px">wykonywany</td><td style="border:1px solid #ddd;padding:8px">wykonywany</td><td style="border:1px solid #ddd;padding:8px">ppas</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">8</td><td style="border:1px solid #ddd;padding:8px">65</td><td style="border:1px solid #ddd;padding:8px">5</td><td style="border:1px solid #ddd;padding:8px">28</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">2307</td><td style="border:1px solid #ddd;padding:8px">4.451</td><td style="border:1px solid #ddd;padding:8px">3.39</td><td style="border:1px solid #ddd;padding:8px">5.190</td><td style="border:1px solid #ddd;padding:8px">-2.052</td><td style="border:1px solid #ddd;padding:8px">-0.649</td><td style="border:1px solid #ddd;padding:8px">8.613</td><td style="border:1px solid #ddd;padding:8px">1.896</td><td style="border:1px solid #ddd;padding:8px">3.418</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">3462</td><td style="border:1px solid #ddd;padding:8px">3471</td><td style="border:1px solid #ddd;padding:8px">1640</td><td style="border:1px solid #ddd;padding:8px">1620</td><td style="border:1px solid #ddd;padding:8px">3389</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">3256</td><td style="border:1px solid #ddd;padding:8px">T2?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">nie</td><td style="border:1px solid #ddd;padding:8px">2 z 2</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Imiesłów od czasownika „wykonywać”, słownictwo wspólne dla wielu przedmiotów, bez znaczenia biologicznego.</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Imiesłów od „wykonywać”, słowo języka szkolnego używane w wielu przedmiotach.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">8</td><td style="border:1px solid #ddd;padding:8px">65</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td></tr>
-</tbody><tfoot><tr><td colspan="68" style="border:none;padding:8px;text-align:center">(3,163 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_be0b5d81_7f42_43cf_a58d_9657ff20bb07")?.removeAttribute("hidden");document.getElementById("itables_be0b5d81_7f42_43cf_a58d_9657ff20bb07_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="68" style="border:none;padding:8px;text-align:center">(3,163 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_68eab04b_e3f9_43e4_927e_8030fed1d25e")?.removeAttribute("hidden");document.getElementById("itables_68eab04b_e3f9_43e4_927e_8030fed1d25e_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_be0b5d81_7f42_43cf_a58d_9657ff20bb07:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_68eab04b_e3f9_43e4_927e_8030fed1d25e:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1223,8 +1267,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>636 concepts; 122 of them group more than one term (spelling variants, synonyms, a noun and its adjective). The grouping is one request to the language model over the whole list of subject terms; a term the model left alone is its own concept.</p>
-<div id="0db995ce" class="cell" data-execution_count="4">
+<div id="bf15c278" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pojecia.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pojecia.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pojecia.csv">download</a>).</p>
 </div>
@@ -1289,7 +1332,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_fe4366fe_c6ad_4faf_ae74_fdfba509f6d5" hidden="hidden">
+<table id="itables_310af00b_af30_4da2_8756_80ca81d75dbe" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -1355,7 +1398,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_fe4366fe_c6ad_4faf_ae74_fdfba509f6d5_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_310af00b_af30_4da2_8756_80ca81d75dbe_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>pojecie</th>
       <th style="border:1px solid #ddd;padding:8px">terminy</th>
       <th style="border:1px solid #ddd;padding:8px">n_terminow</th>
@@ -1389,12 +1432,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">bezjądrowy</td><td style="border:1px solid #ddd;padding:8px">bezjądrowy</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">bezkręgowiec</td><td style="border:1px solid #ddd;padding:8px">bezkręgowiec; bezkręgowy; zwierzę bezkręgowe</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">tak</td><td style="border:1px solid #ddd;padding:8px">38</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">pochłanianie; gospodarstwo rolne</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">bezlistny</td><td style="border:1px solid #ddd;padding:8px">bezlistny</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">tak</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">nietrwały</td></tr>
-</tbody><tfoot><tr><td colspan="7" style="border:none;padding:8px;text-align:center">(611 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_fe4366fe_c6ad_4faf_ae74_fdfba509f6d5")?.removeAttribute("hidden");document.getElementById("itables_fe4366fe_c6ad_4faf_ae74_fdfba509f6d5_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="7" style="border:none;padding:8px;text-align:center">(611 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_310af00b_af30_4da2_8756_80ca81d75dbe")?.removeAttribute("hidden");document.getElementById("itables_310af00b_af30_4da2_8756_80ca81d75dbe_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_fe4366fe_c6ad_4faf_ae74_fdfba509f6d5:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_310af00b_af30_4da2_8756_80ca81d75dbe:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1419,9 +1462,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<div id="54bb020e" class="cell" data-execution_count="5">
+<div id="a40c6322" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>As a check on step 4, a language model listed terms directly from a sample of materials. These 696 terms are <strong>not</strong> among the candidates: they occurred too rarely in the sample, or their form does not fit the syntactic patterns used for multiword candidates. They are not in the pools.</p>
+<p>696 terms that a model listed directly from the materials and that are <strong>not</strong> among the candidates of step 4: too rare in the sample, or not matching the phrase patterns. They are not in the pools.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>terminy_llm_spoza_kandydatow.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/terminy_llm_spoza_kandydatow.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/terminy_llm_spoza_kandydatow.csv">download</a>).</p>
@@ -1475,7 +1518,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_5eccb329_9905_476e_8279_2831a690faef" hidden="hidden">
+<table id="itables_ca2650a4_bb50_4e77_acdd_2c6e61c2e353" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -1541,7 +1584,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_5eccb329_9905_476e_8279_2831a690faef_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_ca2650a4_bb50_4e77_acdd_2c6e61c2e353_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>termin</th>
       <th style="border:1px solid #ddd;padding:8px">kategoria_ekstrakcji</th>
       <th style="border:1px solid #ddd;padding:8px">n_materialow</th>
@@ -1572,12 +1615,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">pleśń</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">1</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">pożywka</td><td style="border:1px solid #ddd;padding:8px">T3</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">1</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">proporcja</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">1</td></tr>
-</tbody><tfoot><tr><td colspan="4" style="border:none;padding:8px;text-align:center">(671 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_5eccb329_9905_476e_8279_2831a690faef")?.removeAttribute("hidden");document.getElementById("itables_5eccb329_9905_476e_8279_2831a690faef_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="4" style="border:none;padding:8px;text-align:center">(671 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_ca2650a4_bb50_4e77_acdd_2c6e61c2e353")?.removeAttribute("hidden");document.getElementById("itables_ca2650a4_bb50_4e77_acdd_2c6e61c2e353_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_5eccb329_9905_476e_8279_2831a690faef:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_ca2650a4_bb50_4e77_acdd_2c6e61c2e353:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

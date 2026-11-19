@@ -100,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./results.html"> 
 <span class="menu-text">Results</span></a>
   </li>  
@@ -140,6 +144,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
         <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./resources-tools.html">
  <span class="dropdown-text">NLP tools</span></a>
   </li>  
@@ -172,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Annotation worksheets</h1>
-<p class="subtitle lead">The two spreadsheets that wait for human judgement</p>
+<p class="subtitle lead">Two spreadsheets for human judgement</p>
 </div>
 
 
@@ -189,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="36c4194f" class="cell" data-execution_count="1">
+<div id="12cadd0e" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
@@ -197,13 +205,51 @@ ul.task-list li input[type="checkbox"] {
 </script>
 </div>
 </div>
-<p>Both files are meant to be downloaded, filled in and returned. They are shown here so that their content can be inspected without opening Excel.</p>
+<div id="46bdda51" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 22%">
+<col style="width: 31%">
+<col style="width: 8%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Worksheet</th>
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Content</th>
+<th style="text-align: left;">Filled in</th>
+<th style="text-align: left;">Save as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gold set</td>
+<td style="text-align: left;">are the model labels (T1, T2, T3 …) right?</td>
+<td style="text-align: left;">400 candidates with sentences, no model labels shown; two annotators</td>
+<td style="text-align: left;">A 0, B 0 of 400</td>
+<td style="text-align: left;"><code>zloty_zbior_oznaczony.xlsx</code>, then re-run step 6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lemmatisation</td>
+<td style="text-align: left;">which tool gives the right base form?</td>
+<td style="text-align: left;">300 inflected forms in context with the answer of every tool</td>
+<td style="text-align: left;">0 of 300</td>
+<td style="text-align: left;"><code>ocena_lematyzacji_300_sprawdzone.xlsx</code>, then re-run step 2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Download a file, fill it in, save it under the given name next to the original. The pipeline then reports accuracy against it.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Gold-set worksheet</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Lemmatisation sheet (300 forms)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Gold set</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Lemmatisation (300 forms)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>400 candidates, drawn in equal numbers from each final label and, within a label, half from the cases the models agreed on and half from the adjudicated ones, then shuffled. Each row shows the candidate, its counts and up to three sentences from the corpus. The sheet deliberately carries <strong>no model labels</strong>, so that two annotators can label independently; the key with the labels and the sampling weights stays outside the published files. The second tab of the file holds the instructions (in Polish) with the definitions of T3, T3_INNY, T2, T1 and SZUM. Filled in so far: annotator A 0, annotator B 0 of 400. Once the file is saved as <code>zloty_zbior_oznaczony.xlsx</code> next to the original, step 6 reports agreement between the annotators and weighted precision, recall and F1 of the final labels.</p>
-<div id="05c200e5" class="cell" data-execution_count="2">
+<p>Equal numbers per final label, half from cases the models agreed on and half from adjudicated ones, shuffled. Definitions of the labels are in the second tab of the file (in Polish).</p>
+<div id="840cc2a2" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>zloty_zbior_do_oznaczenia.xlsx</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/zloty_zbior_do_oznaczenia.xlsx">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/zloty_zbior_do_oznaczenia.xlsx">download</a>).</p>
 </div>
@@ -292,7 +338,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_9032ef4b_5316_4820_b16b_71e069383cbf" hidden="hidden">
+<table id="itables_01096d18_042c_41e3_98cd_11da880bc957" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -358,7 +404,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_9032ef4b_5316_4820_b16b_71e069383cbf_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_01096d18_042c_41e3_98cd_11da880bc957_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>id</th>
       <th style="border:1px solid #ddd;padding:8px">kandydat</th>
       <th style="border:1px solid #ddd;padding:8px">liczba_wyrazow</th>
@@ -398,12 +444,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">G023</td><td style="border:1px solid #ddd;padding:8px">piątek</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">23</td><td style="border:1px solid #ddd;padding:8px">6</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">[Biologia] Piątek z zafrasowaną miną szedł przez las, pchając przed sobą dziecięcy wózeczek.</td><td style="border:1px solid #ddd;padding:8px">[Biologia] Piątek nieraz srożył się, wypisywał mandaty, apelował do sumień i uczciwości…</td><td style="border:1px solid #ddd;padding:8px">[Matematyka] 1100 W rozkładzie tej liczby występują dokładnie trzy dwójki i trzy piątki.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">G024</td><td style="border:1px solid #ddd;padding:8px">ciśnienie</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">17</td><td style="border:1px solid #ddd;padding:8px">62</td><td style="border:1px solid #ddd;padding:8px">6</td><td style="border:1px solid #ddd;padding:8px">[Biologia] paliwa powstałe w wyniku beztlenowych procesów zachodzących pod ogromnym ciśnieniem we wnętrzu Ziemi;</td><td style="border:1px solid #ddd;padding:8px">[Biologia] Gdzie jest większe ciśnienie atmosferyczne – na nizinach, czy w górach?</td><td style="border:1px solid #ddd;padding:8px">[Biologia] przewód łączący jamę bębenkową z gardłem; odpowiada za wyrównywanie różnicy ciśnień między uchem zewnętrznym i środkowym</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">G025</td><td style="border:1px solid #ddd;padding:8px">krążek międzykręgowy</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">[Biologia] Trzony kręgów łączą się ze sobą za pomocą krążków międzykręgowych.</td><td style="border:1px solid #ddd;padding:8px">[Biologia] Krzywizny kręgosłupa wraz ze znajdującymi się pomiędzy kręgami krążkami międzykręgowymi (nazywanymi potocznie dyskami) amortyzują wstrząsy i obciążenia, którym poddawany jest organizm podczas wykonywania codziennych czynności.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td></tr>
-</tbody><tfoot><tr><td colspan="13" style="border:none;padding:8px;text-align:center">(375 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_9032ef4b_5316_4820_b16b_71e069383cbf")?.removeAttribute("hidden");document.getElementById("itables_9032ef4b_5316_4820_b16b_71e069383cbf_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="13" style="border:none;padding:8px;text-align:center">(375 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_01096d18_042c_41e3_98cd_11da880bc957")?.removeAttribute("hidden");document.getElementById("itables_01096d18_042c_41e3_98cd_11da880bc957_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9032ef4b_5316_4820_b16b_71e069383cbf:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_01096d18_042c_41e3_98cd_11da880bc957:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -428,8 +474,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>300 inflected forms with their sentence, the reference base form, and the answer of every tool. Columns <code>lemat_poprawny_czlowiek</code> and <code>pos_poprawny_czlowiek</code> are for the human checker (0 filled in so far). Once the sheet is saved as <code>ocena_lematyzacji_300_sprawdzone.xlsx</code> next to the original, step 2 recomputes the benchmark against those answers.</p>
-<div id="2aa93d86" class="cell" data-execution_count="3">
+<p>Fill in <code>lemat_poprawny_czlowiek</code> and <code>pos_poprawny_czlowiek</code>.</p>
+<div id="5053a113" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>ocena_lematyzacji_300.xlsx</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/ocena_lematyzacji_300.xlsx">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/ocena_lematyzacji_300.xlsx">download</a>).</p>
 </div>
@@ -578,7 +624,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_6703d466_6459_4072_9c48_8a95d1b4c370" hidden="hidden">
+<table id="itables_7b20fb8f_eae9_47ba_9f64_8cb28f66adb9" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -644,7 +690,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_6703d466_6459_4072_9c48_8a95d1b4c370_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_7b20fb8f_eae9_47ba_9f64_8cb28f66adb9_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>id</th>
       <th style="border:1px solid #ddd;padding:8px">warstwa</th>
       <th style="border:1px solid #ddd;padding:8px">zrodlo_referencji</th>
@@ -699,12 +745,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">L023</td><td style="border:1px solid #ddd;padding:8px">wielowyrazowe</td><td style="border:1px solid #ddd;padding:8px">redakcja ZPE</td><td style="border:1px solid #ddd;padding:8px">badania radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px">W profilaktyce i diagnostyce chorób układu oddechowego istotną rolę odgrywają badania radiologiczne klatki piersiowej, które pozwalają na ocenę stanu płuc i wykrycie nieprawidłowości w ich strukturze.</td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">PXtf9kaoe</td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczny klatka piersiowy</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczny klatka piersiowy</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">badanie radiologiczne klatki piersiowej</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">L024</td><td style="border:1px solid #ddd;padding:8px">wielowyrazowe</td><td style="border:1px solid #ddd;padding:8px">redakcja ZPE</td><td style="border:1px solid #ddd;padding:8px">wodniczki tętniące</td><td style="border:1px solid #ddd;padding:8px">Przypomnij sobie, jaką funkcję pełnią wodniczki tętniące i zastanów się, czy są one potrzebne protistom żyjącym w wodach słonych.</td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">PtBsTwW4c</td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniące</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">wodniczka tętnić</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniąca</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">wodniczka tętniące</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">L025</td><td style="border:1px solid #ddd;padding:8px">pozostale</td><td style="border:1px solid #ddd;padding:8px">redakcja ZPE</td><td style="border:1px solid #ddd;padding:8px">antybiotykowa</td><td style="border:1px solid #ddd;padding:8px">Sprzyja temu: spadek odporności organizmu, kuracja antybiotykowa, występowanie innych chorób, np. cukrzycy, brak higieny osobistej, noszenie obcisłej, syntetycznej bielizny i kąpiel w zanieczyszczonej wodzie.</td><td style="border:1px solid #ddd;padding:8px">antybiotyk</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">PwRKAeErj</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td><td style="border:1px solid #ddd;padding:8px">antybiotykowy</td><td style="border:1px solid #ddd;padding:8px">przymiotnik</td></tr>
-</tbody><tfoot><tr><td colspan="28" style="border:none;padding:8px;text-align:center">(275 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_6703d466_6459_4072_9c48_8a95d1b4c370")?.removeAttribute("hidden");document.getElementById("itables_6703d466_6459_4072_9c48_8a95d1b4c370_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="28" style="border:none;padding:8px;text-align:center">(275 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_7b20fb8f_eae9_47ba_9f64_8cb28f66adb9")?.removeAttribute("hidden");document.getElementById("itables_7b20fb8f_eae9_47ba_9f64_8cb28f66adb9_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_6703d466_6459_4072_9c48_8a95d1b4c370:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_7b20fb8f_eae9_47ba_9f64_8cb28f66adb9:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 

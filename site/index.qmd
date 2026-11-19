@@ -1,175 +1,118 @@
 ---
 title: "JUTRO pilot: subject vocabulary and pseudowords"
 subtitle: "Biology · Polish primary school, grades 5–8 · ZPE teaching materials"
+toc: false
 ---
 
 ```{python}
-import yaml
 import _lib as L
 
-cfg = yaml.safe_load((L.ROOT / "config" / f"{L.NAME}.yaml").read_text(encoding="utf-8"))
+cfg = L.config()
 opis, m41, m42, m5, m6, m7 = (L.metrics(n) for n in
                               ["opis_danych", "ocena_41", "ekstrakcja_42", "llm_5", "pule_6", "pseudoslowa_7"])
-czasy = L.metrics("tagowanie_czasy")
-num = lambda v: L.fmt(v)
-short = lambda m: str(m or "–").replace("claude-", "")
-pct = lambda v: f"{100 * v:.0f}%" if isinstance(v, (int, float)) else "–"
+num, pct, M = L.fmt, L.pct, L.model
+llm = cfg["llm"]
+dp = m6.get("dopasowanie", {})
 ```
 
 ::: {.callout-important title="Status"}
-Everything here is a **candidate list** produced by an automatic process on a sample of
-`{python} num(opis.get("materialy_cel"))` biology materials (run `{python} L.RUN_NAME`). No list has been validated by
-subject or language specialists, and no model label has been checked against human annotation yet.
+Automatic candidate lists from a sample of `{python} num(opis.get("materialy_cel"))` biology materials. Nothing has
+been checked by people yet.
 :::
 
-## Problem
+## Goal
 
-Pupils with a migration background may fail a subject test for two different reasons: weak general Polish, or
-missing **subject concepts** despite adequate language. JUTRO aims to separate those barriers with three modules:
-recognition of general words against pseudowords, word associations, and matching subject terms to images.
+A pupil with a migration background can fail a biology test because of weak Polish or because of missing biology
+concepts. The JUTRO test is meant to tell the two apart. This pilot builds the word material for it from the
+teaching materials of the ZPE platform.
 
-This pilot builds the word material for biology (grades 5–8) from the teaching materials of the Integrated
-Educational Platform (ZPE): a pool of subject terms, a pool of general and school vocabulary, concept groups, and
-pseudowords for a LexTALE-style test.
+## What it produces
 
-## Method in brief
-
-1. **Candidates** come from statistics, not from a model: every content lemma and every noun phrase that fits a
-   syntactic pattern is counted in biology and in the other subjects, and scored by several keyness and termhood
-   measures. General candidates, the source of everyday and school vocabulary, are words spread across the other subjects.
-2. **Labels** come from language models reading the candidate in real sentences. Two models label independently, a
-   third settles disagreements, and the rule-based pre-label of step 4 is kept only as a point of comparison.
-3. **Pools** contain only labelled items. Each subject term gets a partner from the general pool with the same part
-   of speech and a similar general frequency and length.
-4. **Pseudowords** are produced by five generators, pass a set of hard filters grounded in a reference lexicon of
-   Polish, are rated by a model for pronounceability and associations, and are compared with real words on length,
-   syllables, neighbourhood density and letter-sequence probability.
-5. **People decide.** The pipeline writes the worksheets for human annotation and reports accuracy against them once
-   they are filled in.
-
-## Pipeline
-
-One command runs eight steps. Each step reads the files written by the earlier ones, so a step can be re-run on its
-own, and every number on this site is read from a metrics file that a step saved.
-
-```bash
-python -m jutro run --config config/biologia_sp.yaml --probka 50   # sample of 50 target materials
-python -m jutro run --config config/biologia_sp.yaml               # full corpus
+```{python}
+L.table([
+    ("[Subject pool](pools.qmd)", "biology terms, to test subject concepts",
+     f"{num(m6.get('n_pula_przedmiotowa'))} terms in {num(m6.get('n_pojec'))} concepts"),
+    ("[General pool](pools.qmd)", "everyday and school words, to test general Polish; each term gets a partner of similar frequency and length",
+     f"{num(m6.get('n_pula_ogolna'))} words; partner found for {num(dp.get('n_dopasowanych'))} terms ({pct(dp.get('udzial_dopasowanych'))})"),
+    ("[Pseudowords](pseudowords.qmd)", "non-words for the word-recognition test (LexTALE type)",
+     f"{num(m7.get('n_wybranych'))} recommended, for {num(m7.get('n_szablonow_z_wybranym'))} of {num(m7.get('n_szablonow'))} template words"),
+    ("[Worksheets](sheets.qmd)", "human check of the model labels and of the lemmatisation",
+     f"{num(m6.get('n_zloty'))} + {num(m41.get('n'))} rows, not filled in yet"),
+], ["Output", "What it is for", "In this run"], "lll")
 ```
 
-### Technical diagram
-
-::: {.column-page-right}
+## How
 
 ```{python}
 from IPython.display import HTML
-import _pipeline
-HTML(_pipeline.diagram(cfg))
+boxes = [
+    ("ZPE materials", "biology and other subjects", f"{num(opis.get('materialy_cel'))} + {num(opis.get('materialy_kontrast'))}"),
+    ("Candidates", "statistics", num(m6.get("n_kandydaci_csv"))),
+    ("Labels", "language models", f"{num(m5.get('n_klasyfikowanych'))} labelled"),
+    ("Pools", "biology terms · general words", f"{num(m6.get('n_pula_przedmiotowa'))} · {num(m6.get('n_pula_ogolna'))}"),
+    ("Pseudowords", "generate, filter, rate", f"{num(m7.get('n_wybranych'))} recommended"),
+]
+HTML('<ol class="flow" aria-label="Pipeline at a glance">'
+     + "".join(f"<li><b>{a}</b><span>{b}</span><strong>{c}</strong></li>" for a, b, c in boxes) + "</ol>")
 ```
-
-:::
-
-Read each row from left to right: what the step reads, what it does, what it writes. A number in a circle says which
-step wrote the file. Result files and metrics files are links to the page that shows them. Intermediate files stay
-on the machine that ran the pipeline and are not published. The configuration file `config/biologia_sp.yaml`
-(subject, school stage, seed, thresholds, model names) is read by every step and is left out of the drawing; the
-thresholds quoted in the boxes are taken from it.
-
-### Steps in this run
 
 ```{python}
-llm_cfg = cfg["llm"]
-mod = m5.get("modele", {})
-models = " and ".join(short(m) for m in mod.get("porownywane", llm_cfg["modele_porownywane"]))
-judge = short(mod.get("rozstrzygajacy", llm_cfg["model_rozstrzygajacy"]))
-sm, st = czasy.get("spacy_morfeusz", {}), czasy.get("stanza", {})
-dur = lambda d: f"{d['czas_s']:.0f} s" if d.get("czas_s") is not None else "–"
-tag_time = " + ".join(x for x in [
-    f"{sm['czas_s']:.0f} s spaCy+Morfeusz2" if sm.get("czas_s") else "",
-    f"{st['czas_s']:.0f} s Stanza" if st.get("czas_s") else ""] if x) or "–"
-rows = [
-    ("1 · korpus", f"{num(opis.get('materialy_cel'))} target + {num(opis.get('materialy_kontrast'))} contrast materials; "
-                   f"{num(opis.get('slowa_cel'))} + {num(opis.get('slowa_kontrast'))} words", "`opis_danych`, `dobor_materialow`", dur(opis)),
-    ("2 · tagowanie", f"{num(sm.get('tokeny'))} tokens tagged; production tagger `{cfg['narzedzia']['tager_produkcyjny']}`; "
-                      f"benchmark n = {num(m41.get('n'))}", "`tagowanie_czasy`, `ocena_41`", tag_time),
-    ("3 · frekwencje", f"{num(L.metrics('frekwencje_43').get('korpus', {}).get('n_lematow'))} lemmas with corpus and general frequencies",
-     "`frekwencje_43`", dur(L.metrics("frekwencje_43"))),
-    ("4 · kandydaci", f"{num(m42.get('n_kandydatow'))} subject candidates ({num(m42.get('n_mwu'))} multiword) and "
-                      f"{num(m42.get('n_kandydatow_ogolnych'))} general candidates; TermoPL ran: {num(m42.get('termopl'))}",
-     "`ekstrakcja_42`", dur(m42)),
-    ("5 · llm", f"{num(m5.get('n_klasyfikowanych'))} candidates labelled by {models}; {num(m5.get('n_rozstrzyganych'))} adjudicated by {judge}",
-     "`llm_5`", dur(m5)),
-    ("6 · pule", f"{num(m6.get('n_pula_przedmiotowa'))} subject terms, {num(m6.get('n_pula_ogolna'))} general items, "
-                 f"{num(m6.get('n_pojec'))} concepts, {num(m6.get('n_zloty'))} worksheet rows", "`pule_6`", dur(m6)),
-    ("7 · pseudoslowa", f"{num(m7.get('n_szablonow'))} templates; {num(m7.get('n_wygenerowanych'))} candidates generated, "
-                        f"{num(m7.get('n_zaakceptowanych'))} passed the filters, {num(m7.get('n_wybranych'))} recommended", "`pseudoslowa_7`", dur(m7)),
-    ("8 · raport", "Polish report and this site", "`raport_8`", "–"),
-]
-L.table(rows, ["Step", "What it produced", "Metrics file", "Time"], "llll")
+m1, m2 = (M(x) for x in llm["modele_porownywane"][:2])
+L.table([
+    ("1 · Corpus", "subject words stand out only against other subjects",
+     "biology materials plus materials of all other subjects of the same school stage"),
+    ("2 · Tagging", "Polish inflects, so counting needs base forms", "spaCy + Morfeusz2"),
+    ("3 · Frequencies", "how common a word is in general Polish", "KWJP100 frequency list"),
+    ("4 · Candidates", "a complete, repeatable list before any model is involved",
+     "every content word and noun phrase frequent enough in biology, scored by keyness and termhood measures"),
+    ("5 · Labels", "statistics cannot tell a biology term from a school word",
+     f"{m1} and {m2} label each candidate in its sentences; {M(llm['model_rozstrzygajacy'])} settles disagreements"),
+    ("6 · Pools", "terms and general words must be comparable",
+     "T3 → subject pool, T1 and T2 → general pool; one-to-one matching on frequency and length"),
+    ("7 · Pseudowords", "non-words that pupils cannot spot by their shape",
+     f"five generators (Wuggy twice, UniPseudo, {M(llm['model_pseudoslow'])}, a published list) → hard filters → rating by "
+     f"{M(llm['model_oceny_pseudoslow'])}"),
+], ["Step", "Why", "How"], "lll")
 ```
 
-Times are wall-clock on the machine described under [Reproduce](reproduce.qmd); step 5 is mostly waiting for batch jobs.
+Methods, packages and models of each step: [Method](method.qmd).
 
-## Headline numbers
+## Key results
 
 ```{python}
 tools = m41.get("narzedzia", {})
 prod = cfg["narzedzia"]["tager_produkcyjny"]
-best = max(tools.items(), key=lambda kv: kv[1].get("lemat_dokladny_wszystkie") or 0, default=(None, {}))
-agree = m5.get("zgodnosc_miedzy_modelami", {})
-fin, dp, ex = m5.get("rozklad_final", {}), m6.get("dopasowanie", {}), m5.get("ekstrakcja_llm", {})
-rows = [
-    ("Lemmatisation, exact match, production tagger", f"{num(tools.get(prod, {}).get('lemat_dokladny_wszystkie'))} (`{prod}`, n = {num(m41.get('n'))})"),
-    ("Lemmatisation, best tool in the benchmark", f"{num(best[1].get('lemat_dokladny_wszystkie'))} (`{best[0]}`)"),
-    ("Subject candidates after frequency thresholds", f"{num(m42.get('n_kandydatow'))}, of which {num(m42.get('n_mwu'))} multiword"),
-    ("Candidates labelled by the models", f"{num(m5.get('n_klasyfikowanych'))}; agreement between the two models "
-                                         f"{num(agree.get('prosta'))}, Cohen's κ {num(agree.get('kappa'))}"),
-    ("Final labels", ", ".join(f"{k} {num(v)}" for k, v in fin.items())),
-    ("Subject pool (T3)", f"{num(m6.get('n_pula_przedmiotowa'))} terms in {num(m6.get('n_pojec'))} concepts"),
-    ("General pool (T1/T2)", f"{num(m6.get('n_pula_ogolna'))} items; {num(dp.get('n_dopasowanych'))} subject terms "
-                             f"({pct(dp.get('udzial_dopasowanych'))}) have a matched partner"),
-    ("Terms a model lists directly from the materials that step 4 also found", pct(ex.get("T3_wsrod_kandydatow"))),
-    ("Pseudowords", f"{num(m7.get('n_wybranych'))} recommended for {num(m7.get('n_szablonow_z_wybranym'))} of "
-                    f"{num(m7.get('n_szablonow'))} templates; {num(m7.get('n_zaakceptowanych'))} passed the filters"),
-    ("API spend for this configuration, all runs and steps",
-     f"${(L.metrics('koszty_8') or {}).get('dotychczas') or m5.get('koszt_usd_dotychczas', 0):.2f}"),
-]
-L.table(rows, ["Measure", "Value"], "ll")
+agree, fin = m5.get("zgodnosc_miedzy_modelami", {}), m5.get("rozklad_final", {})
+cost = (L.metrics("koszty_8") or {}).get("dotychczas") or m5.get("koszt_usd_dotychczas", 0)
+L.table([
+    ("Corpus", f"{num(opis.get('materialy_cel'))} biology + {num(opis.get('materialy_kontrast'))} contrast materials; "
+               f"{num(opis.get('slowa_cel'))} + {num(opis.get('slowa_kontrast'))} words"),
+    ("Lemmatisation, exact match", f"{num(tools.get(prod, {}).get('lemat_dokladny_wszystkie'))} on {num(m41.get('n'))} forms, mostly rare terms and phrases"),
+    ("Candidates", f"{num(m42.get('n_kandydatow'))} from biology ({num(m42.get('n_mwu'))} multiword), "
+                   f"{num(m42.get('n_kandydatow_ogolnych_tylko'))} general"),
+    ("Labelled by the models", f"{num(m5.get('n_klasyfikowanych'))}; the two models agree on {pct(agree.get('prosta'))} "
+                               f"(Cohen's κ {num(agree.get('kappa'))}); {num(m5.get('n_rozstrzyganych'))} adjudicated"),
+    ("Final labels", " · ".join(f"{k} {num(v)}" for k, v in fin.items())),
+    ("Terms against general words, whole pools → matched pairs",
+     f"frequency {num(dp.get('smd_zipf_przed'))} → {num(dp.get('smd_zipf_po'))}, length {num(dp.get('smd_liter_przed'))} → "
+     f"{num(dp.get('smd_liter_po'))} (standardised difference; 0 = none)"),
+    ("Pseudowords", f"{num(m7.get('n_wygenerowanych'))} generated → {num(m7.get('n_zaakceptowanych'))} passed the filters → "
+                    f"{num(m7.get('n_ocena_pozytywna'))} of {num(m7.get('n_ocenianych'))} rated positively → {num(m7.get('n_wybranych'))} recommended"),
+    ("API cost", f"${cost:.2f}"),
+], ["Measure", "Value"], "ll")
 ```
 
-The reference for the lemmatisation benchmark is partly ZPE editors' own base forms and partly a provisional
-reference from a language model, so those accuracies are not a gold-standard result. Agreement between models is not
-accuracy. Details and all remaining metrics are on the [Results](results.qmd) page.
-
-## Where to find things
-
-| Page | Content |
-|:---|:---|
-| [Results](results.qmd) | every metric the pipeline saved, by step |
-| [Candidates](candidates.qmd) | the full candidate table with scores of all methods and all model labels |
-| [Pools and concepts](pools.qmd) | subject pool, general pool with matching, concept groups, terms the extraction missed |
-| [Pseudowords](pseudowords.qmd) | recommended, accepted and rejected pseudowords, with ratings, reasons and distributions |
-| [Annotation worksheets](sheets.qmd) | gold-set worksheet and the 300-form lemmatisation sheet |
-| [Raport (PL)](raport-pl.qmd) | the detailed report in Polish, as written by the pipeline |
-| [Reproduce](reproduce.qmd) | requirements, configuration, versions, run log, raw metrics files |
-| Resources | notes on [NLP tools](resources-tools.qmd), [frequency lists](resources-freq.qmd) and [pseudoword resources](resources-pseudo.qmd): availability, licences, checksums |
+All numbers by step: [Results](results.qmd). The lists themselves: **Data** in the menu.
 
 ## Limits
 
 ```{python}
-cov = (m42.get("srebrny_pokrycie") or {}).get("slowniczek", {})
-lines = [
-    "- This is a sample run. Counts and rankings will change on the full corpus, and frequency thresholds cut more on a small sample: "
-    f"only {pct(cov.get('udzial_wsrod_kandydatow'))} of the glossary entries of the sampled materials are among the candidates.",
-    "- All labels come from language models. Agreement between models is reported, accuracy is not: the gold-set worksheet has not been filled in.",
-    "- The grade of a material is **estimated** from topic keywords; the ZPE catalogue only records the stage (grades 4–8).",
-    "- A multiword candidate must fit a syntactic pattern (adjective + noun, noun + genitive). Terms built differently are "
-    "visible only in the direct extraction by a model, listed on the [Pools](pools.qmd) page.",
-    "- KWJP100 has no frequencies for phrases, so phrases are matched on their frequency in the ZPE corpus, not in general Polish.",
-    "- The silver standard (ZPE glossaries) is incomplete, so precision@K against it is only useful for comparing methods.",
-    "- SUBTLEX-PL is licensed CC BY-NC-SA 4.0 and is used for comparison metrics only; it does not enter the published lists.",
-    "- Pseudowords were rated by a model, not by people. The Ukrainian/Russian filter transliterates the most frequent words of "
-    "both languages and cannot replace review by bilingual staff; the recommended list still needs a pilot with pupils.",
-]
-L.md("\n".join(lines))
+ex = m5.get("ekstrakcja_llm", {})
+L.md("\n".join([
+    f"- Sample of {num(opis.get('materialy_cel'))} materials. Counts and rankings will change on the full corpus.",
+    "- Labels and pseudoword ratings come from language models. Agreement between models is not accuracy.",
+    f"- A model reading {num(ex.get('n_materialow'))} materials directly listed biology terms of which step 4 has "
+    f"{pct(ex.get('T3_wsrod_kandydatow'))}; the others are on the [Pools](pools.qmd) page.",
+    "- The filter for Ukrainian and Russian words works from word lists and does not replace review by bilingual staff.",
+]))
 ```

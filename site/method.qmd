@@ -1,0 +1,189 @@
+---
+title: "Method"
+subtitle: "What each step is for, and which methods, packages and models it uses"
+toc-depth: 2
+---
+
+```{python}
+import _lib as L
+
+cfg = L.config()
+ver = L.run_meta().get("wersje", {})
+m6, m7 = L.metrics("pule_6"), L.metrics("pseudoslowa_7")
+k, llm, p = cfg["kandydaci"], cfg["llm"], cfg["pseudoslowa"]
+num, M = L.fmt, L.model
+v = lambda name: f"{name} {ver[name]}" if name in ver else name
+T = lambda rows, heads: L.table(rows, heads, "l" * len(heads))
+m1, m2 = (M(x) for x in llm["modele_porownywane"][:2])
+judge = M(llm["model_rozstrzygajacy"])
+```
+
+Thresholds and model names on this page are read from
+[`config/biologia_sp.yaml`](https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/config/biologia_sp.yaml).
+One command runs all steps: `python -m jutro run --config config/biologia_sp.yaml --probka 50`.
+
+## Models
+
+```{python}
+T([
+    ("Label every candidate, twice and independently", f"{m1}, {m2}", "5"),
+    ("Settle disagreements and low-confidence cases", judge, "5"),
+    ("Group terms into concepts", M(llm.get("model_pojec")), "5"),
+    ("List terms directly from the materials (check on step 4)", M(llm["model_ekstrakcji"]), "5"),
+    ("Generate pseudowords", M(llm["model_pseudoslow"]), "7"),
+    ("Rate pseudowords", M(llm["model_oceny_pseudoslow"]), "7"),
+    ("Lemmatise, as two of the tools compared in the benchmark", ", ".join(M(x) for x in llm.get("lematyzacja_modele", [])), "2"),
+], ["Task", "Model", "Step"])
+```
+
+All requests go through the Claude Batch API (`{python} v("anthropic")`) with JSON-schema output.
+
+## 1 · Corpus {#corpus}
+
+**Why:** subject words stand out only against the text of other subjects.
+
+```{python}
+T([
+    ("Target", f"materials of the subject `{cfg['cel']['przedmiot']}`, school stage `{cfg['cel']['etap_kod']}`", "ZPE dump"),
+    ("Contrast", "materials of all other subjects of the same stage, without foreign languages; six per target material in a sample run", "ZPE dump"),
+    ("Text", "HTML parsed into titles, body, definitions, exercises, captions", v("lxml")),
+    ("Cleaning", f"sentences repeated in at least {cfg['czyszczenie']['szablon_min_materialow']} materials, interface instructions "
+                 "and licence lines are removed", "own rules"),
+], ["What", "How", "Tool"])
+```
+
+## 2 · Tagging and lemmatisation {#tagging}
+
+**Why:** Polish inflects, so counting words needs their base forms.
+
+```{python}
+T([
+    ("Lemma and part of speech", "spaCy tags each token; the Morfeusz2 reading that agrees with spaCy gives the lemma",
+     f"{v('spacy')} (`{cfg['narzedzia']['spacy_model']}`), {v('morfeusz2')}"),
+    ("Check", f"300 forms, mostly rare terms and phrases; spaCy and Stanza, each with and without Morfeusz2, Morfeusz2 alone, "
+              f"{' and '.join(M(x) for x in llm.get('lematyzacja_modele', []))}", v("stanza")),
+], ["What", "How", "Tool"])
+```
+
+## 3 · Frequencies {#frequency}
+
+**Why:** general frequency tells a rare term from an everyday word, and it is what matching uses later.
+
+```{python}
+T([
+    ("Used in the lists", "KWJP100 lemma frequencies, on the Zipf scale", "KWJP100 (CC BY 4.0)"),
+    ("Compared only", "coverage of the biology vocabulary and agreement with KWJP100", f"NKJP, SUBTLEX-PL, {v('wordfreq')}"),
+], ["What", "How", "Resource"])
+```
+
+## 4 · Candidates {#candidates}
+
+**Why:** a complete and repeatable list of everything that could be a term, made before any model is involved.
+
+```{python}
+T([
+    ("Single words", "lemmas of content words known to Morfeusz2; proper names dropped", "own code"),
+    ("Phrases", f"noun phrases of 2–{k['max_dlugosc']} words found by syntactic patterns (adjective + noun, noun + genitive), "
+                "rebuilt in the nominative", "own code (`frazy.py`)"),
+    ("Subject candidates", f"at least {k['min_frekw_cel']} occurrences in at least {k['min_materialow']} biology materials, or at "
+                           f"least {k['min_frekw_jeden_material']} in one", ""),
+    ("General candidates", f"at least {k['ogolne_min_frekw']} occurrences across at least {k['ogolne_min_przedmiotow']} other subjects", ""),
+    ("Scores", "log-likelihood and log ratio against the contrast corpus and against KWJP100, Simple Maths, TF-IDF across "
+               "subjects, PMI and logDice for phrases, C-value, rank fusion of all of them", "own code; C-value from TermoPL 8.1.1"),
+], ["What", "How", "Tool"])
+```
+
+The scores rank candidates and are compared with each other on the [Results](results.qmd#extraction) page. They do
+not decide the labels: all subject candidates (up to `{python} num(k["top_do_llm"])`) and a stratified sample of
+`{python} num(k["ogolne_do_llm"])` general candidates go to the models.
+
+## 5 · Labels {#labels}
+
+**Why:** statistics cannot tell a biology term from a school word that happens to be frequent in biology.
+
+```{python}
+T([
+    ("The model sees", "the candidate, its counts in biology and in the other subjects, up to three sentences from the corpus"),
+    ("The model returns", "a label, a corrected base form if needed, whether the term can be shown in a picture, its confidence, a one-sentence reason"),
+    ("Labels", "`T3` biology term · `T3_INNY` term of another subject · `T2` school vocabulary · `T1` everyday word · `SZUM` not usable"),
+    ("Final label", f"the label of {m1} and {m2} if they agree and are confident; otherwise {judge} votes too and the majority of "
+                    "three decides; no majority → marked for review"),
+    ("Concepts", f"{M(llm.get('model_pojec'))} groups variants, synonyms and derivatives of one concept, in one request over all T3 terms"),
+], ["What", "How"])
+```
+
+## 6 · Pools {#pools}
+
+**Why:** the test compares terms with general words, so the two sets must not differ in frequency or length.
+
+```{python}
+pr = (m6.get("dopasowanie") or {}).get("progi", {})
+T([
+    ("Subject pool", "all candidates labelled T3", ""),
+    ("General pool", "all candidates labelled T1 or T2", ""),
+    ("Matching", f"one general word per term: same part of speech, closest Zipf frequency and length; optimal assignment without "
+                 f"reuse, within {num(pr.get('max_roznica_zipf'))} Zipf and {num(pr.get('max_roznica_liter'))} letters",
+     f"{v('scipy')} (`linear_sum_assignment`)"),
+    ("Worksheet", f"{cfg['zloty_zbior']['n']} candidates, stratified by label, for two annotators; model labels are not shown", v("openpyxl")),
+], ["What", "How", "Tool"])
+```
+
+## 7 · Pseudowords {#pseudowords}
+
+**Why:** the word-recognition test needs non-words that look and sound Polish and cannot be spotted by their shape.
+
+Each pseudoword is tied to a **template**: one of `{python} num(p["n_szablonow"])` real nouns and verbs drawn from
+the two pools. Each generator gives up to `{python} num(p["kandydatow_na_szablon"])` candidates per template.
+
+```{python}
+T([
+    ("`wuggy_koncowka`", "replaces sub-syllabic segments of the template, keeps their lengths and the template's ending", f"{v('Wuggy')}, Polish plugin"),
+    ("`wuggy`", "the same, ending free", v("Wuggy")),
+    ("`unipseudo`", "letter-trigram chain built from real words of the same length and part of speech", "UniPseudo (Python port), WorldLex-Polish"),
+    ("`llm`", "the model is given the template and asked for non-words with the same ending and number of syllables", M(llm["model_pseudoslow"])),
+    ("`imbir`", f"published list, items accepted by at least {p['imbir_min_sedziow']} of 5 judges, paired by length", "Imbir et al. (2015)"),
+], ["Generator", "How", "Tool or model"])
+```
+
+Hard filters; a candidate is rejected by the first one it fails:
+
+```{python}
+lex = m7.get("leksykon", {})
+T([
+    ("Existing word", "found in Morfeusz2, KWJP100, WorldLex, wordfreq or the corpus"),
+    ("Shape", "length within one letter of the template, same number of syllables, same kind of ending"),
+    ("Letter patterns", f"every trigram, onset, coda and consonant cluster occurs in at least {num(lex.get('min_typow_ngramu'))} "
+                        f"of {num(lex.get('lematy_kwjp'))} Polish lemmas"),
+    ("Too close to a word", f"one edit from the template or from a frequent word (Zipf ≥ {num(lex.get('prog_zipf'))}), or sounds like a word"),
+    ("Transparent", "a real stem with a prefix or suffix, or two words joined"),
+    ("Unsuitable", f"vulgar association; sounds like one of {num(lex.get('slowa_ua_ru'))} frequent Ukrainian or Russian words"),
+], ["Filter", "Rule"])
+```
+
+Edit distances: `{python} v("rapidfuzz")`.
+
+```{python}
+thr = m7.get("progi_oceny", {})
+T([
+    ("Ranking", "within a template, by closeness to it in neighbourhood density (OLD20) and bigram probability"),
+    ("Rating", f"{M(llm['model_oceny_pseudoslow'])} rates the top {p['ocenianych_na_szablon']} per template, at most half from one "
+               "generator: pronounceability 1–5, similarity to a real word 0–3, and flags for existing, foreign and inappropriate"),
+    ("Recommended list", f"pronounceability ≥ {num(thr.get('min_wymawialnosc'))}, similarity ≤ {num(thr.get('max_podobienstwo'))}, no flag; "
+                         f"the best-ranked {p['wybrane_na_szablon']} per template"),
+    ("Check", "templates and pseudowords compared on length, syllables, clusters, diacritics, OLD20, bigram probability"),
+], ["What", "How"])
+```
+
+## Software
+
+```{python}
+use = {"spacy": "tagging", "pl_core_news_lg": "spaCy model for Polish", "morfeusz2": "lemmas, inflection, word check",
+       "stanza": "comparison tagger; input of TermoPL", "wordfreq": "Zipf frequencies; Ukrainian and Russian word lists",
+       "Wuggy": "pseudoword generator", "anthropic": "Claude API", "scipy": "matching, rank correlations",
+       "rapidfuzz": "edit distances", "lxml": "HTML parsing", "pandas": "tables", "openpyxl": "worksheets"}
+T([(f"`{name}`", ver.get(name, "–"), what) for name, what in use.items() if name in ver]
+  + [("TermoPL", "8.1.1", "C-value (Java)"), ("Quarto", "1.9.36", "this site")], ["Package", "Version", "Used for"])
+```
+
+Installation, external files and licences: [Reproduce](reproduce.qmd). What every step reads and writes:
+[Pipeline in detail](pipeline.qmd).

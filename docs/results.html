@@ -97,6 +97,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./results.html" aria-current="page"> 
 <span class="menu-text">Results</span></a>
   </li>  
@@ -137,6 +141,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
         <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./resources-tools.html">
  <span class="dropdown-text">NLP tools</span></a>
   </li>  
@@ -167,38 +175,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#corpus" id="toc-corpus" class="nav-link active" data-scroll-target="#corpus">1 · Corpus</a>
+  <li><a href="#corpus" id="toc-corpus" class="nav-link active" data-scroll-target="#corpus">1 · Corpus</a></li>
+  <li><a href="#tagging" id="toc-tagging" class="nav-link" data-scroll-target="#tagging">2 · Lemmatisation</a></li>
+  <li><a href="#frequency" id="toc-frequency" class="nav-link" data-scroll-target="#frequency">3 · General-frequency resources</a></li>
+  <li><a href="#extraction" id="toc-extraction" class="nav-link" data-scroll-target="#extraction">4 · Candidates</a>
   <ul class="collapse">
-  <li><a href="#selection-of-materials" id="toc-selection-of-materials" class="nav-link" data-scroll-target="#selection-of-materials">Selection of materials</a></li>
-  <li><a href="#size" id="toc-size" class="nav-link" data-scroll-target="#size">Size</a></li>
-  <li><a href="#cleaning" id="toc-cleaning" class="nav-link" data-scroll-target="#cleaning">Cleaning</a></li>
-  <li><a href="#silver-standards-from-zpe" id="toc-silver-standards-from-zpe" class="nav-link" data-scroll-target="#silver-standards-from-zpe">Silver standards from ZPE</a></li>
+  <li><a href="#which-score-finds-terms-best" id="toc-which-score-finds-terms-best" class="nav-link" data-scroll-target="#which-score-finds-terms-best">Which score finds terms best</a></li>
   </ul></li>
-  <li><a href="#tagging" id="toc-tagging" class="nav-link" data-scroll-target="#tagging">2 · Tagging and lemmatisation</a>
+  <li><a href="#llm" id="toc-llm" class="nav-link" data-scroll-target="#llm">5 · Labels</a>
   <ul class="collapse">
-  <li><a href="#benchmark-on-300-forms" id="toc-benchmark-on-300-forms" class="nav-link" data-scroll-target="#benchmark-on-300-forms">Benchmark on 300 forms</a></li>
-  <li><a href="#tagging-the-corpus" id="toc-tagging-the-corpus" class="nav-link" data-scroll-target="#tagging-the-corpus">Tagging the corpus</a></li>
-  </ul></li>
-  <li><a href="#frequency" id="toc-frequency" class="nav-link" data-scroll-target="#frequency">3 · General-frequency resources</a>
-  <ul class="collapse">
-  <li><a href="#coverage-of-the-biology-vocabulary" id="toc-coverage-of-the-biology-vocabulary" class="nav-link" data-scroll-target="#coverage-of-the-biology-vocabulary">Coverage of the biology vocabulary</a></li>
-  <li><a href="#agreement-between-resources" id="toc-agreement-between-resources" class="nav-link" data-scroll-target="#agreement-between-resources">Agreement between resources</a></li>
-  </ul></li>
-  <li><a href="#extraction" id="toc-extraction" class="nav-link" data-scroll-target="#extraction">4 · Candidate extraction</a>
-  <ul class="collapse">
-  <li><a href="#how-much-of-the-silver-standard-is-reachable" id="toc-how-much-of-the-silver-standard-is-reachable" class="nav-link" data-scroll-target="#how-much-of-the-silver-standard-is-reachable">How much of the silver standard is reachable</a></li>
-  <li><a href="#precision-and-recall-at-k-against-the-silver-standards" id="toc-precision-and-recall-at-k-against-the-silver-standards" class="nav-link" data-scroll-target="#precision-and-recall-at-k-against-the-silver-standards">Precision and recall at K against the silver standards</a></li>
-  </ul></li>
-  <li><a href="#llm" id="toc-llm" class="nav-link" data-scroll-target="#llm">5 · LLM classification</a>
-  <ul class="collapse">
-  <li><a href="#direct-extraction-by-a-language-model" id="toc-direct-extraction-by-a-language-model" class="nav-link" data-scroll-target="#direct-extraction-by-a-language-model">Direct extraction by a language model</a></li>
-  <li><a href="#concepts" id="toc-concepts" class="nav-link" data-scroll-target="#concepts">Concepts</a></li>
+  <li><a href="#check-terms-listed-by-a-model-directly-from-the-materials" id="toc-check-terms-listed-by-a-model-directly-from-the-materials" class="nav-link" data-scroll-target="#check-terms-listed-by-a-model-directly-from-the-materials">Check: terms listed by a model directly from the materials</a></li>
   <li><a href="#cost" id="toc-cost" class="nav-link" data-scroll-target="#cost">Cost</a></li>
   </ul></li>
-  <li><a href="#pools" id="toc-pools" class="nav-link" data-scroll-target="#pools">6 · Pools</a>
-  <ul class="collapse">
-  <li><a href="#matching-the-general-pool-to-the-subject-pool" id="toc-matching-the-general-pool-to-the-subject-pool" class="nav-link" data-scroll-target="#matching-the-general-pool-to-the-subject-pool">Matching the general pool to the subject pool</a></li>
-  </ul></li>
+  <li><a href="#pools" id="toc-pools" class="nav-link" data-scroll-target="#pools">6 · Pools</a></li>
   <li><a href="#pseudowords" id="toc-pseudowords" class="nav-link" data-scroll-target="#pseudowords">7 · Pseudowords</a></li>
   </ul>
 </nav>
@@ -209,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Results</h1>
-<p class="subtitle lead">Every metric saved by the pipeline, step by step</p>
+<p class="subtitle lead">Numbers of each step; the main table first, details in the tabs</p>
 </div>
 
 
@@ -226,17 +215,44 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Run <strong>probka50</strong> of configuration <strong>biologia_sp</strong>. All numbers are read from the files in wyniki/biologia_sp/probka50/metryki/ when the site is rendered; the raw files are shown on the <a href="./reproduce.html#raw-metrics-files">Reproduce</a> page. Polish key names from the files are kept where they identify a column or a setting.</p>
+<p>Run probka50, configuration biologia_sp. Every number is read from a metrics file saved by the pipeline (<a href="./reproduce.html#raw-metrics-files">raw files</a>). What each step does: <a href="./method.html">Method</a>.</p>
 <section id="corpus" class="level2">
 <h2 class="anchored" data-anchor-id="corpus">1 · Corpus</h2>
-<section id="selection-of-materials" class="level3">
-<h3 class="anchored" data-anchor-id="selection-of-materials">Selection of materials</h3>
-<div id="45f51c01" class="cell" data-execution_count="2">
+<div id="5540212e" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Stage of selection (whole ZPE catalogue)</th>
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Biology</th>
+<th style="text-align: right;">Contrast (other subjects)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Materials</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Words</td>
+<td style="text-align: right;">81 151</td>
+<td style="text-align: right;">405 499</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Selection</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By subject</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">By segment type</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Estimated grade</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Cleaning</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">ZPE glossaries</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="dc0dbe30" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Whole ZPE catalogue</th>
 <th style="text-align: right;">Materials</th>
 </tr>
 </thead>
@@ -250,124 +266,27 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1194</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">… of an excluded type, addressed to teachers (dropped)</td>
+<td style="text-align: left;">… addressed to teachers (dropped)</td>
 <td style="text-align: right;">132</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Selected (target + contrast)</td>
+<td style="text-align: left;">Selected (biology + contrast)</td>
 <td style="text-align: right;">4785</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">of which target subject</td>
+<td style="text-align: left;">of which biology</td>
 <td style="text-align: right;">262</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<p>From the selected materials this run sampled 50 target materials and 300 contrast materials (six contrast materials per target one), with the seed from the configuration.</p>
-</section>
-<section id="size" class="level3">
-<h3 class="anchored" data-anchor-id="size">Size</h3>
-<div id="5f10d6e0" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Materials, target (biology)</td>
-<td style="text-align: right;">50</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… assigned to biology only</td>
-<td style="text-align: right;">43</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Materials, contrast</td>
-<td style="text-align: right;">300</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">HTML units in target materials</td>
-<td style="text-align: right;">63</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Words, target</td>
-<td style="text-align: right;">81 151</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Words, contrast</td>
-<td style="text-align: right;">405 499</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Content read from HTML / from plain-text fallback</td>
-<td style="text-align: right;">344 / 6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Parsing errors</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Word counts cover the segment types used for statistics (cwiczenie, definicja, podpis, tresc, tytul); image descriptions (<code>alt</code>) are kept in the corpus but left out of the statistics.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Words by segment type</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By subject</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Target material types</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Estimated grade</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div id="6412642b" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Segment type</th>
-<th style="text-align: right;">Words, target</th>
-<th style="text-align: right;">Words, all</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">tresc</td>
-<td style="text-align: right;">51 017</td>
-<td style="text-align: right;">306 260</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">alt</td>
-<td style="text-align: right;">32 042</td>
-<td style="text-align: right;">234 538</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">cwiczenie</td>
-<td style="text-align: right;">22 330</td>
-<td style="text-align: right;">146 748</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">definicja</td>
-<td style="text-align: right;">4501</td>
-<td style="text-align: right;">17 700</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">podpis</td>
-<td style="text-align: right;">3173</td>
-<td style="text-align: right;">15 541</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">tytul</td>
-<td style="text-align: right;">130</td>
-<td style="text-align: right;">401</td>
-</tr>
-</tbody>
-</table>
+<p>This run is a seeded sample of 50 biology materials and six contrast materials for each.</p>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div id="63ce1caa" class="cell" data-execution_count="5">
+<div id="19ff8809" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -472,48 +391,65 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
-<p>A material assigned to several subjects is counted under each of them.</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div id="ae51f423" class="cell" data-execution_count="6">
+<div id="50106730" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Material type</th>
-<th style="text-align: right;">Materials</th>
+<th style="text-align: left;">Segment type</th>
+<th style="text-align: right;">Words, biology</th>
+<th style="text-align: right;">Words, all</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">edukacja dostępna</td>
-<td style="text-align: right;">39</td>
+<td style="text-align: left;">tresc</td>
+<td style="text-align: right;">51 017</td>
+<td style="text-align: right;">306 260</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">zasób dodatkowy (KZD)</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;">alt</td>
+<td style="text-align: right;">32 042</td>
+<td style="text-align: right;">234 538</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">e-materiał</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;">cwiczenie</td>
+<td style="text-align: right;">22 330</td>
+<td style="text-align: right;">146 748</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">edukacja włączająca</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">definicja</td>
+<td style="text-align: right;">4501</td>
+<td style="text-align: right;">17 700</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">podpis</td>
+<td style="text-align: right;">3173</td>
+<td style="text-align: right;">15 541</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tytul</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">401</td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p>Image descriptions (<code>alt</code>) are kept in the corpus but not counted in the statistics.</p>
+</div>
 </div>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<div id="64f7ad5c" class="cell" data-execution_count="7">
+<div id="3cd92823" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Estimated grade (keyword rules)</th>
-<th style="text-align: right;">Target materials</th>
+<th style="text-align: left;">Grade estimated from topic keywords</th>
+<th style="text-align: right;">Biology materials</th>
 </tr>
 </thead>
 <tbody>
@@ -541,48 +477,14 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Confidence of the estimate</th>
-<th style="text-align: right;">Target materials</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">high</td>
-<td style="text-align: right;">36</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">low</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">none</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">medium</td>
-<td style="text-align: right;">7</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>The catalogue value for all target materials is 4-8; 0 materials name a grade explicitly in their text.</p>
+<p>The ZPE catalogue records only the stage (grades 4–8), so the grade is an estimate.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="cleaning" class="level3">
-<h3 class="anchored" data-anchor-id="cleaning">Cleaning</h3>
-<div id="e583c161" class="cell" data-execution_count="8">
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div id="a01b8271" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Measure</th>
@@ -591,41 +493,32 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Distinct sentences removed</td>
-<td style="text-align: right;">1055</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Removals in total</td>
-<td style="text-align: right;">18 795</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">Words removed</td>
 <td style="text-align: right;">35 947</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Template threshold: sentence repeated in at least this many materials</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;">Distinct sentences removed</td>
+<td style="text-align: right;">1055</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Distinct sentences removed as: repeated platform template</td>
+<td style="text-align: left;">… repeated platform template</td>
 <td style="text-align: right;">266</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Distinct sentences removed as: technical instruction (UI)</td>
+<td style="text-align: left;">… interface instruction</td>
 <td style="text-align: right;">624</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Distinct sentences removed as: metadata or licence line</td>
+<td style="text-align: left;">… metadata or licence line</td>
 <td style="text-align: right;">165</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</section>
-<section id="silver-standards-from-zpe" class="level3">
-<h3 class="anchored" data-anchor-id="silver-standards-from-zpe">Silver standards from ZPE</h3>
-<div id="18ca8d0d" class="cell" data-execution_count="9">
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<div id="1503d116" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -636,38 +529,28 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Glossary entries in target materials</td>
-<td style="text-align: right;">262</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… distinct</td>
+<td style="text-align: left;">Distinct glossary entries in the biology materials</td>
 <td style="text-align: right;">241</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">Target materials that have a glossary</td>
+<tr class="even">
+<td style="text-align: left;">Biology materials that have a glossary</td>
 <td style="text-align: right;">36</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Glossary entries in contrast materials</td>
-<td style="text-align: right;">684</td>
-</tr>
 <tr class="odd">
-<td style="text-align: left;">Editors’ pairs inflected form → base form, target</td>
-<td style="text-align: right;">223</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… distinct</td>
+<td style="text-align: left;">Distinct editors’ pairs inflected form → base form</td>
 <td style="text-align: right;">215</td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p>Used as an incomplete reference (silver standard) in steps 2 and 4.</p>
 </div>
-</section>
-<div id="ee29790f" class="cell" data-execution_count="10">
-<section id="full-corpus-for-scale" class="level3 cell-output cell-output-display cell-output-markdown">
-<h3 class="anchored" data-anchor-id="full-corpus-for-scale">Full corpus, for scale</h3>
-<p>Step 1 has also been run on the full corpus (the later steps have not):</p>
+</div>
+<div id="43054ee4" class="cell" data-execution_count="9">
+<section id="full-corpus" class="level4 cell-output cell-output-display cell-output-markdown">
+<h4 class="anchored" data-anchor-id="full-corpus">Full corpus</h4>
+<p>Step 1 has also been run on the full corpus; the later steps have not.</p>
 </section>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
@@ -680,7 +563,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Materials, target</td>
+<td style="text-align: left;">Materials, biology</td>
 <td style="text-align: right;">50</td>
 <td style="text-align: right;">262</td>
 </tr>
@@ -690,7 +573,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">4523</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Words, target</td>
+<td style="text-align: left;">Words, biology</td>
 <td style="text-align: right;">81 151</td>
 <td style="text-align: right;">479 944</td>
 </tr>
@@ -700,7 +583,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">6 393 011</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Distinct glossary entries, target</td>
+<td style="text-align: left;">Distinct glossary entries, biology</td>
 <td style="text-align: right;">241</td>
 <td style="text-align: right;">1120</td>
 </tr>
@@ -708,32 +591,62 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 <section id="tagging" class="level2">
-<h2 class="anchored" data-anchor-id="tagging">2 · Tagging and lemmatisation</h2>
-<section id="benchmark-on-300-forms" class="level3">
-<h3 class="anchored" data-anchor-id="benchmark-on-300-forms">Benchmark on 300 forms</h3>
-<p>Each tool lemmatised the same forms in their sentence context. <em>Exact</em> means the whole base form equals the reference; <em>components</em> means each word of the answer shares a lemma with the matching word of the reference, even if the phrase as a whole was not rebuilt in the nominative.</p>
-<div id="03a72acc" class="cell" data-execution_count="11">
+<h2 class="anchored" data-anchor-id="tagging">2 · Lemmatisation</h2>
+<div id="86f48640" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Finding:</strong> adding Morfeusz2 raises exact-match accuracy of spaCy from 0.457 to 0.767. The best tool is Sonnet 5.5 with 0.783; the tagger used for the whole corpus is spaCy + Morfeusz2 with 0.767, which runs locally and costs nothing.</p>
+</div>
+</div>
+<div id="a9b4a2b4" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="results_files/figure-html/cell-12-output-1.png" alt="Horizontal bar chart of exact-match lemmatisation accuracy by tool." width="676" height="277" class="figure-img"></p>
+<figcaption>Share of forms whose base form equals the reference (tagger used for the corpus in green).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="The reference is provisional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The reference is provisional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No human has checked the sheet yet. The reference is the base form written by ZPE editors where one exists, otherwise an answer from Opus 5.5, which may favour the LLM lemmatisers.</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">All scores</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Sample</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Tagging the corpus</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="99e76b8b" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 30%">
+<col style="width: 9%">
+<col style="width: 13%">
 <col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Tool</th>
-<th style="text-align: right;">Exact, all</th>
-<th style="text-align: right;">Components, all</th>
-<th style="text-align: right;">Exact, ZPE reference (n = 182)</th>
-<th style="text-align: right;">Exact, provisional reference</th>
+<th style="text-align: right;">Exact</th>
+<th style="text-align: right;">Components</th>
+<th style="text-align: right;">Exact, ZPE editors’ reference (n = 182)</th>
 <th style="text-align: right;">Exact, other</th>
 <th style="text-align: right;">Exact, rare terms</th>
 <th style="text-align: right;">Exact, multiword</th>
@@ -741,71 +654,64 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>llm_sonnet_5_5</code></td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">0.783</td>
 <td style="text-align: right;">0.947</td>
 <td style="text-align: right;">0.665</td>
-<td style="text-align: right;">0.966</td>
 <td style="text-align: right;">0.94</td>
 <td style="text-align: right;">0.713</td>
 <td style="text-align: right;">0.81</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>stanza_morfeusz</code></td>
+<td style="text-align: left;">Stanza + Morfeusz2</td>
 <td style="text-align: right;">0.777</td>
 <td style="text-align: right;">0.937</td>
 <td style="text-align: right;">0.659</td>
-<td style="text-align: right;">0.958</td>
 <td style="text-align: right;">0.96</td>
 <td style="text-align: right;">0.7</td>
 <td style="text-align: right;">0.8</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>llm_haiku_5_5</code></td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.773</td>
 <td style="text-align: right;">0.937</td>
 <td style="text-align: right;">0.67</td>
-<td style="text-align: right;">0.932</td>
 <td style="text-align: right;">0.96</td>
 <td style="text-align: right;">0.687</td>
 <td style="text-align: right;">0.81</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>spacy_morfeusz</code></td>
+<td style="text-align: left;">spaCy + Morfeusz2</td>
 <td style="text-align: right;">0.767</td>
 <td style="text-align: right;">0.933</td>
 <td style="text-align: right;">0.648</td>
-<td style="text-align: right;">0.949</td>
 <td style="text-align: right;">0.96</td>
 <td style="text-align: right;">0.687</td>
 <td style="text-align: right;">0.79</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>morfeusz_pierwsza</code></td>
+<td style="text-align: left;">Morfeusz2, first reading</td>
 <td style="text-align: right;">0.65</td>
 <td style="text-align: right;">0.93</td>
 <td style="text-align: right;">0.527</td>
-<td style="text-align: right;">0.839</td>
 <td style="text-align: right;">0.92</td>
 <td style="text-align: right;">0.72</td>
 <td style="text-align: right;">0.41</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>stanza</code></td>
+<td style="text-align: left;">Stanza</td>
 <td style="text-align: right;">0.473</td>
 <td style="text-align: right;">0.893</td>
 <td style="text-align: right;">0.385</td>
-<td style="text-align: right;">0.61</td>
 <td style="text-align: right;">0.74</td>
 <td style="text-align: right;">0.547</td>
 <td style="text-align: right;">0.23</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>spacy</code></td>
+<td style="text-align: left;">spaCy</td>
 <td style="text-align: right;">0.457</td>
 <td style="text-align: right;">0.863</td>
 <td style="text-align: right;">0.39</td>
-<td style="text-align: right;">0.559</td>
 <td style="text-align: right;">0.72</td>
 <td style="text-align: right;">0.533</td>
 <td style="text-align: right;">0.21</td>
@@ -813,34 +719,13 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-</div>
-<div id="09a35d8c" class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="results_files/figure-html/cell-13-output-1.png" alt="Horizontal bar chart of exact-match lemmatisation accuracy by tool." width="674" height="277" class="figure-img"></p>
-<figcaption>Share of forms whose base form equals the reference.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="What the reference is">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>What the reference is
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The sheet has not been checked by a human yet. Until it is, the reference is the base form written by ZPE editors where one exists, and otherwise a provisional answer from the adjudicating language model. The editors’ forms were not written for this study (some keep the plural, for example), and a reference written by a language model may favour the LLM lemmatisers. The sheet itself is on the <a href="./sheets.html">Annotation worksheets</a> page.</p>
-</div>
-</div>
-<div id="c638027d" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>Composition of the sample:</p>
+<p><em>Exact</em>: the whole base form equals the reference. <em>Components</em>: every word of the answer has the right lemma, even if the phrase was not rebuilt in the nominative.</p>
 </div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="d6e47786" class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -884,18 +769,14 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Note saved with the metrics (PL): <em>przeliczone po poprawce generate_form(prefer=) dla imiesłowów; ta sama próbka i referencje LLM</em></p>
 </div>
 </div>
-</section>
-<section id="tagging-the-corpus" class="level3">
-<h3 class="anchored" data-anchor-id="tagging-the-corpus">Tagging the corpus</h3>
-<div id="c83c6edb" class="cell" data-execution_count="14">
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="e407c5a0" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 50%">
+<col style="width: 49%">
 <col style="width: 50%">
 </colgroup>
 <thead>
@@ -906,208 +787,91 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Production tagger</td>
-<td style="text-align: left;">spaCy 3.8.18 / pl_core_news_lg 3.8.0 + Morfeusz2 pl.sgjp.sgjp-2026.06.01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Tokens tagged, whole corpus</td>
+<td style="text-align: left;">Tokens tagged</td>
 <td style="text-align: left;">628 959</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">… alphabetic</td>
-<td style="text-align: left;">478 009</td>
-</tr>
 <tr class="even">
-<td style="text-align: left;">Time, whole corpus</td>
+<td style="text-align: left;">Time</td>
 <td style="text-align: left;">81.2 s on 8 processes</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Alphabetic tokens unknown to Morfeusz2, whole corpus</td>
-<td style="text-align: left;">1.70%</td>
+<td style="text-align: left;">Biology tokens unknown to Morfeusz2</td>
+<td style="text-align: left;">0.93%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">… in the target corpus</td>
-<td style="text-align: left;">0.93% (323 distinct forms)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Target tokens outside the spaCy vocabulary</td>
+<td style="text-align: left;">Biology tokens outside the spaCy vocabulary</td>
 <td style="text-align: left;">3.36%</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Comparison tagger</td>
-<td style="text-align: left;">Stanza 1.15.0 (pl, pakiet domyślny)</td>
-</tr>
 <tr class="odd">
-<td style="text-align: left;">Tokens tagged by Stanza, target corpus</td>
-<td style="text-align: left;">100 531</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Time, Stanza</td>
-<td style="text-align: left;">128 s on 1 process, cpu</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Morfeusz2 dictionary</td>
-<td style="text-align: left;">pl.sgjp.sgjp-2026.06.01</td>
+<td style="text-align: left;">Speed, words per second (one process, CPU)</td>
+<td style="text-align: left;">spaCy 11 709 · Morfeusz2 24 318 · Stanza 657</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Speed on the same 60 066 words, one process, CPU:</p>
-<div id="767173c8" class="cell" data-execution_count="15">
+</div>
+</div>
+</div>
+</section>
+<section id="frequency" class="level2">
+<h2 class="anchored" data-anchor-id="frequency">3 · General-frequency resources</h2>
+<div id="38a83b8f" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Finding:</strong> KWJP100 covers the largest share of the 7726 distinct biology lemmas (92.2%). The lists use KWJP100 (CC BY 4.0).</p>
+</div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 69%">
+<col style="width: 30%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Tool</th>
-<th style="text-align: right;">Seconds</th>
-<th style="text-align: right;">Words per second</th>
+<th style="text-align: left;">Resource</th>
+<th style="text-align: right;">Biology lemmas covered</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">spaCy</td>
-<td style="text-align: right;">5.13</td>
-<td style="text-align: right;">11 709</td>
+<td style="text-align: left;">KWJP100</td>
+<td style="text-align: right;">92.2%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Morfeusz2 analysis</td>
-<td style="text-align: right;">2.47</td>
-<td style="text-align: right;">24 318</td>
+<td style="text-align: left;">wordfreq</td>
+<td style="text-align: right;">90.9%</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Stanza</td>
-<td style="text-align: right;">91.47</td>
-<td style="text-align: right;">657</td>
+<td style="text-align: left;">SUBTLEX-PL (comparison only, non-commercial licence)</td>
+<td style="text-align: right;">83.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NKJP 1M subcorpus</td>
+<td style="text-align: right;">69.8%</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Most frequent target forms unknown to Morfeusz2">
+<div class="callout callout-style-default callout-note callout-titled" title="Agreement between resources">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Most frequent target forms unknown to Morfeusz2
+<span class="screen-reader-only">Note</span>Agreement between resources
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div id="7f47350e" class="cell" data-execution_count="16">
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>np (186), µg (21), y (18), tzw (17), r (14), xhxh (13), wikimedia (8), commons (8), xhy (8), tzn (7), rebis (6), lugola (6), xdy (6), the (5), of (5), drapieżnictwo (5), grzebne (5), wodno (5), cortiego (5), gimnajzum (5), protokooperacja (5), bmi (5), jackfruit (4), mułożercy (4), pranóży (4), skaningowy (4), flickr (4), recesywnie (4), krzekiszkach (4), tyflomapami (4), pdf (4), kłująco (4), yellowstone (3), nukleazy (3), pepsynogen (3), wym (3), ostrakodermy (3), f (3), trawożerców (3), pixabay (3)</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="frequency" class="level2">
-<h2 class="anchored" data-anchor-id="frequency">3 · General-frequency resources</h2>
-<div id="52c687d5" class="cell" data-execution_count="17">
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Corpus after tagging</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Alphabetic tokens</td>
-<td style="text-align: right;">478 009</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… target</td>
-<td style="text-align: right;">80 831</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">… contrast</td>
-<td style="text-align: right;">397 178</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Distinct lemmas</td>
-<td style="text-align: right;">26 756</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Distinct forms</td>
-<td style="text-align: right;">60 433</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<section id="coverage-of-the-biology-vocabulary" class="level3">
-<h3 class="anchored" data-anchor-id="coverage-of-the-biology-vocabulary">Coverage of the biology vocabulary</h3>
-<div id="80097dd9" class="cell" data-execution_count="18">
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Share of the 7726 distinct target lemmas and 15 075 distinct target forms found in each resource:</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Resource</th>
-<th style="text-align: left;">Unit</th>
-<th style="text-align: right;">Coverage</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">KWJP100, lemmas</td>
-<td style="text-align: left;">lemma</td>
-<td style="text-align: right;">0.922</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NKJP 1M subcorpus, lemmas</td>
-<td style="text-align: left;">lemma</td>
-<td style="text-align: right;">0.698</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">SUBTLEX-PL, lemmas (comparison only)</td>
-<td style="text-align: left;">lemma</td>
-<td style="text-align: right;">0.836</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">wordfreq, forms</td>
-<td style="text-align: left;">lemma</td>
-<td style="text-align: right;">0.909</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">KWJP100, forms</td>
-<td style="text-align: left;">form</td>
-<td style="text-align: right;">0.895</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NKJP 1-grams, forms</td>
-<td style="text-align: left;">form</td>
-<td style="text-align: right;">0.973</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Resource used in the published lists (note saved by the step, PL): <em>KWJP100 lemma (CC BY 4.0); SUBTLEX tylko do porównań wewnętrznych</em></p>
-</div>
-</div>
-</section>
-<section id="agreement-between-resources" class="level3">
-<h3 class="anchored" data-anchor-id="agreement-between-resources">Agreement between resources</h3>
-<div id="4fbe5234" class="cell" data-execution_count="19">
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Spearman rank correlation of frequencies, over target lemmas with at least 3 occurrences that both resources contain:</p>
-</div>
+<div id="af592074" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Pair</th>
-<th style="text-align: right;">Spearman ρ</th>
+<th style="text-align: right;">Spearman ρ of frequencies</th>
 <th style="text-align: right;">Lemmas</th>
 </tr>
 </thead>
@@ -1135,51 +899,14 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>How much the choice of resource changes a simple keyness ranking: overlap of the top 300 lemmas ranked by target frequency divided by (1 + general frequency).</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Pair</th>
-<th style="text-align: right;">Shared share of top 300</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">KWJP100 vs NKJP 1M</td>
-<td style="text-align: right;">0.19</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">KWJP100 vs wordfreq</td>
-<td style="text-align: right;">0.11</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">KWJP100 vs SUBTLEX-PL</td>
-<td style="text-align: right;">0.277</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NKJP 1M vs wordfreq</td>
-<td style="text-align: right;">0.42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NKJP 1M vs SUBTLEX-PL</td>
-<td style="text-align: right;">0.38</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">SUBTLEX-PL vs wordfreq</td>
-<td style="text-align: right;">0.117</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
-</section>
+</div>
+</div>
 </section>
 <section id="extraction" class="level2">
-<h2 class="anchored" data-anchor-id="extraction">4 · Candidate extraction</h2>
-<div id="299f8172" class="cell" data-execution_count="20">
+<h2 class="anchored" data-anchor-id="extraction">4 · Candidates</h2>
+<div id="a62626ea" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1190,11 +917,11 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Subject candidates after the thresholds</td>
+<td style="text-align: left;">Subject candidates</td>
 <td style="text-align: right;">3844</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">… single-word</td>
+<td style="text-align: left;">… single words</td>
 <td style="text-align: right;">2892</td>
 </tr>
 <tr class="odd">
@@ -1202,107 +929,51 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">952</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">… found in one material only (kept because frequent there)</td>
-<td style="text-align: right;">441</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">General candidates (source of T1/T2 items)</td>
-<td style="text-align: right;">5327</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… not among the subject candidates</td>
+<td style="text-align: left;">General candidates not among them</td>
 <td style="text-align: right;">3347</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">Lemmas dropped as proper names</td>
-<td style="text-align: right;">231</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Terms returned by TermoPL</td>
-<td style="text-align: right;">12 706</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">… linked to a candidate</td>
-<td style="text-align: right;">3060</td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>A subject candidate needs at least 3 occurrences in at least 2 biology materials, or at least 5 occurrences if it is found in a single material. A general candidate needs at least 5 occurrences in at least 3 materials of at least 3 other subjects. Keyness is computed with the true corpus sizes: 80 831 words of biology, 397 178 words of contrast, 81 664 894 words behind the KWJP100 list. For a multiword candidate PMI and logDice are computed for each pair of adjacent words and the lowest value is kept, so a phrase scores high only if every link in it is strong.</p>
-<section id="how-much-of-the-silver-standard-is-reachable" class="level3">
-<h3 class="anchored" data-anchor-id="how-much-of-the-silver-standard-is-reachable">How much of the silver standard is reachable</h3>
-<div id="3791b3c0" class="cell" data-execution_count="21">
+<section id="which-score-finds-terms-best" class="level3">
+<h3 class="anchored" data-anchor-id="which-score-finds-terms-best">Which score finds terms best</h3>
+<div id="9826fecb" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Silver standard (target materials)</th>
-<th style="text-align: right;">Entries</th>
-<th style="text-align: right;">… multiword</th>
-<th style="text-align: right;">Found in the corpus by the extraction</th>
-<th style="text-align: right;">Among candidates after the thresholds</th>
-<th style="text-align: right;">… multiword</th>
-<th style="text-align: right;">Share among candidates</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Glossary entries</td>
-<td style="text-align: right;">243</td>
-<td style="text-align: right;">83</td>
-<td style="text-align: right;">234</td>
-<td style="text-align: right;">165</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">67.9%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Editors’ base forms of linked terms</td>
-<td style="text-align: right;">207</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">199</td>
-<td style="text-align: right;">148</td>
-<td style="text-align: right;">47</td>
-<td style="text-align: right;">71.5%</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Finding:</strong> of the top 300 candidates of each score, the share finally labelled T3 is highest for Simple Maths vs KWJP100 (0.68) and log ratio vs contrast (0.673); frequency alone gives 0.18, and 0.205 of all candidates are T3.</p>
 </div>
 </div>
-<p>The last column is the ceiling for recall of any ranking: an entry that is not a candidate cannot be ranked. Entries are lost mostly to the frequency thresholds, which matter more on a small sample.</p>
-</section>
-<section id="precision-and-recall-at-k-against-the-silver-standards" class="level3">
-<h3 class="anchored" data-anchor-id="precision-and-recall-at-k-against-the-silver-standards">Precision and recall at K against the silver standards</h3>
-<p>Each method ranks the candidates it can score; P@K is the share of its top K that is in the silver standard, R@K the share of the silver items among the candidates that it has reached by K. The <em>baseline</em> row is the share of silver items among all candidates, which is what a random ranking would achieve.</p>
-<div id="81a7c113" class="cell" data-execution_count="22">
+<div id="53e386f2" class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="results_files/figure-html/cell-20-output-1.png" alt="Horizontal bar chart of precision at 300 by extraction score, with the share of T3 among all candidates as a vertical line." width="695" height="453" class="figure-img"></p>
+<figcaption>Share of the top 300 candidates of each score that the models labelled T3 (line: share of T3 among all candidates).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The T3 labels come from the models of step 5, not from people.</p>
+<div id="d41c7617" class="cell" data-execution_count="20">
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">All candidates</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Single words</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Multiword</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">All candidates</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Single words</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Multiword</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Against ZPE glossaries</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
+<col style="width: 34%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Score</th>
 <th style="text-align: right;">Candidates ranked</th>
 <th style="text-align: right;">P@100</th>
 <th style="text-align: right;">P@300</th>
@@ -1314,7 +985,381 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><em>baseline: random ranking</em></td>
+<td style="text-align: left;"><em>share of T3 among candidates</em></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log-likelihood vs contrast</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.448</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.186</td>
+<td style="text-align: right;">0.569</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">log ratio vs contrast</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.673</td>
+<td style="text-align: right;">0.498</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">0.256</td>
+<td style="text-align: right;">0.632</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TF-IDF across subjects</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.543</td>
+<td style="text-align: right;">0.416</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">0.528</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple Maths vs KWJP100</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.417</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.426</td>
+<td style="text-align: right;">0.871</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log-likelihood vs KWJP100</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.358</td>
+<td style="text-align: right;">0.098</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">0.747</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PMI (multiword)</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.123</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">logDice (multiword)</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">0.517</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.172</td>
+<td style="text-align: right;">0.502</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-value (TermoPL)</td>
+<td style="text-align: right;">2432</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">0.493</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">0.078</td>
+<td style="text-align: right;">0.219</td>
+<td style="text-align: right;">0.554</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rank fusion of all scores</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.597</td>
+<td style="text-align: right;">0.471</td>
+<td style="text-align: right;">0.076</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: right;">0.598</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">frequency in biology alone</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">0.288</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Score</th>
+<th style="text-align: right;">Candidates ranked</th>
+<th style="text-align: right;">P@100</th>
+<th style="text-align: right;">P@300</th>
+<th style="text-align: right;">P@1000</th>
+<th style="text-align: right;">R@100</th>
+<th style="text-align: right;">R@300</th>
+<th style="text-align: right;">R@1000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>share of T3 among candidates</em></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log-likelihood vs contrast</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">0.376</td>
+<td style="text-align: right;">0.096</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.785</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">log ratio vs contrast</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.647</td>
+<td style="text-align: right;">0.421</td>
+<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">0.405</td>
+<td style="text-align: right;">0.879</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TF-IDF across subjects</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">0.477</td>
+<td style="text-align: right;">0.351</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.298</td>
+<td style="text-align: right;">0.733</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Simple Maths vs KWJP100</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.417</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.426</td>
+<td style="text-align: right;">0.871</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log-likelihood vs KWJP100</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.358</td>
+<td style="text-align: right;">0.098</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">0.747</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-value (TermoPL)</td>
+<td style="text-align: right;">1640</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">0.277</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.741</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rank fusion of all scores</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.513</td>
+<td style="text-align: right;">0.384</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">0.322</td>
+<td style="text-align: right;">0.802</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">frequency in biology alone</td>
+<td style="text-align: right;">2892</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.182</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">0.106</td>
+<td style="text-align: right;">0.38</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Score</th>
+<th style="text-align: right;">Candidates ranked</th>
+<th style="text-align: right;">P@100</th>
+<th style="text-align: right;">P@300</th>
+<th style="text-align: right;">P@1000</th>
+<th style="text-align: right;">R@100</th>
+<th style="text-align: right;">R@300</th>
+<th style="text-align: right;">R@1000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>share of T3 among candidates</em></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">log-likelihood vs contrast</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.214</td>
+<td style="text-align: right;">0.505</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">log ratio vs contrast</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.523</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.508</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TF-IDF across subjects</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">0.537</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.223</td>
+<td style="text-align: right;">0.521</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PMI (multiword)</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.123</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">logDice (multiword)</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">0.517</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.172</td>
+<td style="text-align: right;">0.502</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-value (TermoPL)</td>
+<td style="text-align: right;">792</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.383</td>
+<td style="text-align: right;">0.228</td>
+<td style="text-align: right;">0.554</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rank fusion of all scores</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.214</td>
+<td style="text-align: right;">0.553</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">frequency in biology alone</td>
+<td style="text-align: right;">952</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.507</td>
+<td style="text-align: right;">0.325</td>
+<td style="text-align: right;">0.201</td>
+<td style="text-align: right;">0.492</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 17%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Score</th>
+<th style="text-align: right;">Candidates ranked</th>
+<th style="text-align: right;">P@100</th>
+<th style="text-align: right;">P@300</th>
+<th style="text-align: right;">P@1000</th>
+<th style="text-align: right;">R@100</th>
+<th style="text-align: right;">R@300</th>
+<th style="text-align: right;">R@1000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>share of glossary entries among candidates</em></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;">0.042</td>
 <td style="text-align: right;">0.042</td>
@@ -1394,7 +1439,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
+<td style="text-align: left;">C-value (TermoPL)</td>
 <td style="text-align: right;">2432</td>
 <td style="text-align: right;">0.21</td>
 <td style="text-align: right;">0.15</td>
@@ -1404,7 +1449,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">0.497</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
+<td style="text-align: left;">rank fusion of all scores</td>
 <td style="text-align: right;">3844</td>
 <td style="text-align: right;">0.26</td>
 <td style="text-align: right;">0.183</td>
@@ -1425,765 +1470,35 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: right;">Candidates ranked</th>
-<th style="text-align: right;">P@100</th>
-<th style="text-align: right;">P@300</th>
-<th style="text-align: right;">P@1000</th>
-<th style="text-align: right;">R@100</th>
-<th style="text-align: right;">R@300</th>
-<th style="text-align: right;">R@1000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>baseline: random ranking</em></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs contrast</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.143</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">0.174</td>
-<td style="text-align: right;">0.374</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">log ratio vs contrast</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.21</td>
-<td style="text-align: right;">0.106</td>
-<td style="text-align: right;">0.217</td>
-<td style="text-align: right;">0.548</td>
-<td style="text-align: right;">0.922</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TF-IDF across subjects</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.21</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.104</td>
-<td style="text-align: right;">0.183</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Simple Maths vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.203</td>
-<td style="text-align: right;">0.102</td>
-<td style="text-align: right;">0.191</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.887</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.143</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.174</td>
-<td style="text-align: right;">0.374</td>
-<td style="text-align: right;">0.87</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
-<td style="text-align: right;">1640</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.083</td>
-<td style="text-align: right;">0.098</td>
-<td style="text-align: right;">0.107</td>
-<td style="text-align: right;">0.223</td>
-<td style="text-align: right;">0.875</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.21</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.105</td>
-<td style="text-align: right;">0.183</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.913</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">frequency in biology alone</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.063</td>
-<td style="text-align: right;">0.058</td>
-<td style="text-align: right;">0.087</td>
-<td style="text-align: right;">0.165</td>
-<td style="text-align: right;">0.504</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: right;">Candidates ranked</th>
-<th style="text-align: right;">P@100</th>
-<th style="text-align: right;">P@300</th>
-<th style="text-align: right;">P@1000</th>
-<th style="text-align: right;">R@100</th>
-<th style="text-align: right;">R@300</th>
-<th style="text-align: right;">R@1000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>baseline: random ranking</em></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs contrast</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.458</td>
-<td style="text-align: right;">0.75</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">log ratio vs contrast</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.19</td>
-<td style="text-align: right;">0.107</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.396</td>
-<td style="text-align: right;">0.667</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TF-IDF across subjects</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.24</td>
-<td style="text-align: right;">0.123</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.771</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PMI (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.083</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.167</td>
-<td style="text-align: right;">0.521</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">logDice (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.113</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.312</td>
-<td style="text-align: right;">0.708</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
-<td style="text-align: right;">792</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.127</td>
-<td style="text-align: right;">0.059</td>
-<td style="text-align: right;">0.425</td>
-<td style="text-align: right;">0.808</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.812</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">frequency in biology alone</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">0.2</td>
-<td style="text-align: right;">0.123</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.771</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<p>All candidates. The glossaries hold only what editors chose to explain, so low precision here does not mean wrong candidates. 165 of 243 glossary entries (67.9%) are among the candidates; the others fall below the frequency thresholds.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-<p>Both silver standards are taken together here; the figures for each one separately are in the raw metrics file. The silver standard only contains what ZPE editors chose to explain, so low precision does not mean the top candidates are wrong. It supports comparison between methods only.</p>
+<p>P@K: share of the top K that is a term. R@K: share of all terms among the candidates reached by K.</p>
 </section>
-<div id="91112058" class="cell" data-execution_count="23">
-<section id="the-same-rankings-against-the-final-labels-of-step-5" class="level3 cell-output cell-output-display cell-output-markdown">
-<h3 class="anchored" data-anchor-id="the-same-rankings-against-the-final-labels-of-step-5">The same rankings against the final labels of step 5</h3>
-<p>Share of the top K that the models finally labelled <strong>T3</strong>. The labels come from language models, not from people, so this is a second imperfect yardstick, but unlike the glossaries it covers every candidate.</p>
-</section>
-<div class="cell-output cell-output-display cell-output-markdown">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">All candidates</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Single words</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Multiword</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: right;">Candidates ranked</th>
-<th style="text-align: right;">T3 among them</th>
-<th style="text-align: right;">P@100</th>
-<th style="text-align: right;">P@300</th>
-<th style="text-align: right;">P@1000</th>
-<th style="text-align: right;">R@100</th>
-<th style="text-align: right;">R@300</th>
-<th style="text-align: right;">R@1000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>baseline: share of T3 among candidates</em></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">0.205</td>
-<td style="text-align: right;">0.205</td>
-<td style="text-align: right;">0.205</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs contrast</td>
-<td style="text-align: right;">3844</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">0.47</td>
-<td style="text-align: right;">0.49</td>
-<td style="text-align: right;">0.448</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.186</td>
-<td style="text-align: right;">0.569</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">log ratio vs contrast</td>
-<td style="text-align: right;">3844</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">0.73</td>
-<td style="text-align: right;">0.673</td>
-<td style="text-align: right;">0.498</td>
-<td style="text-align: right;">0.093</td>
-<td style="text-align: right;">0.256</td>
-<td style="text-align: right;">0.632</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TF-IDF across subjects</td>
-<td style="text-align: right;">3844</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.543</td>
-<td style="text-align: right;">0.416</td>
-<td style="text-align: right;">0.071</td>
-<td style="text-align: right;">0.207</td>
-<td style="text-align: right;">0.528</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Simple Maths vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.74</td>
-<td style="text-align: right;">0.68</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.154</td>
-<td style="text-align: right;">0.426</td>
-<td style="text-align: right;">0.871</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.47</td>
-<td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.358</td>
-<td style="text-align: right;">0.098</td>
-<td style="text-align: right;">0.276</td>
-<td style="text-align: right;">0.747</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PMI (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.123</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">logDice (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.517</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.172</td>
-<td style="text-align: right;">0.502</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
-<td style="text-align: right;">2432</td>
-<td style="text-align: right;">677</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.493</td>
-<td style="text-align: right;">0.375</td>
-<td style="text-align: right;">0.078</td>
-<td style="text-align: right;">0.219</td>
-<td style="text-align: right;">0.554</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
-<td style="text-align: right;">3844</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">0.6</td>
-<td style="text-align: right;">0.597</td>
-<td style="text-align: right;">0.471</td>
-<td style="text-align: right;">0.076</td>
-<td style="text-align: right;">0.227</td>
-<td style="text-align: right;">0.598</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">frequency in biology alone</td>
-<td style="text-align: right;">3844</td>
-<td style="text-align: right;">788</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.227</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.069</td>
-<td style="text-align: right;">0.288</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: right;">Candidates ranked</th>
-<th style="text-align: right;">T3 among them</th>
-<th style="text-align: right;">P@100</th>
-<th style="text-align: right;">P@300</th>
-<th style="text-align: right;">P@1000</th>
-<th style="text-align: right;">R@100</th>
-<th style="text-align: right;">R@300</th>
-<th style="text-align: right;">R@1000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>baseline: share of T3 among candidates</em></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">0.166</td>
-<td style="text-align: right;">0.166</td>
-<td style="text-align: right;">0.166</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs contrast</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">0.376</td>
-<td style="text-align: right;">0.096</td>
-<td style="text-align: right;">0.28</td>
-<td style="text-align: right;">0.785</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">log ratio vs contrast</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.71</td>
-<td style="text-align: right;">0.647</td>
-<td style="text-align: right;">0.421</td>
-<td style="text-align: right;">0.148</td>
-<td style="text-align: right;">0.405</td>
-<td style="text-align: right;">0.879</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TF-IDF across subjects</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.55</td>
-<td style="text-align: right;">0.477</td>
-<td style="text-align: right;">0.351</td>
-<td style="text-align: right;">0.115</td>
-<td style="text-align: right;">0.298</td>
-<td style="text-align: right;">0.733</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Simple Maths vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.74</td>
-<td style="text-align: right;">0.68</td>
-<td style="text-align: right;">0.417</td>
-<td style="text-align: right;">0.154</td>
-<td style="text-align: right;">0.426</td>
-<td style="text-align: right;">0.871</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs KWJP100</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.47</td>
-<td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.358</td>
-<td style="text-align: right;">0.098</td>
-<td style="text-align: right;">0.276</td>
-<td style="text-align: right;">0.747</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
-<td style="text-align: right;">1640</td>
-<td style="text-align: right;">374</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">0.27</td>
-<td style="text-align: right;">0.277</td>
-<td style="text-align: right;">0.059</td>
-<td style="text-align: right;">0.217</td>
-<td style="text-align: right;">0.741</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.513</td>
-<td style="text-align: right;">0.384</td>
-<td style="text-align: right;">0.117</td>
-<td style="text-align: right;">0.322</td>
-<td style="text-align: right;">0.802</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">frequency in biology alone</td>
-<td style="text-align: right;">2892</td>
-<td style="text-align: right;">479</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.182</td>
-<td style="text-align: right;">0.033</td>
-<td style="text-align: right;">0.106</td>
-<td style="text-align: right;">0.38</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: right;">Candidates ranked</th>
-<th style="text-align: right;">T3 among them</th>
-<th style="text-align: right;">P@100</th>
-<th style="text-align: right;">P@300</th>
-<th style="text-align: right;">P@1000</th>
-<th style="text-align: right;">R@100</th>
-<th style="text-align: right;">R@300</th>
-<th style="text-align: right;">R@1000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><em>baseline: share of T3 among candidates</em></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">log-likelihood vs contrast</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.66</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.214</td>
-<td style="text-align: right;">0.505</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">log ratio vs contrast</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.67</td>
-<td style="text-align: right;">0.523</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.217</td>
-<td style="text-align: right;">0.508</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">TF-IDF across subjects</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.69</td>
-<td style="text-align: right;">0.537</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.223</td>
-<td style="text-align: right;">0.521</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">PMI (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.38</td>
-<td style="text-align: right;">0.46</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.123</td>
-<td style="text-align: right;">0.447</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">logDice (multiword)</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.517</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.172</td>
-<td style="text-align: right;">0.502</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TermoPL C-value</td>
-<td style="text-align: right;">792</td>
-<td style="text-align: right;">303</td>
-<td style="text-align: right;">0.69</td>
-<td style="text-align: right;">0.56</td>
-<td style="text-align: right;">0.383</td>
-<td style="text-align: right;">0.228</td>
-<td style="text-align: right;">0.554</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reciprocal-rank fusion of the methods</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.66</td>
-<td style="text-align: right;">0.57</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.214</td>
-<td style="text-align: right;">0.553</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">frequency in biology alone</td>
-<td style="text-align: right;">952</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">0.62</td>
-<td style="text-align: right;">0.507</td>
-<td style="text-align: right;">0.325</td>
-<td style="text-align: right;">0.201</td>
-<td style="text-align: right;">0.492</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="9ded3c0e" class="cell" data-execution_count="24">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="results_files/figure-html/cell-25-output-1.png" alt="Horizontal bar chart of precision at 300 by extraction method, with the baseline share of T3 as a vertical line." width="694" height="452" class="figure-img"></p>
-<figcaption>Precision at 300 of each ranking against the final T3 label, all candidates.</figcaption>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="llm" class="level2">
-<h2 class="anchored" data-anchor-id="llm">5 · LLM classification</h2>
-<p>Two models, <strong>sonnet-5-5</strong> and <strong>opus-5-5</strong>, label every candidate independently. Each sees the candidate, its counts in biology and in the other subjects, and up to three sentences from the corpus; neither sees the rule-based pre-label or the other model’s answer. Where the two labels differ, or either model reports low confidence, <strong>fable-5-2</strong> labels the candidate as well and the majority of the three decides. If all three differ, the adjudicator’s label is used and the row is marked for review.</p>
-<div id="8baab4ad" class="cell" data-execution_count="26">
+<h2 class="anchored" data-anchor-id="llm">5 · Labels</h2>
+<div id="410b84e2" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Finding:</strong> Sonnet 5.5 and Opus 5.5 give the same label to 80.9% of candidates (Cohen’s κ 0.748). Fable 5.2 settled 1544 cases; 335 had no majority and are marked for review.</p>
+</div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Candidates labelled</td>
-<td style="text-align: right;">5344</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… subject candidates</td>
-<td style="text-align: right;">3844</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">… general candidates only (stratified sample)</td>
-<td style="text-align: right;">1500</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Agreement between sonnet-5-5 and opus-5-5</td>
-<td style="text-align: right;">0.809</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Cohen’s κ</td>
-<td style="text-align: right;">0.748</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Adjudicated</td>
-<td style="text-align: right;">1544</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Left for review after adjudication</td>
-<td style="text-align: right;">335</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Base forms corrected by the models</td>
-<td style="text-align: right;">82</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Prompt version</td>
-<td style="text-align: right;">v2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Wall-clock time of the step</td>
-<td style="text-align: right;">538.8 s</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Agreement is not accuracy">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Agreement is not accuracy
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>There are no human labels yet. The worksheet for double annotation is on the <a href="./sheets.html">Annotation worksheets</a> page; once it is filled in, step 6 reports precision, recall and F1 of the final labels against people.</p>
-</div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Final labels</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Agreement by group</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Model against model</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">Adjudication</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false" href="">Rules against models</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div id="fcb90b40" class="cell" data-execution_count="27">
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 8%">
+<col style="width: 24%">
+<col style="width: 24%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Final label</th>
 <th style="text-align: right;">All</th>
 <th style="text-align: right;">Subject candidates</th>
-<th style="text-align: right;">General candidates only</th>
+<th style="text-align: right;">General candidates</th>
 </tr>
 </thead>
 <tbody>
@@ -2200,69 +1515,51 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">150</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">T2 · school / academic vocabulary</td>
+<td style="text-align: left;">T2 · school vocabulary</td>
 <td style="text-align: right;">1729</td>
 <td style="text-align: right;">1098</td>
 <td style="text-align: right;">631</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">T1 · everyday vocabulary</td>
+<td style="text-align: left;">T1 · everyday word</td>
 <td style="text-align: right;">1495</td>
 <td style="text-align: right;">1101</td>
 <td style="text-align: right;">394</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SZUM · not usable as a test item</td>
+<td style="text-align: left;">SZUM · not usable</td>
 <td style="text-align: right;">1104</td>
 <td style="text-align: right;">788</td>
 <td style="text-align: right;">316</td>
 </tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Kinds of noise:</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Kind</th>
-<th style="text-align: right;">Candidates</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">free word combination</td>
-<td style="text-align: right;">690</td>
-</tr>
 <tr class="even">
-<td style="text-align: left;">part of a longer term</td>
-<td style="text-align: right;">238</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">platform interface or instruction text</td>
-<td style="text-align: right;">103</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">proper name</td>
-<td style="text-align: right;">58</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">extraction error</td>
-<td style="text-align: right;">11</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">other</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;"><strong>Labelled in total</strong></td>
+<td style="text-align: right;">5344</td>
+<td style="text-align: right;">3844</td>
+<td style="text-align: right;">1500</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Agreement is not accuracy">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div id="d246c723" class="cell" data-execution_count="28">
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Agreement is not accuracy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No human labels exist yet. Once the <a href="./sheets.html">worksheet</a> is filled in, step 6 reports precision and recall against it.</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Agreement by group</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Model against model</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Adjudication</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">Kinds of noise</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false" href="">Threshold rules instead of models</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="22bd55aa" class="cell" data-execution_count="22">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -2287,7 +1584,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">0.755</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">general candidates only</td>
+<td style="text-align: left;">general candidates</td>
 <td style="text-align: right;">1500</td>
 <td style="text-align: right;">0.795</td>
 <td style="text-align: right;">0.715</td>
@@ -2307,44 +1604,15 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Agreement of each model with the final label:</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Model</th>
-<th style="text-align: right;">n</th>
-<th style="text-align: right;">Agreement</th>
-<th style="text-align: right;">Cohen’s κ</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">sonnet 5 5</td>
-<td style="text-align: right;">5344</td>
-<td style="text-align: right;">0.898</td>
-<td style="text-align: right;">0.865</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">opus 5 5</td>
-<td style="text-align: right;">5344</td>
-<td style="text-align: right;">0.895</td>
-<td style="text-align: right;">0.86</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
-</div>
-<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div id="fa9b0a5f" class="cell" data-execution_count="29">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="d185b016" class="cell" data-execution_count="23">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">opus 5 5 ↓ / sonnet 5 5 →</th>
+<th style="text-align: left;">Opus 5.5 ↓ / Sonnet 5.5 →</th>
 <th style="text-align: right;">T3</th>
 <th style="text-align: right;">T3_INNY</th>
 <th style="text-align: right;">T2</th>
@@ -2398,8 +1666,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
-<div id="ec652015" class="cell" data-execution_count="30">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div id="5315f61e" class="cell" data-execution_count="24">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -2414,19 +1682,19 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1544</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">… because the two labels differed</td>
+<td style="text-align: left;">… the two labels differed</td>
 <td style="text-align: right;">1019</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">… labels agreed, but a model reported low confidence</td>
+<td style="text-align: left;">… same label, but a model reported low confidence</td>
 <td style="text-align: right;">525</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Adjudicator chose the label of sonnet 5 5</td>
+<td style="text-align: left;">Adjudicator agreed with Sonnet 5.5</td>
 <td style="text-align: right;">926</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Adjudicator chose the label of opus 5 5</td>
+<td style="text-align: left;">Adjudicator agreed with Opus 5.5</td>
 <td style="text-align: right;">913</td>
 </tr>
 <tr class="even">
@@ -2436,15 +1704,52 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div id="2677dbf0" class="cell" data-execution_count="25">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>Where the two models agreed with each other, the adjudicator’s agreement is counted for both.</p>
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Kind</th>
+<th style="text-align: right;">Candidates</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">free word combination</td>
+<td style="text-align: right;">690</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">part of a longer term</td>
+<td style="text-align: right;">238</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">platform interface or instruction text</td>
+<td style="text-align: right;">103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">proper name</td>
+<td style="text-align: right;">58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">extraction error</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="tabset-4-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-5-tab">
-<div id="5141ec18" class="cell" data-execution_count="31">
+<div id="8fc0574c" class="cell" data-execution_count="26">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>Step 4 also assigns a pre-label from thresholds on dispersion and frequency alone. It is not shown to the models and not used for the pools; the table shows how far such rules would get.</p>
+<p>How far a label from thresholds on frequency and dispersion alone would get, measured against the final label:</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
@@ -2456,15 +1761,7 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Subject candidates with a final label</td>
-<td style="text-align: right;">3844</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… for which the rules gave a label</td>
-<td style="text-align: right;">3010</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Agreement of the rule label with the final label</td>
+<td style="text-align: left;">Agreement with the final label</td>
 <td style="text-align: right;">50.9%</td>
 </tr>
 <tr class="even">
@@ -2482,97 +1779,64 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<section id="direct-extraction-by-a-language-model" class="level3">
-<h3 class="anchored" data-anchor-id="direct-extraction-by-a-language-model">Direct extraction by a language model</h3>
-<div id="c5f49aca" class="cell" data-execution_count="32">
+<section id="check-terms-listed-by-a-model-directly-from-the-materials" class="level3">
+<h3 class="anchored" data-anchor-id="check-terms-listed-by-a-model-directly-from-the-materials">Check: terms listed by a model directly from the materials</h3>
+<div id="a5d76762" class="cell" data-execution_count="27">
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>As an independent check of step 4, opus-5-5 read 30 biology materials and listed the terms in them. The table shows how many of those terms the statistical extraction had also found.</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Distinct terms listed</td>
-<td style="text-align: right;">1535</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… labelled as biology terms (T3)</td>
-<td style="text-align: right;">1230</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">… … multiword</td>
-<td style="text-align: right;">598</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Share of those T3 terms that are candidates of step 4</td>
-<td style="text-align: right;">51.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">… single words</td>
-<td style="text-align: right;">62.3%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… multiword</td>
-<td style="text-align: right;">39.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Share that also carry the final label T3</td>
-<td style="text-align: right;">40.5%</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>The terms that are not candidates are listed on the <a href="./pools.html">Pools</a> page. On a sample, most are missing because they occur fewer times than the frequency threshold.</p>
-</div>
-</div>
-</section>
-<section id="concepts" class="level3">
-<h3 class="anchored" data-anchor-id="concepts">Concepts</h3>
-<div id="747b27ee" class="cell" data-execution_count="33">
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: left;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Model</td>
-<td style="text-align: left;">fable-5-2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Subject terms given to the model</td>
-<td style="text-align: left;">790</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Groups of two or more terms</td>
-<td style="text-align: left;">122</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Terms in such groups</td>
-<td style="text-align: left;">275</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Terms in the answer that were not on the list (ignored)</td>
-<td style="text-align: left;">0</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Finding:</strong> Opus 5.5 read 30 biology materials and listed 1230 biology terms. Step 4 has 51.0% of them among its candidates: 62.3% of the single words and 39.0% of the multiword terms. The others occur too rarely in the sample or do not fit the phrase patterns; they are listed on the <a href="./pools.html">Pools</a> page.</p>
 </div>
 </div>
 </section>
 <section id="cost" class="level3">
 <h3 class="anchored" data-anchor-id="cost">Cost</h3>
-<div id="a370f9ef" class="cell" data-execution_count="34">
+<div id="5311be06" class="cell" data-execution_count="28">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">USD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Opus 5.5</td>
+<td style="text-align: right;">17.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fable 5.2</td>
+<td style="text-align: right;">10.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sonnet 5.5</td>
+<td style="text-align: right;">8.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Haiku 5.5</td>
+<td style="text-align: right;">0.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: right;"><strong>35.79</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>All API requests of this configuration so far, including tests and an earlier prompt version.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Cost by task">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Cost by task
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="29a3e346" class="cell" data-execution_count="29">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -2585,126 +1849,129 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">ekstrakcja_terminow</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">0.17</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ekstrakcja_terminow_v2</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">1.19</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">klasyfikacja</td>
-<td style="text-align: left;">haiku-5-5</td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.05</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">klasyfikacja</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">1.00</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">klasyfikacja_rozstrzygniecie</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">0.63</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">klasyfikacja_v2</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">12.63</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">klasyfikacja_v2</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">6.49</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">klasyfikacja_v2_rozstrzygniecie</td>
-<td style="text-align: left;">fable-5-2</td>
+<td style="text-align: left;">Fable 5.2</td>
 <td style="text-align: right;">6.75</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">lematyzacja_proba</td>
-<td style="text-align: left;">haiku-5-5</td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.01</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">lematyzacja_proba</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">lematyzacja_referencja</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">0.43</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">pojecia_v2</td>
-<td style="text-align: left;">fable-5-2</td>
+<td style="text-align: left;">Fable 5.2</td>
 <td style="text-align: right;">0.13</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">pseudoslowa</td>
-<td style="text-align: left;">haiku-5-5</td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">pseudoslowa_ocena_v2</td>
-<td style="text-align: left;">fable-5-2</td>
+<td style="text-align: left;">Fable 5.2</td>
 <td style="text-align: right;">2.30</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">pseudoslowa_v2</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">2.39</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_smoke</td>
-<td style="text-align: left;">haiku-5-5</td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_smoke2</td>
-<td style="text-align: left;">haiku-5-5</td>
+<td style="text-align: left;">Haiku 5.5</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_smoke2</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">0.01</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_smoke2</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">0.00</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_v2</td>
-<td style="text-align: left;">fable-5-2</td>
+<td style="text-align: left;">Fable 5.2</td>
 <td style="text-align: right;">0.84</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_v2</td>
-<td style="text-align: left;">opus-5-5</td>
+<td style="text-align: left;">Opus 5.5</td>
 <td style="text-align: right;">0.43</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">test_v2</td>
-<td style="text-align: left;">sonnet-5-5</td>
+<td style="text-align: left;">Sonnet 5.5</td>
 <td style="text-align: right;">0.21</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>All API tasks of the pipeline are listed, not only step 5: the lemmatisation benchmark (step 2), classification, direct extraction and concepts (step 5), pseudoword generation and rating (step 7), and test requests. Sum for this run: <strong>35.79 USD</strong>; for all runs of this configuration so far: <strong>35.79 USD</strong>. Tasks of earlier prompt versions are included. Requests go through the Batch API with prompt caching; the limit set in the configuration is 100 USD.</p>
+</div>
+</div>
 </div>
 </div>
 </section>
 </section>
 <section id="pools" class="level2">
 <h2 class="anchored" data-anchor-id="pools">6 · Pools</h2>
-<div id="f4b71e67" class="cell" data-execution_count="35">
+<div id="6641e7f3" class="cell" data-execution_count="30">
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Finding:</strong> 514 of 789 subject terms (65.1%) have a general-word partner. Terms differ from general words in general frequency by -1.158 in the whole pools and by -0.334 within the pairs; in length by 0.818 and 0.003 (standardised mean difference; 0 means no difference).</p>
+</div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -2715,16 +1982,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Rows in <code>kandydaci.csv</code></td>
-<td style="text-align: right;">7191</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Subject pool (T3)</td>
 <td style="text-align: right;">789</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">… multiword terms</td>
+<tr class="even">
+<td style="text-align: left;">… multiword</td>
 <td style="text-align: right;">306</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">… concepts</td>
+<td style="text-align: right;">636</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">General pool</td>
@@ -2739,74 +2006,89 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1708</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Concepts</td>
-<td style="text-align: right;">636</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… grouping more than one term</td>
-<td style="text-align: right;">122</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rows left out as duplicates after correction of the base form</td>
-<td style="text-align: right;">55</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Pool items marked for review</td>
 <td style="text-align: right;">249</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rows in the gold-set worksheet</td>
-<td style="text-align: right;">400</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Labels of all rows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Parts of speech</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Imageability of subject terms</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Matching by word type</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Parts of speech</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Can the term be shown in a picture</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div id="215424ad" class="cell" data-execution_count="36">
+<div id="619a3175" class="cell" data-execution_count="31">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 16%">
+<col style="width: 28%">
+<col style="width: 9%">
+<col style="width: 8%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Label in <code>kandydaci.csv</code></th>
-<th style="text-align: right;">Rows</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: right;">Subject terms</th>
+<th style="text-align: right;">General items available</th>
+<th style="text-align: right;">Matched</th>
+<th style="text-align: right;">Share</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">not sent to the models</td>
-<td style="text-align: right;">1847</td>
+<td style="text-align: left;">nouns</td>
+<td style="text-align: right;">373</td>
+<td style="text-align: right;">1485</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">90%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">T2 · school / academic vocabulary</td>
-<td style="text-align: right;">1729</td>
+<td style="text-align: left;">two-word phrases</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">31%</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">T1 · everyday vocabulary</td>
-<td style="text-align: right;">1495</td>
+<td style="text-align: left;">adjectives</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">916</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">79%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SZUM · not usable as a test item</td>
-<td style="text-align: right;">1104</td>
+<td style="text-align: left;">phrases of three or more words</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0%</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">T3 · biology term</td>
-<td style="text-align: right;">797</td>
+<td style="text-align: left;">verbs</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">518</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">100%</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">T3_INNY · term of another subject</td>
-<td style="text-align: right;">219</td>
+<td style="text-align: left;">adverbs</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">179</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50%</td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p>The general pool has 90 phrases for 306 multiword terms, so most multiword terms stay without a partner.</p>
+</div>
 </div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<div id="78cf60b3" class="cell" data-execution_count="37">
+<div id="2f51ad90" class="cell" data-execution_count="32">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -2848,13 +2130,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
-<div id="44ea5b4f" class="cell" data-execution_count="38">
+<div id="b9bab4f2" class="cell" data-execution_count="33">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Can be shown in a picture (model judgement)</th>
-<th style="text-align: right;">Terms</th>
+<th style="text-align: left;">Model judgement</th>
+<th style="text-align: right;">Subject terms</th>
 </tr>
 </thead>
 <tbody>
@@ -2877,201 +2159,23 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<section id="matching-the-general-pool-to-the-subject-pool" class="level3">
-<h3 class="anchored" data-anchor-id="matching-the-general-pool-to-the-subject-pool">Matching the general pool to the subject pool</h3>
-<div id="f7f3fa8b" class="cell" data-execution_count="39">
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: right;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Subject terms</td>
-<td style="text-align: right;">789</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… with a matched general item</td>
-<td style="text-align: right;">514</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Share matched</td>
-<td style="text-align: right;">65.1%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mean absolute difference in Zipf frequency within pairs</td>
-<td style="text-align: right;">0.238</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Mean absolute difference in letters within pairs</td>
-<td style="text-align: right;">0.089</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Balance: standardised mean difference between subject terms and general items, before matching (whole pools) and after (pairs only). Values near 0 mean the two groups do not differ on that feature.</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: right;">Before matching</th>
-<th style="text-align: right;">After matching</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Zipf frequency</td>
-<td style="text-align: right;">-1.158</td>
-<td style="text-align: right;">-0.334</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Length in letters</td>
-<td style="text-align: right;">0.818</td>
-<td style="text-align: right;">0.003</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Stratum</th>
-<th style="text-align: right;">Subject terms</th>
-<th style="text-align: right;">General items available</th>
-<th style="text-align: right;">Matched</th>
-<th style="text-align: right;">Share</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">nouns</td>
-<td style="text-align: right;">373</td>
-<td style="text-align: right;">1485</td>
-<td style="text-align: right;">335</td>
-<td style="text-align: right;">89.8%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">two-word phrases</td>
-<td style="text-align: right;">288</td>
-<td style="text-align: right;">90</td>
-<td style="text-align: right;">90</td>
-<td style="text-align: right;">31.2%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">adjectives</td>
-<td style="text-align: right;">96</td>
-<td style="text-align: right;">916</td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">79.2%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">phrases of three or more words</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.0%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">verbs</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">518</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">100.0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">adverbs</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">179</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">50.0%</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Subject terms are on average rarer in general Polish than everyday and school words, so not every term can have a partner within the calipers; unmatched terms stay in the pool with an empty <code>dopasowanie_ogolne</code>.</p>
-</section>
 </section>
 <section id="pseudowords" class="level2">
 <h2 class="anchored" data-anchor-id="pseudowords">7 · Pseudowords</h2>
-<div id="eb4ae032" class="cell" data-execution_count="41">
+<div id="314742ea" class="cell" data-execution_count="35">
 <div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Measure</th>
-<th style="text-align: left;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Templates (real nouns and verbs)</td>
-<td style="text-align: left;">240</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Candidates generated</td>
-<td style="text-align: left;">11 603</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rejected by the hard filters</td>
-<td style="text-align: left;">8685</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Distinct strings that passed</td>
-<td style="text-align: left;">2911</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rated by the model</td>
-<td style="text-align: left;">1232</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">… rated positively</td>
-<td style="text-align: left;">550</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Recommended list</td>
-<td style="text-align: left;">370</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Templates with at least one recommended pseudoword</td>
-<td style="text-align: left;">206</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Generating model</td>
-<td style="text-align: left;">opus-5-5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rating model</td>
-<td style="text-align: left;">fable-5-2</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Finding:</strong> 11 603 candidates → 2911 passed the filters → 550 of 1232 rated ones were rated positively → 370 recommended, for 206 of 240 templates. <code>llm</code> (Opus 5.5) supplies 239 of the recommended ones.</p>
 </div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">By generator</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Rejection reasons</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Templates against pseudowords</a></li></ul>
-<div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div id="9ada0e70" class="cell" data-execution_count="42">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 15%">
+<col style="width: 20%">
 <col style="width: 10%">
 </colgroup>
 <thead>
@@ -3083,8 +2187,6 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;">Rated</th>
 <th style="text-align: right;">Rated positively</th>
 <th style="text-align: right;">Pronounceability (1–5)</th>
-<th style="text-align: right;">Similarity to a word (0–3)</th>
-<th style="text-align: right;">OLD20</th>
 <th style="text-align: right;">Recommended</th>
 </tr>
 </thead>
@@ -3093,83 +2195,75 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"><code>wuggy_koncowka</code></td>
 <td style="text-align: right;">1856</td>
 <td style="text-align: right;">668</td>
-<td style="text-align: right;">36.0%</td>
+<td style="text-align: right;">36%</td>
 <td style="text-align: right;">298</td>
-<td style="text-align: right;">39.3%</td>
+<td style="text-align: right;">39%</td>
 <td style="text-align: right;">3.49</td>
-<td style="text-align: right;">0.899</td>
-<td style="text-align: right;">3.271</td>
 <td style="text-align: right;">74</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>wuggy</code></td>
 <td style="text-align: right;">2268</td>
 <td style="text-align: right;">318</td>
-<td style="text-align: right;">14.0%</td>
+<td style="text-align: right;">14%</td>
 <td style="text-align: right;">126</td>
-<td style="text-align: right;">25.4%</td>
+<td style="text-align: right;">25%</td>
 <td style="text-align: right;">3.246</td>
-<td style="text-align: right;">0.937</td>
-<td style="text-align: right;">3.349</td>
 <td style="text-align: right;">20</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>unipseudo</code></td>
 <td style="text-align: right;">2880</td>
 <td style="text-align: right;">307</td>
-<td style="text-align: right;">10.7%</td>
+<td style="text-align: right;">11%</td>
 <td style="text-align: right;">161</td>
-<td style="text-align: right;">36.0%</td>
+<td style="text-align: right;">36%</td>
 <td style="text-align: right;">3.882</td>
-<td style="text-align: right;">1.329</td>
-<td style="text-align: right;">3.108</td>
 <td style="text-align: right;">30</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>llm</code></td>
+<td style="text-align: left;"><code>llm</code> (Opus 5.5)</td>
 <td style="text-align: right;">2870</td>
 <td style="text-align: right;">1524</td>
-<td style="text-align: right;">53.3%</td>
+<td style="text-align: right;">53%</td>
 <td style="text-align: right;">603</td>
-<td style="text-align: right;">54.6%</td>
+<td style="text-align: right;">55%</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">1.015</td>
-<td style="text-align: right;">3.238</td>
 <td style="text-align: right;">239</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>imbir</code></td>
 <td style="text-align: right;">1729</td>
 <td style="text-align: right;">94</td>
-<td style="text-align: right;">5.4%</td>
+<td style="text-align: right;">5%</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">31.8%</td>
+<td style="text-align: right;">32%</td>
 <td style="text-align: right;">3.5</td>
-<td style="text-align: right;">1.068</td>
-<td style="text-align: right;">3.036</td>
 <td style="text-align: right;">7</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div id="5eea98f8" class="cell" data-execution_count="43">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Rejection reasons</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Do pseudowords look like the real words</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="d10bc554" class="cell" data-execution_count="36">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
+<col style="width: 47%">
+<col style="width: 6%">
+<col style="width: 15%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 6%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Reason (first filter failed)</th>
+<th style="text-align: left;">First filter failed</th>
 <th style="text-align: right;">All</th>
 <th style="text-align: right;"><code>wuggy_koncowka</code></th>
 <th style="text-align: right;"><code>wuggy</code></th>
@@ -3274,85 +2368,72 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<div id="11e33d18" class="cell" data-execution_count="44">
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="4c1507ac" class="cell" data-execution_count="37">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 30%">
+<col style="width: 24%">
+<col style="width: 25%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Feature</th>
-<th style="text-align: right;">Templates, mean</th>
-<th style="text-align: right;">Passed the filters, mean</th>
-<th style="text-align: right;">… standardised difference</th>
-<th style="text-align: right;">Recommended, mean</th>
-<th style="text-align: right;">… standardised difference</th>
+<th style="text-align: right;">Templates (real words), mean</th>
+<th style="text-align: right;">Recommended pseudowords, mean</th>
+<th style="text-align: right;">Standardised difference</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Length in letters</td>
 <td style="text-align: right;">7.392</td>
-<td style="text-align: right;">8.004</td>
-<td style="text-align: right;">0.322</td>
 <td style="text-align: right;">7.668</td>
 <td style="text-align: right;">0.145</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Syllables</td>
 <td style="text-align: right;">2.642</td>
-<td style="text-align: right;">2.879</td>
-<td style="text-align: right;">0.278</td>
 <td style="text-align: right;">2.773</td>
 <td style="text-align: right;">0.153</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Longest consonant run</td>
 <td style="text-align: right;">2.054</td>
-<td style="text-align: right;">2.104</td>
-<td style="text-align: right;">0.07</td>
 <td style="text-align: right;">2.062</td>
 <td style="text-align: right;">0.011</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Diacritic letters</td>
 <td style="text-align: right;">0.633</td>
-<td style="text-align: right;">0.504</td>
-<td style="text-align: right;">-0.181</td>
 <td style="text-align: right;">0.516</td>
 <td style="text-align: right;">-0.166</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">OLD20</td>
+<td style="text-align: left;">OLD20 (higher = fewer similar words)</td>
 <td style="text-align: right;">2.564</td>
-<td style="text-align: right;">3.237</td>
-<td style="text-align: right;">0.863</td>
 <td style="text-align: right;">2.913</td>
 <td style="text-align: right;">0.501</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Mean log bigram probability</td>
 <td style="text-align: right;">-2.453</td>
-<td style="text-align: right;">-2.482</td>
-<td style="text-align: right;">-0.139</td>
 <td style="text-align: right;">-2.444</td>
 <td style="text-align: right;">0.042</td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p>Values near 0 in the last column mean a pupil cannot tell words from pseudowords by that feature. Still different: OLD20 (0.501).</p>
 </div>
 </div>
 </div>
 </div>
-<p>The lists themselves are on the <a href="./pseudowords.html">Pseudowords</a> page.</p>
+</div>
+<p>The lists: <a href="./pseudowords.html">Pseudowords</a>.</p>
 
 
 </section>

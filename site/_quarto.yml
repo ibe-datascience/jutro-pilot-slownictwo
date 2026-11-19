@@ -13,6 +13,8 @@ website:
     left:
       - text: "Overview"
         href: index.qmd
+      - text: "Method"
+        href: method.qmd
       - text: "Results"
         href: results.qmd
       - text: "Data"
@@ -31,6 +33,8 @@ website:
         href: reproduce.qmd
       - text: "Resources"
         menu:
+          - text: "Pipeline in detail"
+            href: pipeline.qmd
           - text: "NLP tools"
             href: resources-tools.qmd
           - text: "Frequency lists"

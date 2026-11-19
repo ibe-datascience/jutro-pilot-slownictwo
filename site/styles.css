@@ -11,6 +11,16 @@ table.dataTable tfoot input { width: 100%; min-width: 3.5rem; font-weight: norma
 
 /* Static tables */
 main table.table { font-size: 0.9rem; width: auto; }
+main table.table th, main table.table td, main table.table a { overflow-wrap: normal; word-break: normal; }
+
+/* Pipeline at a glance (index) */
+ol.flow { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; list-style: none; margin: 1rem 0 1.25rem; padding: 0; font-size: 0.85rem; }
+ol.flow li { flex: 1 1 6.5rem; position: relative; border: 1.5px solid #2c3e50; border-radius: 6px; padding: 0.45rem 0.55rem; background: #fff; }
+ol.flow li:not(:last-child)::after { content: "\2192"; position: absolute; right: -1.3rem; top: 50%; transform: translateY(-50%);
+                                     color: #95a5a6; font-size: 1.2rem; line-height: 1; }
+ol.flow b, ol.flow span, ol.flow strong { display: block; }
+ol.flow span { color: #5d6d7e; font-size: 0.76rem; line-height: 1.25; min-height: 2.5em; }
+ol.flow strong { color: #0e7c66; font-variant-numeric: tabular-nums; }
 
 /* Pipeline diagram (site/_pipeline.py) */
 .pl { --pl-ink: #2c3e50; --pl-line: #95a5a6; font-size: 0.82rem; line-height: 1.35; margin: 1rem 0 1.25rem; }

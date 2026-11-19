@@ -35,6 +35,22 @@ def run_meta() -> dict[str, Any]:
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
+def config() -> dict[str, Any]:
+    import yaml
+
+    return yaml.safe_load((ROOT / "config" / f"{NAME}.yaml").read_text(encoding="utf-8"))
+
+
+def model(name: Any) -> str:
+    """claude-opus-5-5 → Opus 5.5"""
+    parts = str(name or "–").replace("claude-", "").split("-")
+    return f"{parts[0].title()} {'.'.join(parts[1:])}".strip()
+
+
+def pct(v: Any, nd: int = 0) -> str:
+    return f"{100 * v:.{nd}f}%" if isinstance(v, (int, float)) else "–"
+
+
 def csv(name: str) -> pd.DataFrame:
     return pd.read_csv(OUT / name)
 
@@ -67,9 +83,14 @@ def fmt(v: Any) -> str:
 def table_md(rows: Iterable[Iterable[Any]], headers: list[str], align: str | None = None) -> str:
     """Mała statyczna tabela jako tekst Markdown. `align`: po jednym znaku l/r/c na kolumnę."""
     align = align or "l" + "r" * (len(headers) - 1)
-    sep = {"l": ":---", "r": "---:", "c": ":---:"}
-    lines = ["| " + " | ".join(headers) + " |", "|" + "|".join(sep[a] for a in align) + "|"]
-    lines += ["| " + " | ".join(fmt(x) for x in r) + " |" for r in rows]
+    body = [[fmt(x) for x in r] for r in rows]
+    # Pandoc dzieli szerokość tabeli proporcjonalnie do długości kresek, gdy któryś wiersz jest długi:
+    # kreski odpowiadają więc długości treści kolumny (bez adresów odnośników), w granicach 6–60 znaków.
+    seen = lambda s: len(re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s))
+    width = [min(60, max(6, seen(h), *(seen(r[i]) for r in body if i < len(r)))) for i, h in enumerate(headers)]
+    sep = {"l": lambda n: ":" + "-" * n, "r": lambda n: "-" * n + ":", "c": lambda n: ":" + "-" * n + ":"}
+    lines = ["| " + " | ".join(headers) + " |", "|" + "|".join(sep[a](n) for a, n in zip(align, width)) + "|"]
+    lines += ["| " + " | ".join(r) + " |" for r in body]
     return "\n".join(lines)
 
 

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Pipeline in detail – JUTRO pilot</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6033a600180109c3731f6a886c29932c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">JUTRO pilot</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./results.html"> 
+<span class="menu-text">Results</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data">    
+        <li>
+    <a class="dropdown-item" href="./candidates.html">
+ <span class="dropdown-text">Candidates (all)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pools.html">
+ <span class="dropdown-text">Pools and concepts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pseudowords.html">
+ <span class="dropdown-text">Pseudowords</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./sheets.html">
+ <span class="dropdown-text">Annotation worksheets</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./raport-pl.html"> 
+<span class="menu-text">Raport (PL)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reproduce.html"> 
+<span class="menu-text">Reproduce</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Resources</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
+        <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources-tools.html">
+ <span class="dropdown-text">NLP tools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources-freq.html">
+ <span class="dropdown-text">Frequency lists</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./resources-pseudo.html">
+ <span class="dropdown-text">Pseudoword resources</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pipeline in detail</h1>
+<p class="subtitle lead">What every step reads, does and writes</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Reference page; the short version is on <a href="./method.html">Method</a>. Each row: inputs on the left, the step in the middle, outputs on the right. A number in a circle is the step that wrote the file. Green and dashed boxes link to the page that shows the file.</p>
+<div class="column-page-right">
+<div id="a9c00942" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="pl">
+<ul class="pl-legend" aria-label="Legend">
+  <li class="pl-chip pl-ext"><span class="pl-name">external data or tool</span><span class="pl-note">not in the repository</span></li>
+  <li class="pl-chip pl-mid"><span class="pl-src">n</span><span class="pl-name">intermediate file</span><span class="pl-note">data/&lt;name&gt;/&lt;run&gt;/, written by step n</span></li>
+  <li class="pl-chip pl-out"><span class="pl-name">result file</span><span class="pl-note">wyniki/&lt;name&gt;/&lt;run&gt;/, shown on this site</span></li>
+  <li class="pl-chip pl-met"><span class="pl-name">metrics file</span><span class="pl-note">source of the numbers on Results</span></li>
+</ul><div class="pl-row pl-colhead" aria-hidden="true"><div>reads</div><div>step: what happens</div><div>writes</div></div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 1 reads"><li class="pl-chip pl-ext"><span class="pl-name">ZPE dump</span><span class="pl-note">catalog.jsonl · subjects.json · materials/*.html · texts/*.txt</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">1</span><span class="pl-step-name">korpus</span>
+      <span class="pl-step-title">Build the corpus</span></div>
+    <ul class="pl-does"><li>Select catalogue entries of school stage E2: materials of the target subject (Biologia) and, as contrast, of all other subjects. Teacher-facing material types and foreign-language subjects are dropped.</li><li>With <code>--probka N</code>: draw N target and 6·N contrast materials (seeded).</li><li>Parse the HTML into typed segments: title, body, definition, exercise, caption, image description.</li><li>Remove sentences repeated across many materials (platform templates), interface instructions and licence or metadata lines.</li><li>Estimate the grade of each target material from topic keywords.</li><li>Collect glossary entries and the editors' pairs <i>inflected form → base form</i> as silver standards.</li></ul>
+    <div class="pl-mod">jutro/ s01_korpus.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 1 writes"><li class="pl-chip pl-mid"><span class="pl-name">korpus.jsonl</span><span class="pl-note">one material per row, typed segments</span></li><li class="pl-chip pl-mid"><span class="pl-name">srebrny_slowniczek.csv</span><span class="pl-note">glossary entries</span></li><li class="pl-chip pl-mid"><span class="pl-name">srebrny_pojecie_ref.csv</span><span class="pl-note">form → base form pairs</span></li><li class="pl-chip pl-mid"><span class="pl-name">szablony_usuniete.csv</span><span class="pl-note">removed sentences, with reason</span></li><li class="pl-chip pl-met"><a href="results.html#corpus"><span class="pl-name">metryki/opis_danych.json</span></a></li><li class="pl-chip pl-met"><a href="results.html#corpus"><span class="pl-name">metryki/dobor_materialow.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 2 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">srebrny_pojecie_ref.csv</span><span class="pl-note">reference lemmas</span></li><li class="pl-chip pl-ext"><span class="pl-name">spaCy pl_core_news_lg</span></li><li class="pl-chip pl-ext"><span class="pl-name">Morfeusz2 + SGJP dictionary</span></li><li class="pl-chip pl-ext"><span class="pl-name">Stanza, Polish models</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">LLM lemmatisers, provisional reference</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">2</span><span class="pl-step-name">tagowanie</span>
+      <span class="pl-step-title">Tag and lemmatise; compare tools</span></div>
+    <ul class="pl-does"><li>Whole corpus: spaCy tokenises and tags; for each token the Morfeusz2 reading that agrees with spaCy's part of speech, case, number and gender gives the lemma and inflectional class.</li><li>Target corpus again with Stanza, for comparison; speed test of the three tools on the same text.</li><li>Benchmark on 300 forms (150 rare terms, 100 multiword expressions, 50 others): spaCy and Stanza, each alone and with Morfeusz2, Morfeusz2 first reading, Haiku 5.5 and Sonnet 5.5.</li><li>Reference: the editors' base form where ZPE has one, otherwise a provisional answer from Opus 5.5; the sheet has columns for a human checker.</li></ul>
+    <div class="pl-mod">jutro/ s02_tagowanie.py · s02b_ocena_lematyzacji.py · morf.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 2 writes"><li class="pl-chip pl-mid"><span class="pl-name">tagi.parquet</span><span class="pl-note">token, lemma, class, case, number, gender; whole corpus</span></li><li class="pl-chip pl-mid"><span class="pl-name">tagi_stanza.parquet</span><span class="pl-note">target corpus, comparison only</span></li><li class="pl-chip pl-out"><a href="sheets.html"><span class="pl-name">ocena_lematyzacji_300.xlsx</span></a></li><li class="pl-chip pl-met"><a href="results.html#tagging"><span class="pl-name">metryki/tagowanie_czasy.json</span></a></li><li class="pl-chip pl-met"><a href="results.html#tagging"><span class="pl-name">metryki/ocena_41.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 3 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 2">2</span><span class="pl-name">tagi.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">subject and grade of each material</span></li><li class="pl-chip pl-ext"><span class="pl-name">KWJP100 frequency lists</span><span class="pl-note">lemmas and forms; used in published lists</span></li><li class="pl-chip pl-ext"><span class="pl-name">NKJP 1-grams, NKJP 1M lemmas</span></li><li class="pl-chip pl-ext"><span class="pl-name">wordfreq</span><span class="pl-note">Zipf frequency</span></li><li class="pl-chip pl-ext"><span class="pl-name">SUBTLEX-PL</span><span class="pl-note">CC BY-NC-SA: comparison metrics only</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">3</span><span class="pl-step-name">frekwencje</span>
+      <span class="pl-step-title">Count and attach general-Polish frequencies</span></div>
+    <ul class="pl-does"><li>For every lemma and every form: occurrences in target and in contrast, number of materials, of contrast subjects, of estimated grades.</li><li>Attach the frequency of the lemma or form in each general-Polish resource.</li><li>Measure coverage of the biology vocabulary by each resource, rank correlations between resources, and how much the choice of resource changes a top-300 keyness list.</li></ul>
+    <div class="pl-mod">jutro/ s03_frekwencje.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 3 writes"><li class="pl-chip pl-mid"><span class="pl-name">frekwencje_lemat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-name">frekwencje_forma.parquet</span></li><li class="pl-chip pl-met"><a href="results.html#frequency"><span class="pl-name">metryki/frekwencje_43.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 4 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 2">2</span><span class="pl-name">tagi.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 3">3</span><span class="pl-name">frekwencje_lemat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">texts for TermoPL, material metadata</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">srebrny_*.csv</span><span class="pl-note">for precision@K</span></li><li class="pl-chip pl-ext"><span class="pl-name">TermoPL 8.1.1 (Java)</span><span class="pl-note">its input is tagged by Stanza and checked against Morfeusz2</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">4</span><span class="pl-step-name">kandydaci</span>
+      <span class="pl-step-title">Extract and score candidates</span></div>
+    <ul class="pl-does"><li>Single-word candidates: lemmas of content words known to Morfeusz2; lemmas tagged mostly as proper names are dropped.</li><li>Multiword candidates: noun phrases of 2–4 words found within a sentence by syntactic patterns (agreeing adjectives, genitive modifiers), rebuilt in the nominative; phrases built on pronouns, determiners and instruction words are skipped.</li><li>Subject candidates: at least 3 occurrences in at least 2 target materials, or at least 5 in a single one. General candidates: words spread over at least 3 other subjects.</li><li>Score every candidate with every method, using the true corpus sizes: log-likelihood and log ratio against the contrast corpus; log-likelihood, log ratio and Simple Maths against KWJP100; TF-IDF across subjects; PMI and logDice of the weakest adjacent pair for phrases; TermoPL C-value; reciprocal-rank fusion of the rankings.</li><li>Compare each ranking with the silver standards (precision and recall at K, against a random baseline) and count how many silver entries are reachable at all.</li><li>Keep up to three real sentences per candidate, from different materials, for the models and the annotators.</li></ul>
+    <div class="pl-mod">jutro/ s04_kandydaci.py · frazy.py · morf.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 4 writes"><li class="pl-chip pl-mid"><span class="pl-name">kandydaci_stat.parquet</span><span class="pl-note">one candidate per row; scores and ranks of all methods</span></li><li class="pl-chip pl-mid"><span class="pl-name">kandydaci_konteksty.parquet</span><span class="pl-note">sentences</span></li><li class="pl-chip pl-mid"><span class="pl-name">termopl_terms.tsv</span></li><li class="pl-chip pl-met"><a href="results.html#extraction"><span class="pl-name">metryki/ekstrakcja_42.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 5 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_konteksty.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 1">1</span><span class="pl-name">korpus.jsonl</span><span class="pl-note">texts for direct extraction</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Batch API, prompt caching, JSON-schema output</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">5</span><span class="pl-step-name">llm</span>
+      <span class="pl-step-title">Classify candidates with language models</span></div>
+    <ul class="pl-does"><li>Send all subject candidates (up to 4000) and a sample of 1500 general candidates stratified by general frequency and number of words.</li><li>Prompt per candidate: the form, its counts in biology and in the other subjects, and up to three sentences. The rule-based pre-label is not shown.</li><li>Sonnet 5.5 and Opus 5.5 independently return a category (T3 biology term, T3_INNY term of another subject, T2 school vocabulary, T1 everyday word, SZUM not usable), the kind of noise, a corrected base form, imageability, confidence and a one-sentence reason.</li><li>Where the two labels differ or either confidence is low, Fable 5.2 labels the candidate too; the majority of the three decides, and cases without a majority are marked for review.</li><li>Fable 5.2 groups all T3 terms into concepts in a single request.</li><li>Separately, Opus 5.5 lists terms directly from 30 materials, as a check on what step 4 missed.</li><li>The cost of each batch is estimated before it is sent; the run stops rather than pass the limit of 100 USD. An interrupted batch is collected on the next run, not sent again.</li></ul>
+    <div class="pl-mod">jutro/ s05_llm.py · llm.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 5 writes"><li class="pl-chip pl-mid"><span class="pl-name">llm_klasyfikacja.parquet</span><span class="pl-note">labels of each model and the final label</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm_pojecia.json</span><span class="pl-note">concept groups</span></li><li class="pl-chip pl-mid"><span class="pl-name">llm_ekstrakcja.jsonl</span></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">terminy_llm_spoza_kandydatow.csv</span></a></li><li class="pl-chip pl-mid"><span class="pl-name">llm/</span><span class="pl-note">cached answers, cost ledger</span></li><li class="pl-chip pl-met"><a href="results.html#llm"><span class="pl-name">metryki/llm_5.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 6 reads"><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_stat.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 5">5</span><span class="pl-name">llm_klasyfikacja.parquet</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 5">5</span><span class="pl-name">llm_pojecia.json</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 4">4</span><span class="pl-name">kandydaci_konteksty.parquet</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">6</span><span class="pl-step-name">pule</span>
+      <span class="pl-step-title">Build the pools and the annotation worksheet</span></div>
+    <ul class="pl-does"><li>Join statistics with the final labels. Only labelled candidates enter the pools: T3 the subject pool, T1 and T2 the general pool.</li><li>A corrected base form replaces the extracted one in <code>forma_podstawowa</code> if it keeps the number of words; if two rows then name the same item, the more frequent one is kept.</li><li>Match each subject term to one general item of the same part of speech and number of words, closest in Zipf frequency and length in letters: optimal assignment without reuse, within calipers.</li><li>Report balance of frequency and length before and after matching.</li><li>Attach the concept of each subject term.</li><li>Draw 400 candidates stratified by final label and by whether the case was adjudicated into a worksheet for two human annotators, with sentences and without model labels; keep the key and the sampling weights aside. If a filled-in worksheet is present, score the labels against it.</li></ul>
+    <div class="pl-mod">jutro/ s06_pule.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 6 writes"><li class="pl-chip pl-out"><a href="candidates.html"><span class="pl-name">kandydaci.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_przedmiotowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a></li><li class="pl-chip pl-out"><a href="pools.html"><span class="pl-name">pojecia.csv</span></a></li><li class="pl-chip pl-out"><a href="sheets.html"><span class="pl-name">zloty_zbior_do_oznaczenia.xlsx</span></a></li><li class="pl-chip pl-mid"><span class="pl-name">zloty_zbior_klucz.csv</span><span class="pl-note">labels and weights</span></li><li class="pl-chip pl-met"><a href="results.html#pools"><span class="pl-name">metryki/pule_6.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 7 reads"><li class="pl-chip pl-out"><span class="pl-src" title="written by step 6">6</span><a href="pools.html"><span class="pl-name">pula_ogolna.csv</span></a><span class="pl-note">templates</span></li><li class="pl-chip pl-out"><span class="pl-src" title="written by step 6">6</span><a href="pools.html"><span class="pl-name">pula_przedmiotowa.csv</span></a><span class="pl-note">templates</span></li><li class="pl-chip pl-mid"><span class="pl-src" title="written by step 3">3</span><span class="pl-name">frekwencje_forma.parquet</span><span class="pl-note">forms of the corpus</span></li><li class="pl-chip pl-ext"><span class="pl-name">KWJP100 lemma and form lists</span><span class="pl-note">reference lexicon</span></li><li class="pl-chip pl-ext"><span class="pl-name">Wuggy + Polish plugin</span></li><li class="pl-chip pl-ext"><span class="pl-name">UniPseudo + WorldLex-Polish</span></li><li class="pl-chip pl-ext"><span class="pl-name">Imbir et al. (2015) list</span></li><li class="pl-chip pl-ext"><span class="pl-name">Claude API</span><span class="pl-note">Opus 5.5 generates, Fable 5.2 rates</span></li><li class="pl-chip pl-ext"><span class="pl-name">Morfeusz2, wordfreq</span><span class="pl-note">existing words; Ukrainian and Russian word lists</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">7</span><span class="pl-step-name">pseudoslowa</span>
+      <span class="pl-step-title">Generate, filter and rate pseudowords</span></div>
+    <ul class="pl-does"><li>Templates: 240 real nouns and verbs in base form, 35% from the subject pool and the rest from the general pool.</li><li>Up to 12 candidates per template from each generator: Wuggy keeping the template's ending, Wuggy with a free ending, UniPseudo, a language model, and the Imbir list.</li><li>Reference lexicon: KWJP100 lemmas known to Morfeusz2, with counts of letter trigrams, onsets, codas and clusters.</li><li>Hard filters, each rejection with its reason: existing word; length, syllables or ending unlike the template; rare letter pattern; one edit from a frequent word; homophone of a word; existing stem with an affix or a compound; vulgar association; Ukrainian or Russian word in Polish spelling.</li><li>Measure what passes: OLD20 and neighbours over the whole lexicon, bigram probability, the same for the templates.</li><li>The model rates up to 6 per template for pronounceability, associations and foreign or inappropriate readings; the best 2 rated positively are recommended.</li><li>Compare the distributions of templates and pseudowords (standardised differences).</li></ul>
+    <div class="pl-mod">jutro/ s07_pseudoslowa.py · pseudo.py · morf.py</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 7 writes"><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_odrzucone.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_szablony.csv</span></a></li><li class="pl-chip pl-out"><a href="pseudowords.html"><span class="pl-name">pseudoslowa_rozklady.csv</span></a></li><li class="pl-chip pl-met"><a href="results.html#pseudowords"><span class="pl-name">metryki/pseudoslowa_7.json</span></a></li></ul>
+</div>
+<div class="pl-row">
+  <ul class="pl-io pl-reads" aria-label="Step 8 reads"><li class="pl-chip pl-met"><a href="reproduce.html#raw-metrics-files"><span class="pl-name">metryki/*.json</span></a><span class="pl-note">of steps 1–7</span></li><li class="pl-chip pl-out"><span class="pl-name">all files in wyniki/</span></li><li class="pl-chip pl-ext"><span class="pl-name">Quarto</span></li></ul>
+  <div class="pl-step">
+    <div class="pl-step-head"><span class="pl-num">8</span><span class="pl-step-name">raport</span>
+      <span class="pl-step-title">Report</span></div>
+    <ul class="pl-does"><li>Write the detailed report in Polish from the saved metrics.</li><li>Render this site: the pages read the metrics and result files directly, so no number is typed by hand.</li></ul>
+    <div class="pl-mod">jutro/ s08_raport.py · site/*.qmd</div>
+  </div>
+  <ul class="pl-io pl-writes" aria-label="Step 8 writes"><li class="pl-chip pl-out"><a href="raport-pl.html"><span class="pl-name">raport.md</span></a></li><li class="pl-chip pl-out"><a href="index.html"><span class="pl-name">docs/</span></a><span class="pl-note">this site</span></li></ul>
+</div></div>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>IBE PIB · JUTRO pilot · candidate lists, not expert-validated</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

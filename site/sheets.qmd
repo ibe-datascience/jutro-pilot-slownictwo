@@ -1,6 +1,6 @@
 ---
 title: "Annotation worksheets"
-subtitle: "The two spreadsheets that wait for human judgement"
+subtitle: "Two spreadsheets for human judgement"
 page-layout: full
 toc: false
 ---
@@ -16,22 +16,28 @@ n = lambda v: L.fmt(int(v))
 filled = lambda s: int(s.notna().sum())
 ```
 
-Both files are meant to be downloaded, filled in and returned. They are shown here so that their content can be
-inspected without opening Excel.
+```{python}
+L.table([
+    ("Gold set", "are the model labels (T1, T2, T3 …) right?",
+     f"{n(len(gold))} candidates with sentences, no model labels shown; two annotators",
+     f"A {n(filled(gold['kategoria_oceniajacy_A']))}, B {n(filled(gold['kategoria_oceniajacy_B']))} of {n(len(gold))}",
+     "`zloty_zbior_oznaczony.xlsx`, then re-run step 6"),
+    ("Lemmatisation", "which tool gives the right base form?",
+     f"{n(len(lem))} inflected forms in context with the answer of every tool",
+     f"{n(filled(lem['lemat_poprawny_czlowiek']))} of {n(len(lem))}",
+     "`ocena_lematyzacji_300_sprawdzone.xlsx`, then re-run step 2"),
+], ["Worksheet", "Question", "Content", "Filled in", "Save as"], "lllll")
+```
+
+Download a file, fill it in, save it under the given name next to the original. The pipeline then reports accuracy
+against it.
 
 ::: {.panel-tabset}
 
-## Gold-set worksheet
+## Gold set
 
-`{python} n(len(gold))` candidates, drawn in equal numbers from each final label and, within a label, half from
-the cases the models agreed on and half from the adjudicated ones, then shuffled. Each row shows the candidate, its
-counts and up to three sentences from the corpus. The sheet deliberately carries **no model labels**, so that two
-annotators can label independently; the key with the labels and the sampling weights stays outside the published
-files. The second tab of the file holds the instructions (in Polish) with the definitions of T3, T3_INNY, T2, T1 and
-SZUM. Filled in so far: annotator A `{python} n(filled(gold["kategoria_oceniajacy_A"]))`, annotator B
-`{python} n(filled(gold["kategoria_oceniajacy_B"]))` of `{python} n(len(gold))`. Once the file is saved as
-`zloty_zbior_oznaczony.xlsx` next to the original, step 6 reports agreement between the annotators and weighted
-precision, recall and F1 of the final labels.
+Equal numbers per final label, half from cases the models agreed on and half from adjudicated ones, shuffled.
+Definitions of the labels are in the second tab of the file (in Polish).
 
 ```{python}
 L.source("zloty_zbior_do_oznaczenia.xlsx")
@@ -39,12 +45,9 @@ L.glossary(gold.columns)
 L.dt(gold, page=25, wrap=["zdanie_1", "zdanie_2", "zdanie_3"])
 ```
 
-## Lemmatisation sheet (300 forms)
+## Lemmatisation (300 forms)
 
-`{python} n(len(lem))` inflected forms with their sentence, the reference base form, and the answer of every tool.
-Columns `lemat_poprawny_czlowiek` and `pos_poprawny_czlowiek` are for the human checker
-(`{python} n(filled(lem["lemat_poprawny_czlowiek"]))` filled in so far). Once the sheet is saved as
-`ocena_lematyzacji_300_sprawdzone.xlsx` next to the original, step 2 recomputes the benchmark against those answers.
+Fill in `lemat_poprawny_czlowiek` and `pos_poprawny_czlowiek`.
 
 ```{python}
 L.source("ocena_lematyzacji_300.xlsx")

@@ -100,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./results.html"> 
 <span class="menu-text">Results</span></a>
   </li>  
@@ -140,6 +144,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
         <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./resources-tools.html">
  <span class="dropdown-text">NLP tools</span></a>
   </li>  
@@ -172,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Pseudowords</h1>
-<p class="subtitle lead">Non-words for the LexTALE-style test: how they were made, filtered, rated and chosen</p>
+<p class="subtitle lead">Non-words for the word-recognition test</p>
 </div>
 
 
@@ -189,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="cf8efb45" class="cell" data-execution_count="1">
+<div id="54d7a2f3" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
@@ -197,58 +205,19 @@ ul.task-list li input[type="checkbox"] {
 </script>
 </div>
 </div>
-<p>A pseudoword for a lexical-decision test must look and sound like a possible Polish word, must not exist, and must not give itself away by its length, its ending or an odd letter pattern. This page shows what the pipeline produced: 370 recommended pseudowords for 206 of 240 templates, the 2911 strings that passed the filters, and the 8685 rejected candidates with the reason for each. Nothing here has been judged by people yet.</p>
-<p><strong>Templates</strong> are real nouns and verbs in their base form, drawn from the two pools (156 from the general pool, 84 from the subject pool), so that pseudowords resemble the real items of the test in length and shape.</p>
-<p><strong>Generators.</strong> Five sources are compared; none replaces another.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Generator</th>
-<th style="text-align: left;">How it works</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>wuggy_koncowka</code></td>
-<td style="text-align: left;">Wuggy (Polish orthographic module): same sub-syllabic segment lengths as the template, two thirds of the segments shared, similar transition frequencies; only strings that keep the template’s final rime (the approach of Dołżycka et al.&nbsp;2022)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>wuggy</code></td>
-<td style="text-align: left;">the same search, strings with a different ending</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>unipseudo</code></td>
-<td style="text-align: left;">UniPseudo letter-trigram chain built from WorldLex-Polish nouns or verbs of the same length; generated independently, then paired with a template</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>llm</code></td>
-<td style="text-align: left;">opus-5-5, given the template and the requirements</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>imbir</code></td>
-<td style="text-align: left;">ready-made list of Imbir et al.&nbsp;(2015), items accepted by at least four of five judges, paired by length</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Hard filters</strong> reject a candidate if it exists (Morfeusz2, KWJP100, WorldLex, wordfreq, the corpus); if its length, syllable count or ending differs from the template; if it contains a letter trigram, an onset, a coda or a cluster found in fewer than 5 of the 64 293 lemmas of the reference lexicon; if it is one edit away from a frequent word (Zipf ≥ 3); if it sounds like an existing word; if it is an existing stem with a productive prefix or suffix, or two words joined; if it has a vulgar association; or if it sounds like one of 54 295 frequent Ukrainian and Russian words written in Polish spelling.</p>
-<p><strong>Rating and choice.</strong> For each template the pseudowords closest to it in OLD20 and bigram probability were rated by fable-5-2: pronounceability (1–5), the real word it brings to mind and how strongly (0–3), whether it exists, whether it is a foreign word, whether it is inappropriate. A pseudoword is recommended (<code>wybrane</code>) if pronounceability is at least 4, similarity at most 1, and no flag is raised. The model rating stands in for human judges at the selection stage only.</p>
-<div id="be4984ed" class="cell" data-execution_count="2">
+<p>11 603 candidates from five generators → 2911 passed the filters → 370 recommended, for 206 of 240 template words. Generators, filters and rating: <a href="./method.html#pseudowords">Method</a>. Ratings come from Fable 5.2, not from people.</p>
+<div id="407296fa" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 16%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 10%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -257,9 +226,8 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;">Passed the filters</th>
 <th style="text-align: right;">… share</th>
 <th style="text-align: right;">Rated</th>
-<th style="text-align: right;">Rated positively, share</th>
-<th style="text-align: right;">Mean pronounceability (1–5)</th>
-<th style="text-align: right;">Mean similarity to a word (0–3)</th>
+<th style="text-align: right;">Rated positively</th>
+<th style="text-align: right;">Pronounceability (1–5)</th>
 <th style="text-align: right;">Recommended</th>
 </tr>
 </thead>
@@ -268,68 +236,61 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"><code>wuggy_koncowka</code></td>
 <td style="text-align: right;">1856</td>
 <td style="text-align: right;">668</td>
-<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">36%</td>
 <td style="text-align: right;">298</td>
-<td style="text-align: right;">0.393</td>
+<td style="text-align: right;">39%</td>
 <td style="text-align: right;">3.49</td>
-<td style="text-align: right;">0.899</td>
 <td style="text-align: right;">74</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>wuggy</code></td>
 <td style="text-align: right;">2268</td>
 <td style="text-align: right;">318</td>
-<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">14%</td>
 <td style="text-align: right;">126</td>
-<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">25%</td>
 <td style="text-align: right;">3.246</td>
-<td style="text-align: right;">0.937</td>
 <td style="text-align: right;">20</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>unipseudo</code></td>
 <td style="text-align: right;">2880</td>
 <td style="text-align: right;">307</td>
-<td style="text-align: right;">0.107</td>
+<td style="text-align: right;">11%</td>
 <td style="text-align: right;">161</td>
-<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">36%</td>
 <td style="text-align: right;">3.882</td>
-<td style="text-align: right;">1.329</td>
 <td style="text-align: right;">30</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>llm</code></td>
 <td style="text-align: right;">2870</td>
 <td style="text-align: right;">1524</td>
-<td style="text-align: right;">0.533</td>
+<td style="text-align: right;">53%</td>
 <td style="text-align: right;">603</td>
-<td style="text-align: right;">0.546</td>
+<td style="text-align: right;">55%</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">1.015</td>
 <td style="text-align: right;">239</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>imbir</code></td>
 <td style="text-align: right;">1729</td>
 <td style="text-align: right;">94</td>
-<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">5%</td>
 <td style="text-align: right;">44</td>
-<td style="text-align: right;">0.318</td>
+<td style="text-align: right;">32%</td>
 <td style="text-align: right;">3.5</td>
-<td style="text-align: right;">1.068</td>
 <td style="text-align: right;">7</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>A string produced by several generators is listed once, under the first of them in the order of the table above; <code>metody_wszystkie</code> names all of them.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Recommended</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">All that passed the filters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Rejected</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Templates against pseudowords</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Recommended</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">All that passed the filters</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Rejected</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Compared with real words</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>370 pseudowords, up to 2 per template.</p>
-<div id="756ad26a" class="cell" data-execution_count="3">
+<div id="a6a392a5" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pseudoslowa.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pseudoslowa.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pseudoslowa.csv">download</a>).</p>
 </div>
@@ -438,7 +399,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_d51129b5_8c2f_421d_95ce_0592a9be7aed" hidden="hidden">
+<table id="itables_a7be8347_e3f7_4483_b632_8be46252582c" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -504,7 +465,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_d51129b5_8c2f_421d_95ce_0592a9be7aed_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_a7be8347_e3f7_4483_b632_8be46252582c_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>szablon</th>
       <th style="border:1px solid #ddd;padding:8px">pseudoslowo</th>
       <th style="border:1px solid #ddd;padding:8px">metoda</th>
@@ -574,12 +535,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">eksperyment</td><td style="border:1px solid #ddd;padding:8px">supertament</td><td style="border:1px solid #ddd;padding:8px">unipseudo</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">ogolna</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">testament</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">3.65</td><td style="border:1px solid #ddd;padding:8px">4.40</td><td style="border:1px solid #ddd;padding:8px">-2.555</td><td style="border:1px solid #ddd;padding:8px">-2.592</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">11</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">eksperyment::supertament</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">erytrocyt</td><td style="border:1px solid #ddd;padding:8px">wyrelotek</td><td style="border:1px solid #ddd;padding:8px">unipseudo</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">przedmiotowa</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">wylotek</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">3.75</td><td style="border:1px solid #ddd;padding:8px">4.90</td><td style="border:1px solid #ddd;padding:8px">-2.436</td><td style="border:1px solid #ddd;padding:8px">-2.516</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">erytrocyt::wyrelotek</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">gardziel</td><td style="border:1px solid #ddd;padding:8px">lorpiel</td><td style="border:1px solid #ddd;padding:8px">llm</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">przedmiotowa</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">kąpiel</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">2.85</td><td style="border:1px solid #ddd;padding:8px">2.80</td><td style="border:1px solid #ddd;padding:8px">-2.579</td><td style="border:1px solid #ddd;padding:8px">-2.517</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">gardziel::lorpiel</td></tr>
-</tbody><tfoot><tr><td colspan="18" style="border:none;padding:8px;text-align:center">(320 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_d51129b5_8c2f_421d_95ce_0592a9be7aed")?.removeAttribute("hidden");document.getElementById("itables_d51129b5_8c2f_421d_95ce_0592a9be7aed_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="18" style="border:none;padding:8px;text-align:center">(320 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_a7be8347_e3f7_4483_b632_8be46252582c")?.removeAttribute("hidden");document.getElementById("itables_a7be8347_e3f7_4483_b632_8be46252582c_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d51129b5_8c2f_421d_95ce_0592a9be7aed:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_a7be8347_e3f7_4483_b632_8be46252582c:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -605,7 +566,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div id="5206d91f" class="cell" data-execution_count="4">
+<div id="803e5cc3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="Column glossary">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
@@ -799,7 +760,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_b4855c6f_76be_4705_8bd6_bacb1d7279ee" hidden="hidden">
+<table id="itables_0737ae87_a043_4f7f_ba5e_8acd6da23754" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -865,7 +826,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_b4855c6f_76be_4705_8bd6_bacb1d7279ee_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_0737ae87_a043_4f7f_ba5e_8acd6da23754_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>szablon</th>
       <th style="border:1px solid #ddd;padding:8px">pseudoslowo</th>
       <th style="border:1px solid #ddd;padding:8px">metoda</th>
@@ -957,12 +918,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">antybiotyk</td><td style="border:1px solid #ddd;padding:8px">askozolizm</td><td style="border:1px solid #ddd;padding:8px">imbir</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">przedmiotowa</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">dopasowane</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0.212</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">alkoholizm</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">imbir</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">4.55</td><td style="border:1px solid #ddd;padding:8px">4.45</td><td style="border:1px solid #ddd;padding:8px">-2.468</td><td style="border:1px solid #ddd;padding:8px">-2.483</td><td style="border:1px solid #ddd;padding:8px">41</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">alkoholizm</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">antybiotyk::askozolizm</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">antybiotyk</td><td style="border:1px solid #ddd;padding:8px">pudranetyk</td><td style="border:1px solid #ddd;padding:8px">llm</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">przedmiotowa</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">pochodne</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">0.419</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">puder</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">llm</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">4.75</td><td style="border:1px solid #ddd;padding:8px">4.45</td><td style="border:1px solid #ddd;padding:8px">-2.490</td><td style="border:1px solid #ddd;padding:8px">-2.483</td><td style="border:1px solid #ddd;padding:8px">19</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">antybiotyk::pudranetyk</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">antybiotyk</td><td style="border:1px solid #ddd;padding:8px">ormelostyk</td><td style="border:1px solid #ddd;padding:8px">llm</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">przedmiotowa</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">pochodne</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">0.808</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">llm</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">2</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">4.95</td><td style="border:1px solid #ddd;padding:8px">4.45</td><td style="border:1px solid #ddd;padding:8px">-2.452</td><td style="border:1px solid #ddd;padding:8px">-2.483</td><td style="border:1px solid #ddd;padding:8px">44</td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">antybiotyk::ormelostyk</td></tr>
-</tbody><tfoot><tr><td colspan="40" style="border:none;padding:8px;text-align:center">(2,861 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_b4855c6f_76be_4705_8bd6_bacb1d7279ee")?.removeAttribute("hidden");document.getElementById("itables_b4855c6f_76be_4705_8bd6_bacb1d7279ee_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="40" style="border:none;padding:8px;text-align:center">(2,861 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_0737ae87_a043_4f7f_ba5e_8acd6da23754")?.removeAttribute("hidden");document.getElementById("itables_0737ae87_a043_4f7f_ba5e_8acd6da23754_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_b4855c6f_76be_4705_8bd6_bacb1d7279ee:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_0737ae87_a043_4f7f_ba5e_8acd6da23754:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -988,24 +949,24 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div id="a9872aea" class="cell" data-execution_count="5">
+<div id="0c15705e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pseudoslowa_odrzucone.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pseudoslowa_odrzucone.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pseudoslowa_odrzucone.csv">download</a>).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
+<col style="width: 53%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 13%">
+<col style="width: 6%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Reason</th>
+<th style="text-align: left;">First filter failed</th>
 <th style="text-align: right;">imbir</th>
 <th style="text-align: right;">llm</th>
 <th style="text-align: right;">unipseudo</th>
@@ -1109,7 +1070,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
-<p>A candidate is counted under the first filter it fails. <code>wuggy</code> and <code>unipseudo</code> do not aim at the template’s ending, so most of their candidates fail the shape filter by design.</p>
+<p><code>wuggy</code>, <code>unipseudo</code> and <code>imbir</code> do not aim at the template’s ending, so most of their candidates fail the shape filter.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="Column glossary">
@@ -1176,7 +1137,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_3fffc807_1ccb_4077_b526_e40ec9ca6bc2" hidden="hidden">
+<table id="itables_d98fbe7f_0bc2_4c20_b1ca_ed61db681518" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -1242,7 +1203,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_3fffc807_1ccb_4077_b526_e40ec9ca6bc2_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_d98fbe7f_0bc2_4c20_b1ca_ed61db681518_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>szablon</th>
       <th style="border:1px solid #ddd;padding:8px">pseudoslowo</th>
       <th style="border:1px solid #ddd;padding:8px">metoda</th>
@@ -1302,12 +1263,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">grać</td><td style="border:1px solid #ddd;padding:8px">krać</td><td style="border:1px solid #ddd;padding:8px">wuggy_koncowka</td><td style="border:1px solid #ddd;padding:8px">istniejace_slowo</td><td style="border:1px solid #ddd;padding:8px">znane_morfeusz</td><td style="border:1px solid #ddd;padding:8px">czasownik</td><td style="border:1px solid #ddd;padding:8px">ogolna</td><td style="border:1px solid #ddd;padding:8px">4</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">grać</td><td style="border:1px solid #ddd;padding:8px">szać</td><td style="border:1px solid #ddd;padding:8px">wuggy_koncowka</td><td style="border:1px solid #ddd;padding:8px">literowka_czestego_slowa</td><td style="border:1px solid #ddd;padding:8px">siać</td><td style="border:1px solid #ddd;padding:8px">czasownik</td><td style="border:1px solid #ddd;padding:8px">ogolna</td><td style="border:1px solid #ddd;padding:8px">4</td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">grać</td><td style="border:1px solid #ddd;padding:8px">plać</td><td style="border:1px solid #ddd;padding:8px">wuggy_koncowka</td><td style="border:1px solid #ddd;padding:8px">literowka_czestego_slowa</td><td style="border:1px solid #ddd;padding:8px">lać</td><td style="border:1px solid #ddd;padding:8px">czasownik</td><td style="border:1px solid #ddd;padding:8px">ogolna</td><td style="border:1px solid #ddd;padding:8px">4</td></tr>
-</tbody><tfoot><tr><td colspan="8" style="border:none;padding:8px;text-align:center">(8,635 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_3fffc807_1ccb_4077_b526_e40ec9ca6bc2")?.removeAttribute("hidden");document.getElementById("itables_3fffc807_1ccb_4077_b526_e40ec9ca6bc2_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="8" style="border:none;padding:8px;text-align:center">(8,635 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_d98fbe7f_0bc2_4c20_b1ca_ed61db681518")?.removeAttribute("hidden");document.getElementById("itables_d98fbe7f_0bc2_4c20_b1ca_ed61db681518_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_3fffc807_1ccb_4077_b526_e40ec9ca6bc2:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_d98fbe7f_0bc2_4c20_b1ca_ed61db681518:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -1332,20 +1293,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<p>Mean and standard deviation of six features for the templates, for all pseudowords that passed the filters and for the recommended list. The last column is the standardised mean difference from the templates; values near 0 mean that a pupil cannot tell words from pseudowords by that feature alone.</p>
-<div id="fa8908e9" class="cell" data-execution_count="6">
+<p>Values near 0 in the last column mean a pupil cannot tell words from pseudowords by that feature.</p>
+<div id="384deeaa" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>pseudoslowa_rozklady.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/pseudoslowa_rozklady.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/pseudoslowa_rozklady.csv">download</a>).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 25%">
+<col style="width: 20%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 35%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1360,7 +1321,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">mean log bigram probability</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">-2.453</td>
 <td style="text-align: right;">0.23</td>
@@ -1384,7 +1345,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">diacritic letters</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">0.633</td>
 <td style="text-align: right;">0.754</td>
@@ -1408,7 +1369,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">length in letters</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">7.392</td>
 <td style="text-align: right;">2.089</td>
@@ -1432,7 +1393,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">OLD20</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">2.564</td>
 <td style="text-align: right;">0.769</td>
@@ -1456,7 +1417,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;">syllables</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">2.642</td>
 <td style="text-align: right;">0.899</td>
@@ -1480,7 +1441,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td style="text-align: left;">longest consonant run</td>
-<td style="text-align: left;">templates</td>
+<td style="text-align: left;">templates (real words)</td>
 <td style="text-align: right;">240</td>
 <td style="text-align: right;">2.054</td>
 <td style="text-align: right;">0.733</td>
@@ -1501,87 +1462,6 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">2.104</td>
 <td style="text-align: right;">0.693</td>
 <td style="text-align: right;">0.07</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<p>Means by generator, all strings that passed the filters:</p>
-</div>
-<div class="cell-output cell-output-display cell-output-markdown">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 12%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">metoda</th>
-<th style="text-align: right;">dlugosc</th>
-<th style="text-align: right;">syl</th>
-<th style="text-align: right;">zbitka</th>
-<th style="text-align: right;">diakryty</th>
-<th style="text-align: right;">old20</th>
-<th style="text-align: right;">bigram_lp</th>
-<th style="text-align: right;">n_sasiadow_1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">imbir</td>
-<td style="text-align: right;">7.5</td>
-<td style="text-align: right;">2.83</td>
-<td style="text-align: right;">1.904</td>
-<td style="text-align: right;">0.234</td>
-<td style="text-align: right;">3.036</td>
-<td style="text-align: right;">-2.47</td>
-<td style="text-align: right;">0.223</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">llm</td>
-<td style="text-align: right;">8.077</td>
-<td style="text-align: right;">2.942</td>
-<td style="text-align: right;">2.092</td>
-<td style="text-align: right;">0.535</td>
-<td style="text-align: right;">3.238</td>
-<td style="text-align: right;">-2.48</td>
-<td style="text-align: right;">0.106</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">unipseudo</td>
-<td style="text-align: right;">8.195</td>
-<td style="text-align: right;">3.003</td>
-<td style="text-align: right;">2.013</td>
-<td style="text-align: right;">0.531</td>
-<td style="text-align: right;">3.108</td>
-<td style="text-align: right;">-2.455</td>
-<td style="text-align: right;">0.358</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">wuggy</td>
-<td style="text-align: right;">7.72</td>
-<td style="text-align: right;">2.588</td>
-<td style="text-align: right;">2.05</td>
-<td style="text-align: right;">0.494</td>
-<td style="text-align: right;">3.349</td>
-<td style="text-align: right;">-2.56</td>
-<td style="text-align: right;">0.075</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">wuggy_koncowka</td>
-<td style="text-align: right;">7.955</td>
-<td style="text-align: right;">2.826</td>
-<td style="text-align: right;">2.226</td>
-<td style="text-align: right;">0.461</td>
-<td style="text-align: right;">3.271</td>
-<td style="text-align: right;">-2.462</td>
-<td style="text-align: right;">0.088</td>
 </tr>
 </tbody>
 </table>

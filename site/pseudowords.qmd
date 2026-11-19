@@ -1,6 +1,6 @@
 ---
 title: "Pseudowords"
-subtitle: "Non-words for the LexTALE-style test: how they were made, filtered, rated and chosen"
+subtitle: "Non-words for the word-recognition test"
 page-layout: full
 toc: false
 ---
@@ -15,64 +15,22 @@ acc, rej = L.csv("pseudoslowa.csv"), L.csv("pseudoslowa_odrzucone.csv")
 m7 = L.metrics("pseudoslowa_7")
 n = lambda v: L.fmt(int(v))
 sel = acc[acc["wybrane"] == True]
-lex = m7.get("leksykon", {})
-thr = m7.get("progi_oceny", {})
-short = lambda m: str(m or "–").replace("claude-", "")
 ```
 
-A pseudoword for a lexical-decision test must look and sound like a possible Polish word, must not exist, and must
-not give itself away by its length, its ending or an odd letter pattern. This page shows what the pipeline produced:
-`{python} n(len(sel))` recommended pseudowords for `{python} n(sel["szablon"].nunique())` of
-`{python} n(m7.get("n_szablonow", 0))` templates, the `{python} n(len(acc))` strings that passed the filters, and the
-`{python} n(len(rej))` rejected candidates with the reason for each. Nothing here has been judged by people yet.
-
-**Templates** are real nouns and verbs in their base form, drawn from the two pools
-(`{python} ", ".join(f"{v} from the {('general' if k == 'ogolna' else 'subject')} pool" for k, v in m7.get("szablony_wg_puli", {}).items())`),
-so that pseudowords resemble the real items of the test in length and shape.
-
-**Generators.** Five sources are compared; none replaces another.
-
-| Generator | How it works |
-|:---|:---|
-| `wuggy_koncowka` | Wuggy (Polish orthographic module): same sub-syllabic segment lengths as the template, two thirds of the segments shared, similar transition frequencies; only strings that keep the template's final rime (the approach of Dołżycka et al. 2022) |
-| `wuggy` | the same search, strings with a different ending |
-| `unipseudo` | UniPseudo letter-trigram chain built from WorldLex-Polish nouns or verbs of the same length; generated independently, then paired with a template |
-| `llm` | `{python} short(m7.get("model_generujacy"))`, given the template and the requirements |
-| `imbir` | ready-made list of Imbir et al. (2015), items accepted by at least four of five judges, paired by length |
-
-**Hard filters** reject a candidate if it exists (Morfeusz2, KWJP100, WorldLex, wordfreq, the corpus); if its
-length, syllable count or ending differs from the template; if it contains a letter trigram, an onset, a coda or a
-cluster found in fewer than `{python} n(lex.get("min_typow_ngramu", 0))` of the `{python} n(lex.get("lematy_kwjp", 0))`
-lemmas of the reference lexicon; if it is one edit away from a frequent word (Zipf ≥
-`{python} L.fmt(lex.get("prog_zipf"))`); if it sounds like an existing word; if it is an existing stem with a
-productive prefix or suffix, or two words joined; if it has a vulgar association; or if it sounds like one of
-`{python} n(lex.get("slowa_ua_ru", 0))` frequent Ukrainian and Russian words written in Polish spelling.
-
-**Rating and choice.** For each template the pseudowords closest to it in OLD20 and bigram probability were rated by
-`{python} short(m7.get("model_oceniajacy"))`: pronounceability (1–5), the real word it brings to mind and how
-strongly (0–3), whether it exists, whether it is a foreign word, whether it is inappropriate. A pseudoword is
-recommended (`wybrane`) if pronounceability is at least `{python} n(thr.get("min_wymawialnosc", 0))`, similarity at
-most `{python} n(thr.get("max_podobienstwo", 0))`, and no flag is raised. The model rating stands in for human judges
-at the selection stage only.
+`{python} n(m7.get("n_wygenerowanych", 0))` candidates from five generators → `{python} n(len(acc))` passed the
+filters → `{python} n(len(sel))` recommended, for `{python} n(sel["szablon"].nunique())` of
+`{python} n(m7.get("n_szablonow", 0))` template words. Generators, filters and rating:
+[Method](method.qmd#pseudowords). Ratings come from `{python} L.model(m7.get("model_oceniajacy"))`, not from people.
 
 ```{python}
-rows = []
-for m, d in m7.get("wg_metody", {}).items():
-    rows.append((f"`{m}`", d.get("wygenerowane"), d.get("przyjete"), d.get("udzial_przyjetych"), d.get("oceniane"),
-                 d.get("udzial_pozytywnych"), d.get("srednia_wymawialnosc"), d.get("srednie_podobienstwo"), d.get("wybrane")))
-L.table(rows, ["Generator", "Generated", "Passed the filters", "… share", "Rated", "Rated positively, share",
-               "Mean pronounceability (1–5)", "Mean similarity to a word (0–3)", "Recommended"])
+rows = [(f"`{m}`", d.get("wygenerowane"), d.get("przyjete"), L.pct(d.get("udzial_przyjetych")), d.get("oceniane"),
+         L.pct(d.get("udzial_pozytywnych")), d.get("srednia_wymawialnosc"), d.get("wybrane")) for m, d in m7.get("wg_metody", {}).items()]
+L.table(rows, ["Generator", "Generated", "Passed the filters", "… share", "Rated", "Rated positively", "Pronounceability (1–5)", "Recommended"])
 ```
-
-A string produced by several generators is listed once, under the first of them in the order of the table above;
-`metody_wszystkie` names all of them.
 
 ::: {.panel-tabset}
 
 ## Recommended
-
-`{python} n(len(sel))` pseudowords, up to `{python} n(sel.groupby("szablon").size().max() if len(sel) else 0)` per
-template.
 
 ```{python}
 L.source("pseudoslowa.csv")
@@ -105,32 +63,26 @@ ct = pd.crosstab(rej["powod_odrzucenia"], rej["metoda"])
 ct["all"] = ct.sum(axis=1)
 ct = ct.sort_values("all", ascending=False).reset_index()
 ct["powod_odrzucenia"] = ct["powod_odrzucenia"].map(lambda x: f"{why.get(x, x)} (`{x}`)")
-L.df_table(ct.rename(columns={"powod_odrzucenia": "Reason"}))
-L.md("A candidate is counted under the first filter it fails. `wuggy` and `unipseudo` do not aim at the template's "
-     "ending, so most of their candidates fail the shape filter by design.")
+L.df_table(ct.rename(columns={"powod_odrzucenia": "First filter failed"}))
+L.md("`wuggy`, `unipseudo` and `imbir` do not aim at the template's ending, so most of their candidates fail the shape filter.")
 keep = [c for c in ["szablon", "pseudoslowo", "metoda", "powod_odrzucenia", "szczegol", "pos", "pula_szablonu", "dlugosc"] if c in rej.columns]
 L.glossary(keep)
 L.dt(rej[keep], page=50)
 ```
 
-## Templates against pseudowords
+## Compared with real words
 
-Mean and standard deviation of six features for the templates, for all pseudowords that passed the filters and for
-the recommended list. The last column is the standardised mean difference from the templates; values near 0 mean
-that a pupil cannot tell words from pseudowords by that feature alone.
+Values near 0 in the last column mean a pupil cannot tell words from pseudowords by that feature.
 
 ```{python}
 d = L.csv("pseudoslowa_rozklady.csv")
-grp = {"szablony": "templates", "pseudoslowa_przyjete": "passed the filters", "pseudoslowa_wybrane": "recommended"}
+grp = {"szablony": "templates (real words)", "pseudoslowa_przyjete": "passed the filters", "pseudoslowa_wybrane": "recommended"}
 feat = {"dlugosc": "length in letters", "syl": "syllables", "zbitka": "longest consonant run", "diakryty": "diacritic letters",
         "old20": "OLD20", "bigram_lp": "mean log bigram probability"}
 L.source("pseudoslowa_rozklady.csv")
 L.table([(feat.get(r.cecha, r.cecha), grp.get(r.grupa, r.grupa), r.n, r.srednia, r.odch_std, r.smd_wzgledem_szablonow)
          for r in d.sort_values(["cecha", "grupa"], ascending=[True, False]).itertuples()],
         ["Feature", "Group", "n", "Mean", "SD", "Standardised difference from templates"], "llrrrr")
-by = acc.groupby("metoda")[["dlugosc", "syl", "zbitka", "diakryty", "old20", "bigram_lp", "n_sasiadow_1"]].mean().round(3).reset_index()
-L.md("Means by generator, all strings that passed the filters:")
-L.df_table(by)
 L.source("pseudoslowa_szablony.csv")
 ```
 

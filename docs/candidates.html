@@ -100,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./method.html"> 
+<span class="menu-text">Method</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./results.html"> 
 <span class="menu-text">Results</span></a>
   </li>  
@@ -140,6 +144,10 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-resources">    
         <li>
+    <a class="dropdown-item" href="./pipeline.html">
+ <span class="dropdown-text">Pipeline in detail</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./resources-tools.html">
  <span class="dropdown-text">NLP tools</span></a>
   </li>  
@@ -172,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Candidates</h1>
-<p class="subtitle lead">Every extracted candidate with its statistics, method ranks and labels</p>
+<p class="subtitle lead">Every candidate with its statistics, scores and labels</p>
 </div>
 
 
@@ -189,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="af7bbcb8" class="cell" data-execution_count="1">
+<div id="7df5b097" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     import { set_or_remove_dark_class } from 'https://www.unpkg.com/dt_for_itables/dt_bundle.js';
@@ -197,28 +205,60 @@ ul.task-list li input[type="checkbox"] {
 </script>
 </div>
 </div>
-<p>7191 rows: 3844 candidates from the biology materials and 3347 general candidates that occur across the other subjects only. 5344 rows were labelled by the language models (sonnet-5-5, opus-5-5, with fable-5-2 adjudicating); the remaining general candidates were not sent to the models (<code>nieklasyfikowany</code>) and are in neither pool. No label has been checked by a human.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Two form columns">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div id="b78fd999" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 89%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Rows</td>
+<td style="text-align: right;">7191</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">… candidates from the biology materials</td>
+<td style="text-align: right;">3844</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">… general candidates (other subjects only)</td>
+<td style="text-align: right;">3347</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Labelled by the models</td>
+<td style="text-align: right;">5344</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Not sent to the models (<code>nieklasyfikowany</code>)</td>
+<td style="text-align: right;">1847</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Base form corrected by the models (<code>form_changed</code>)</td>
+<td style="text-align: right;">82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Duplicates after correction, left out of the pools (<code>duplikat_formy</code>)</td>
+<td style="text-align: right;">55</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Two form columns
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>forma_kandydata</code> is the string the statistics were computed for. <code>forma_podstawowa</code> is the same string unless the models corrected a wrong base form (82 rows); a correction is accepted only if it keeps the number of words. Where a correction makes two rows name the same item (for example <em>odwłoka</em> and <em>odwłok</em>, one lemma split by a tagging error), the row whose form needed no correction is the main one; the others point to it in <code>duplikat_formy</code> (55 rows) and are left out of the pools. <code>warianty</code> lists the strings merged into an item and <code>freq_cel_laczna</code> gives their summed frequency.</p>
-</div>
-</div>
-<p>Type in the boxes under the column names to filter a single column (for example <code>T3</code> under <code>kategoria</code>), click a header to sort, and use <strong>Columns</strong> to show the hidden score, rank and per-model columns, including each model’s one-sentence reason.</p>
-<div id="b769a4f7" class="cell" data-execution_count="2">
+<p><code>forma_kandydata</code> is the string that was counted; <code>forma_podstawowa</code> is the base form after correction. Filter with the boxes under the header (for example <code>T3</code> under <code>kategoria</code>), click a header to sort, <strong>Columns</strong> shows the hidden scores, ranks and each model’s label and reason. How candidates are extracted and labelled: <a href="./method.html#candidates">Method</a>.</p>
+<div id="b716ba4c" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown">
 <p>Source file: <code>kandydaci.csv</code> (<a href="https://github.com/ibe-datascience/jutro-pilot-slownictwo/blob/main/wyniki/biologia_sp/probka50/kandydaci.csv">view</a> · <a href="https://raw.githubusercontent.com/ibe-datascience/jutro-pilot-slownictwo/main/wyniki/biologia_sp/probka50/kandydaci.csv">download</a>).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <div class="callout callout-style-default callout-note callout-titled" title="Column glossary">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -227,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -512,10 +552,10 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div id="05ced3f9" class="cell" data-execution_count="3">
+<div id="5c3ba1e7" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_8ab1c8f0_8c5f_439a_ab47_315efa83eeb8" hidden="hidden">
+<table id="itables_8ff0269d_09d2_483b_8d1c_73e5fbc651b5" hidden="hidden">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://itables.org/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -581,7 +621,7 @@ ul.task-list li input[type="checkbox"] {
     </tr>
   </tbody>
 </table>
-<div id="itables_8ab1c8f0_8c5f_439a_ab47_315efa83eeb8_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
+<div id="itables_8ff0269d_09d2_483b_8d1c_73e5fbc651b5_fallback"><table style="border-collapse:collapse"><thead>    <tr style="text-align: right;">
       <th style="border:1px solid #ddd;padding:8px"><sup><noscript><span title="JavaScript not allowed. Please trust this notebook to get interactive tables.">🔒</span></noscript><a href="https://itables.org/fallbacks/static_preview.html" title="ITables v2.9.1 static preview">ⓘ</a></sup>forma_podstawowa</th>
       <th style="border:1px solid #ddd;padding:8px">forma_kandydata</th>
       <th style="border:1px solid #ddd;padding:8px">form_changed</th>
@@ -674,12 +714,12 @@ ul.task-list li input[type="checkbox"] {
 <tr><td style="border:1px solid #ddd;padding:8px">pokarm</td><td style="border:1px solid #ddd;padding:8px">pokarm</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">3 z 3</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">185</td><td style="border:1px solid #ddd;padding:8px">16</td><td style="border:1px solid #ddd;padding:8px">25</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">4.144</td><td style="border:1px solid #ddd;padding:8px">5.626</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">subst</td><td style="border:1px solid #ddd;padding:8px">pokarm</td><td style="border:1px solid #ddd;padding:8px">5</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">1136</td><td style="border:1px solid #ddd;padding:8px">3.55</td><td style="border:1px solid #ddd;padding:8px">551.843</td><td style="border:1px solid #ddd;padding:8px">5.788</td><td style="border:1px solid #ddd;padding:8px">1492.149</td><td style="border:1px solid #ddd;padding:8px">7.365</td><td style="border:1px solid #ddd;padding:8px">153.565</td><td style="border:1px solid #ddd;padding:8px">0.003</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">18.287</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">6</td><td style="border:1px solid #ddd;padding:8px">603</td><td style="border:1px solid #ddd;padding:8px">71</td><td style="border:1px solid #ddd;padding:8px">7</td><td style="border:1px solid #ddd;padding:8px">6</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">57</td><td style="border:1px solid #ddd;padding:8px">0.012</td><td style="border:1px solid #ddd;padding:8px">10</td><td style="border:1px solid #ddd;padding:8px">nierozstrzygniete</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">claude-fable-5-2</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Znane z domu słowo (jedzenie), choć często używane na biologii; znaczenie potoczne.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Słowo znane z codziennego języka (jedzenie dla zwierząt), choć częste w biologii.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">niska</td><td style="border:1px solid #ddd;padding:8px">Słowo znane dzieciom z życia codziennego, używane w ogólnym znaczeniu jedzenia.</td><td style="border:1px solid #ddd;padding:8px">185</td><td style="border:1px solid #ddd;padding:8px">16</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">brać</td><td style="border:1px solid #ddd;padding:8px">brać</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">czesciowo</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">2 z 2</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">czasownik</td><td style="border:1px solid #ddd;padding:8px">11</td><td style="border:1px solid #ddd;padding:8px">54</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px">5.487</td><td style="border:1px solid #ddd;padding:8px">5.140</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">fin</td><td style="border:1px solid #ddd;padding:8px">brać</td><td style="border:1px solid #ddd;padding:8px">34</td><td style="border:1px solid #ddd;padding:8px">3</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">25074</td><td style="border:1px solid #ddd;padding:8px">4.68</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">0.052</td><td style="border:1px solid #ddd;padding:8px">-9.728</td><td style="border:1px solid #ddd;padding:8px">-1.11</td><td style="border:1px solid #ddd;padding:8px">0.445</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">3124</td><td style="border:1px solid #ddd;padding:8px">3153</td><td style="border:1px solid #ddd;padding:8px">2660</td><td style="border:1px solid #ddd;padding:8px">2701</td><td style="border:1px solid #ddd;padding:8px">2756</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">0</td><td style="border:1px solid #ddd;padding:8px">3548</td><td style="border:1px solid #ddd;padding:8px">T1?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Pospolity czasownik codzienny; w zdaniach tylko w zwrotach „brać udział”, „skąd się biorą”.</td><td style="border:1px solid #ddd;padding:8px">T1</td><td style="border:1px solid #ddd;padding:8px">wysoka</td><td style="border:1px solid #ddd;padding:8px">Bardzo częsty czasownik codzienny, znany dzieciom bez nauki szkolnej.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">11</td><td style="border:1px solid #ddd;padding:8px">54</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
 <tr><td style="border:1px solid #ddd;padding:8px">udział</td><td style="border:1px solid #ddd;padding:8px">udział</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">brak</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">nie</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">2 z 2</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">1</td><td style="border:1px solid #ddd;padding:8px">rzeczownik</td><td style="border:1px solid #ddd;padding:8px">35</td><td style="border:1px solid #ddd;padding:8px">142</td><td style="border:1px solid #ddd;padding:8px">14</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px">5.524</td><td style="border:1px solid #ddd;padding:8px">5.571</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">subst</td><td style="border:1px solid #ddd;padding:8px">udział</td><td style="border:1px solid #ddd;padding:8px">52</td><td style="border:1px solid #ddd;padding:8px">4</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">27271</td><td style="border:1px solid #ddd;padding:8px">5.4</td><td style="border:1px solid #ddd;padding:8px">0.991</td><td style="border:1px solid #ddd;padding:8px">0.292</td><td style="border:1px solid #ddd;padding:8px">2.168</td><td style="border:1px solid #ddd;padding:8px">0.395</td><td style="border:1px solid #ddd;padding:8px">1.296</td><td style="border:1px solid #ddd;padding:8px">0.000</td><td style="border:1px solid #ddd;padding:8px">9</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">3.28</td><td style="border:1px solid #ddd;padding:8px">True</td><td style="border:1px solid #ddd;padding:8px">2822</td><td style="border:1px solid #ddd;padding:8px">3020</td><td style="border:1px solid #ddd;padding:8px">2190</td><td style="border:1px solid #ddd;padding:8px">2000</td><td style="border:1px solid #ddd;padding:8px">951</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">653</td><td style="border:1px solid #ddd;padding:8px">0.001</td><td style="border:1px solid #ddd;padding:8px">1858</td><td style="border:1px solid #ddd;padding:8px">T1?</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">False</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Ogólne słowo języka szkolnego, używane w wielu przedmiotach (brać udział), nie termin biologiczny.</td><td style="border:1px solid #ddd;padding:8px">T2</td><td style="border:1px solid #ddd;padding:8px">srednia</td><td style="border:1px solid #ddd;padding:8px">Słowo języka podręczników („brać udział”) wspólne dla wielu przedmiotów, nie termin.</td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px"></td><td style="border:1px solid #ddd;padding:8px">35</td><td style="border:1px solid #ddd;padding:8px">142</td><td style="border:1px solid #ddd;padding:8px"></td></tr>
-</tbody><tfoot><tr><td colspan="66" style="border:none;padding:8px;text-align:center">(7,166 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_8ab1c8f0_8c5f_439a_ab47_315efa83eeb8")?.removeAttribute("hidden");document.getElementById("itables_8ab1c8f0_8c5f_439a_ab47_315efa83eeb8_fallback")?.setAttribute("hidden", "hidden");</script>
+</tbody><tfoot><tr><td colspan="66" style="border:none;padding:8px;text-align:center">(7,166 more rows not shown)</td></tr></tfoot></table></div><script>document.getElementById("itables_8ff0269d_09d2_483b_8d1c_73e5fbc651b5")?.removeAttribute("hidden");document.getElementById("itables_8ff0269d_09d2_483b_8d1c_73e5fbc651b5_fallback")?.setAttribute("hidden", "hidden");</script>
 <link href="https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.css" rel="stylesheet">
 <script type="module">
     import { ITable, jQuery as $ } from 'https://www.unpkg.com/dt_for_itables@2.5.8/dt_bundle.js';
 
-    document.querySelectorAll("#itables_8ab1c8f0_8c5f_439a_ab47_315efa83eeb8:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_8ff0269d_09d2_483b_8d1c_73e5fbc651b5:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
